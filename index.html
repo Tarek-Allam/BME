@@ -192,29 +192,30 @@
     }
 
     // Fetch existing case IDs and populate the dropdown list
-    async function fetchCreatedCases() {
-      var dropdown = document.getElementById("caseDropdownSelect");
-      dropdown.innerHTML = "<option value=''>جاري تحميل القائمة...</option>";
+async function fetchCreatedCases() {
+  var dropdown = document.getElementById("caseDropdownSelect");
+  dropdown.innerHTML = "<option value=''>جاري تحميل القائمة...</option>";
 
-      try {
-        const response = await fetch(API_ENDPOINT);
-        const data = await response.json();
+  try {
+    const response = await fetch(API_ENDPOINT, { method: "GET" });
+    const data = await response.json();
 
-        if (data.status === "success" && data.cases && data.cases.length > 0) {
-          dropdown.innerHTML = "<option value=''>-- اختر كود المهمة --</option>";
-          data.cases.forEach(function(caseId) {
-            var option = document.createElement("option");
-            option.value = caseId;
-            option.text = caseId;
-            dropdown.appendChild(option);
-          });
-        } else {
-          dropdown.innerHTML = "<option value=''>لا توجد بلاغات سابقة مسجلة</option>";
-        }
-      } catch (err) {
-        dropdown.innerHTML = "<option value=''>فشل في جلب القائمة</option>";
-      }
+    if (data.status === "success" && data.cases && data.cases.length > 0) {
+      dropdown.innerHTML = "<option value=''>-- اختر كود المهمة --</option>";
+      data.cases.forEach(function(caseId) {
+        var option = document.createElement("option");
+        option.value = caseId;
+        option.text = caseId;
+        dropdown.appendChild(option);
+      });
+    } else {
+      dropdown.innerHTML = "<option value=''>لا توجد بلاغات سابقة مسجلة بالمستند</option>";
     }
+  } catch (err) {
+    console.error("Fetch error:", err);
+    dropdown.innerHTML = "<option value=''>عذراً، فشل في جلب القائمة (تأكد من النشر بـ Anyone)</option>";
+  }
+}
 
     function toggleInput(selectId, targetGroupId, triggerValue) {
       var select = document.getElementById(selectId);
