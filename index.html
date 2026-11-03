@@ -6,87 +6,23 @@
   <title>نظام توثيق الأجهزة الطبية</title>
   <style>
     * { box-sizing: border-box; }
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f8f9fa;
-      margin: 0;
-      padding: 16px;
-      color: #333;
-      direction: rtl;
-      text-align: right;
-    }
-    .container {
-      max-width: 600px;
-      margin: 0 auto;
-      background: #ffffff;
-      padding: 24px;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-    }
-    h2 {
-      margin-top: 0;
-      color: #1a73e8;
-      font-size: 20px;
-      border-bottom: 2px solid #1a73e8;
-      padding-bottom: 8px;
-      margin-bottom: 16px;
-    }
-    .section-title {
-      font-size: 15px;
-      color: #1a73e8;
-      border-bottom: 1px solid #1a73e8;
-      padding-bottom: 3px;
-      margin-top: 20px;
-      margin-bottom: 12px;
-      font-weight: bold;
-    }
+    body { font-family: Arial, sans-serif; background-color: #f8f9fa; margin: 0; padding: 16px; color: #333; direction: rtl; text-align: right; }
+    .container { max-width: 600px; margin: 0 auto; background: #ffffff; padding: 24px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08); }
+    h2 { margin-top: 0; color: #1a73e8; font-size: 20px; border-bottom: 2px solid #1a73e8; padding-bottom: 8px; margin-bottom: 16px; }
+    .section-title { font-size: 15px; color: #1a73e8; border-bottom: 1px solid #1a73e8; padding-bottom: 3px; margin-top: 20px; margin-bottom: 12px; font-weight: bold; }
     .form-group { margin-bottom: 14px; }
     label { display: block; font-weight: bold; font-size: 13px; margin-bottom: 6px; color: #202124; }
-    select, input, textarea {
-      width: 100%;
-      padding: 8px 10px;
-      font-size: 13.5px;
-      border: 1px solid #dadce0;
-      border-radius: 6px;
-      background-color: #fff;
-      font-family: inherit;
-    }
-    select:focus, input:focus, textarea:focus {
-      outline: none;
-      border-color: #1a73e8;
-      box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2);
-    }
+    select, input, textarea { width: 100%; padding: 8px 10px; font-size: 13.5px; border: 1px solid #dadce0; border-radius: 6px; background-color: #fff; font-family: inherit; }
+    select:focus, input:focus, textarea:focus { outline: none; border-color: #1a73e8; box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2); }
     textarea { resize: vertical; min-height: 60px; }
     .hidden { display: none; }
-    .highlight-box {
-      background-color: #e8f0fe;
-      border: 1px solid #1a73e8;
-      padding: 12px;
-      border-radius: 6px;
-      margin-bottom: 16px;
-    }
-    button {
-      width: 100%;
-      padding: 12px;
-      background-color: #1a73e8;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-      margin-top: 15px;
-    }
+    .highlight-box { background-color: #e8f0fe; border: 1px solid #1a73e8; padding: 12px; border-radius: 6px; margin-bottom: 16px; }
+    button { width: 100%; padding: 12px; background-color: #1a73e8; color: white; border: none; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 15px; }
     button:hover { background-color: #1557b0; }
     button:disabled { background-color: #a0c3ff; cursor: not-allowed; }
-    .status-msg {
-      margin-top: 14px;
-      padding: 10px;
-      border-radius: 6px;
-      text-align: center;
-      font-size: 14px;
-      display: none;
-    }
+    .btn-reset { background-color: #dc3545; margin-top: 8px; font-size: 13px; padding: 8px; }
+    .btn-reset:hover { background-color: #b02a37; }
+    .status-msg { margin-top: 14px; padding: 10px; border-radius: 6px; text-align: center; font-size: 14px; display: none; }
     .status-success { background-color: #e6f4ea; color: #137333; }
     .status-error { background-color: #fce8e6; color: #c5221f; }
   </style>
@@ -97,12 +33,12 @@
     <h2>توثيق وتفتيش مهمة هندسية طبية</h2>
     <form id="medicalForm">
 
-      <!-- اختيار نوع الإجراء -->
+      <!-- نوع الإجراء -->
       <div class="highlight-box">
         <div class="form-group" style="margin-bottom:0;">
           <label>نوع الإجراء المطلوب:</label>
           <select id="actionType" onchange="toggleActionType()">
-            <option value="NEW">إضافة بلاغ جديد (توليد كود تلقائي)</option>
+            <option value="NEW">إضافة بلاغ جديد (الأخير في الأعلى)</option>
             <option value="UPDATE">تحديث بيانات بلاغ حالي</option>
           </select>
         </div>
@@ -250,6 +186,7 @@
       </div>
 
       <button type="submit" id="submitBtn">حفظ التقرير في المستند</button>
+      <button type="button" class="btn-reset" onclick="resetCounter()">تصفير عداد الترقيم (البدء من 1000)</button>
     </form>
 
     <div id="statusMsg" class="status-msg"></div>
@@ -277,7 +214,6 @@
       }
     }
 
-    // جلب الحالات باستخدام JSONP لتفادي حظر CORS نهائياً
     function loadCasesViaJSONP() {
       var dropdown = document.getElementById("caseDropdownSelect");
       dropdown.innerHTML = "<option value=''>جاري تحميل البلاغات...</option>";
@@ -290,13 +226,12 @@
       script.src = API_ENDPOINT + "?callback=handleJSONPResponse";
       
       script.onerror = function() {
-        dropdown.innerHTML = "<option value=''>فشل في جلب القائمة (تحقق من النشر بـ New Version)</option>";
+        dropdown.innerHTML = "<option value=''>فشل في جلب القائمة (تأكد من النشر بـ New Version)</option>";
       };
       
       document.body.appendChild(script);
     }
 
-    // الدالة الاستدعائية لاستلام البيانات
     window.handleJSONPResponse = function(data) {
       var dropdown = document.getElementById("caseDropdownSelect");
       if (data && data.status === "success" && data.cases && data.cases.length > 0) {
@@ -311,6 +246,19 @@
         dropdown.innerHTML = "<option value=''>لا توجد بلاغات مسجلة بالمستند</option>";
       }
     };
+
+    function resetCounter() {
+      if (confirm("هل أنت تأكد من تصفير عداد الترقيم تلقائياً؟")) {
+        fetch(API_ENDPOINT, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify({ actionType: "RESET_COUNTER" })
+        }).then(function() {
+          alert("تم تصفير العداد بنجاح. البلاغ القادم سيبدأ من 1001.");
+        });
+      }
+    }
 
     function toggleInput(selectId, targetGroupId, triggerValue) {
       var select = document.getElementById(selectId);
@@ -386,4 +334,24 @@
       .then(function() {
         statusMsg.className = "status-msg status-success";
         statusMsg.innerText = actionType === "NEW" 
-          ?
+          ? "تم إضافة البلاغ بنجاح في أعلى المستند!" 
+          : "تم تحديث البيانات للبلاغ بنجاح!";
+        document.getElementById("medicalForm").reset();
+        document.getElementById("reportDate").value = today;
+        document.getElementById("endDate").value = today;
+        document.getElementById("reportTime").value = timeStr;
+        toggleActionType();
+      })
+      .catch(function(err) {
+        statusMsg.className = "status-msg status-error";
+        statusMsg.innerText = "حدث خطأ أثناء الإرسال. تحقق من الاتصال بالإنترنت.";
+      })
+      .finally(function() {
+        statusMsg.style.display = "block";
+        submitBtn.disabled = false;
+        submitBtn.innerText = "حفظ التقرير في المستند";
+      });
+    });
+  </script>
+</body>
+</html>
