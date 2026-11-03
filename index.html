@@ -1,220 +1,423 @@
-<script>
-  var today = new Date().toISOString().split("T")[0];
-  document.getElementById("reportDate").value = today;
-  document.getElementById("endDate").value = today;
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>نظام توثيق الأجهزة الطبية</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: Arial, sans-serif; background-color: #f8f9fa; margin: 0; padding: 16px; color: #333; direction: rtl; text-align: right; }
+    .container { max-width: 600px; margin: 0 auto; background: #ffffff; padding: 24px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08); }
+    h2 { margin-top: 0; color: #1a73e8; font-size: 20px; border-bottom: 2px solid #1a73e8; padding-bottom: 8px; margin-bottom: 16px; }
+    .section-title { font-size: 15px; color: #1a73e8; border-bottom: 1px solid #1a73e8; padding-bottom: 3px; margin-top: 20px; margin-bottom: 12px; font-weight: bold; }
+    .form-group { margin-bottom: 14px; }
+    label { display: block; font-weight: bold; font-size: 13px; margin-bottom: 6px; color: #202124; }
+    select, input, textarea { width: 100%; padding: 8px 10px; font-size: 13.5px; border: 1px solid #dadce0; border-radius: 6px; background-color: #fff; font-family: inherit; }
+    select:focus, input:focus, textarea:focus { outline: none; border-color: #1a73e8; box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2); }
+    textarea { resize: vertical; min-height: 60px; }
+    .hidden { display: none; }
+    .highlight-box { background-color: #e8f0fe; border: 1px solid #1a73e8; padding: 12px; border-radius: 6px; margin-bottom: 16px; }
+    button { width: 100%; padding: 12px; background-color: #1a73e8; color: white; border: none; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 15px; }
+    button:hover { background-color: #1557b0; }
+    button:disabled { background-color: #a0c3ff; cursor: not-allowed; }
+    .btn-reset { background-color: #dc3545; margin-top: 8px; font-size: 13px; padding: 8px; }
+    .btn-reset:hover { background-color: #b02a37; }
+    .status-msg { margin-top: 14px; padding: 10px; border-radius: 6px; text-align: center; font-size: 14px; display: none; }
+    .status-success { background-color: #e6f4ea; color: #137333; }
+    .status-error { background-color: #fce8e6; color: #c5221f; }
+  </style>
+</head>
+<body>
 
-  var now = new Date();
-  var timeStr = (now.getHours() < 10 ? "0" : "") + now.getHours() + ":" + (now.getMinutes() < 10 ? "0" : "") + now.getMinutes();
-  document.getElementById("reportTime").value = timeStr;
+  <div class="container">
+    <h2>توثيق وتفتيش مهمة هندسية طبية</h2>
+    <form id="medicalForm">
 
-  const API_ENDPOINT = "https://script.google.com/macros/s/AKfycbwOhQJU-q_1vbXS4hxJuHdgtSi2SD74odMa4WO296Y7Iv9VUvAlNJEsTbaXlJl3ZMXQug/exec";
+      <!-- Action Selection -->
+      <div class="highlight-box">
+        <div class="form-group" style="margin-bottom:0;">
+          <label>نوع الإجراء المطلوب:</label>
+          <select id="actionType" onchange="toggleActionType()">
+            <option value="NEW">إضافة بلاغ جديد</option>
+            <option value="UPDATE">تحديث بيانات بلاغ حالي</option>
+          </select>
+        </div>
 
-  var loadedCasesData = {};
+        <div class="form-group hidden" id="taskIdGroup" style="margin-top:12px; margin-bottom:0;">
+          <label>اختر رقم البلاغ المراد تحديثه:</label>
+          <select id="caseDropdownSelect">
+            <option value="">جاري تحميل البلاغات...</option>
+          </select>
+        </div>
+      </div>
+      
+      <!-- Task Type -->
+      <div class="form-group">
+        <label>نوع المهمة:</label>
+        <select id="taskSelect" onchange="toggleInput('taskSelect', 'otherTaskGroup', 'أخرى')">
+          <option value="تجهيز جهاز طبي">تجهيز جهاز طبي</option>
+          <option value="تركيب جهاز طبي">تركيب جهاز طبي</option>
+          <option value="تفكيك جهاز طبي">تفكيك جهاز طبي</option>
+          <option value="طلب صيانة">طلب صيانة</option>
+          <option value="صيانة طوارئ">صيانة طوارئ</option>
+          <option value="أخرى">أخرى...</option>
+        </select>
+      </div>
 
-  function toggleActionType() {
-    var action = document.getElementById("actionType").value;
-    var taskGroup = document.getElementById("taskIdGroup");
-    if (action === "UPDATE") {
-      taskGroup.classList.remove("hidden");
-      loadCasesViaJSONP();
-    } else {
-      taskGroup.classList.add("hidden");
-      document.getElementById("medicalForm").reset();
-      document.getElementById("reportDate").value = today;
-      document.getElementById("endDate").value = today;
-      document.getElementById("reportTime").value = timeStr;
-    }
-  }
+      <div class="form-group hidden" id="otherTaskGroup">
+        <label>تفاصيل المهمة البديلة:</label>
+        <input type="text" id="otherTaskDetails" placeholder="أدخل تفاصيل نوع المهمة البديلة">
+      </div>
 
-  function loadCasesViaJSONP() {
-    var dropdown = document.getElementById("caseDropdownSelect");
-    dropdown.innerHTML = "<option value=''>جاري تحميل البلاغات...</option>";
+      <!-- Device List (27 Devices) -->
+      <div class="form-group">
+        <label>نوع الجهاز:</label>
+        <select id="deviceSelect" onchange="toggleInput('deviceSelect', 'newDeviceGroup', 'NEW_DEVICE')">
+          <option value="INTALIGHT DREAM OCTA VG100D">INTALIGHT DREAM OCTA VG100D</option>
+          <option value="INTALIGHT DREAM OCTA VG200D">INTALIGHT DREAM OCTA VG200D</option>
+          <option value="INTALIGHT DREAM OCTA VG200C">INTALIGHT DREAM OCTA VG200C</option>
+          <option value="OPTOVUE SOLIX OCTA">OPTOVUE SOLIX OCTA</option>
+          <option value="OPTOVUE XRAVANTI OCTA">OPTOVUE XRAVANTI OCTA</option>
+          <option value="OPTOVUE IVUE80 OCT">OPTOVUE IVUE80 OCT</option>
+          <option value="OPTOVUE ISCAN OCT">OPTOVUE ISCAN OCT</option>
+          <option value="OPTOVUE RTVUE100 OCT">OPTOVUE RTVUE100 OCT</option>
+          <option value="MOVU Argos AS OCT">MOVU Argos AS OCT</option>
+          <option value="DGH Ocular UtraSound A/B Scan">DGH Ocular UtraSound A/B Scan</option>
+          <option value="DGH Ocular UtraSound A/B Scan and UBM">DGH Ocular UtraSound A/B Scan and UBM</option>
+          <option value="MicroClear Apollo Laser Retinal Fundus Camera RB">MicroClear Apollo Laser Retinal Fundus Camera RB</option>
+          <option value="MicroClear Apollo Laser Retinal Fundus Camera RGB v1.0">MicroClear Apollo Laser Retinal Fundus Camera RGB v1.0</option>
+          <option value="MicroClear ApolloLaser Retinal Fundus Camera RGB v2.0">MicroClear ApolloLaser Retinal Fundus Camera RGB v2.0</option>
+          <option value="RODENSTOCK Perimat Visual Field">RODENSTOCK Perimat Visual Field</option>
+          <option value="RODENSTOCK Perimat2 Visual Field">RODENSTOCK Perimat2 Visual Field</option>
+          <option value="RODENSTOCK Refraction Unit 500">RODENSTOCK Refraction Unit 500</option>
+          <option value="RODENSTOCK Refraction Unit 1000">RODENSTOCK Refraction Unit 1000</option>
+          <option value="RODENSTOCK Tonometer Topascope">RODENSTOCK Tonometer Topascope</option>
+          <option value="Visionix Tulip Screen Portable Autorefractor autokeratometer">Visionix Tulip Screen Portable Autorefractor autokeratometer</option>
+          <option value="Visionix Tulip sidetube Portable Autorefractor autokeratometer">Visionix Tulip sidetube Portable Autorefractor autokeratometer</option>
+          <option value="REXONE EYE Resono Dry Eye Treatment">REXONE EYE Resono Dry Eye Treatment</option>
+          <option value="SBM Dry Eye Diagnostics OS-1000">SBM Dry Eye Diagnostics OS-1000</option>
+          <option value="Peschke PXL Corneal Cross linking SAPPHIRE 318">Peschke PXL Corneal Cross linking SAPPHIRE 318</option>
+          <option value="Sterlink Plasmapp FPS-15s-Plus Low temp Plasma sterilizer">Sterlink Plasmapp FPS-15s-Plus Low temp Plasma sterilizer</option>
+          <option value="ENBIO Autoclave">ENBIO Autoclave</option>
+          <option value="W&H Autoclave">W&H Autoclave</option>
+          <option value="NEW_DEVICE">إضافة جهاز جديد...</option>
+        </select>
+      </div>
 
-    var oldScript = document.getElementById("jsonpScript");
-    if (oldScript) oldScript.remove();
+      <div class="form-group hidden" id="newDeviceGroup">
+        <label>اسم الجهاز الجديد:</label>
+        <input type="text" id="newDeviceName" placeholder="أدخل طراز الجهاز الجديد">
+      </div>
 
-    var script = document.createElement("script");
-    script.id = "jsonpScript";
-    script.src = API_ENDPOINT + "?callback=handleJSONPResponse&t=" + new Date().getTime();
-    
-    script.onerror = function() {
-      dropdown.innerHTML = "<option value=''>تعذر الاتصال بالخادم.</option>";
-    };
-    
-    document.body.appendChild(script);
-  }
+      <div class="form-group">
+        <label>الرقم المسلسل (S/N):</label>
+        <input type="text" id="serialNumber" placeholder="أدخل الرقم التسلسلي S/N">
+      </div>
 
-  window.handleJSONPResponse = function(data) {
-    var dropdown = document.getElementById("caseDropdownSelect");
-    if (data && data.status === "success" && data.casesMap) {
-      loadedCasesData = data.casesMap;
-      var keys = Object.keys(loadedCasesData);
+      <div class="form-group">
+        <label>الشخص القائم بالإبلاغ:</label>
+        <select id="reporterSelect">
+          <option value="مدير القسم">مدير القسم</option>
+          <option value="مدير الشركة">مدير الشركة</option>
+        </select>
+      </div>
 
-      if (keys.length > 0) {
-        dropdown.innerHTML = "<option value=''>-- اختر كود المهمة المراد تحديثها --</option>";
-        keys.forEach(function(caseId) {
-          var option = document.createElement("option");
-          option.value = caseId;
-          option.text = caseId;
-          dropdown.appendChild(option);
-        });
+      <div class="form-group">
+        <label>اسم الشخص القائم بالإبلاغ (اختياري):</label>
+        <input type="text" id="reporterName" placeholder="أدخل اسم المبلّغ بالتفصيل">
+      </div>
 
-        dropdown.onchange = populateFormFields;
+      <div class="form-group">
+        <label>المهندس المسؤول:</label>
+        <select id="responsibleManager">
+          <option value="مدير الصيانة">مدير الصيانة</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>المهندس المكلف بالتنفيذ:</label>
+        <select id="engineerSelect" onchange="toggleInput('engineerSelect', 'newEngineerGroup', 'NEW')">
+          <option value="عمرو عباس">عمرو عباس</option>
+          <option value="محمد ابراهيم">محمد ابراهيم</option>
+          <option value="NEW">إضافة مهندس جديد...</option>
+        </select>
+      </div>
+
+      <div class="form-group hidden" id="newEngineerGroup">
+        <label>اسم المهندس المكلف الجديد:</label>
+        <input type="text" id="newEngineerName" placeholder="أدخل اسم المهندس الجديد">
+      </div>
+
+      <div class="form-group">
+        <label>تاريخ الإبلاغ:</label>
+        <input type="date" id="reportDate">
+      </div>
+
+      <div class="form-group">
+        <label>وقت الإبلاغ:</label>
+        <input type="time" id="reportTime">
+      </div>
+
+      <div class="form-group">
+        <label>تاريخ الانتهاء:</label>
+        <input type="date" id="endDate">
+      </div>
+
+      <div class="section-title">تقرير التنفيذ والنتائج</div>
+
+      <div class="form-group">
+        <label>تفاصيل ما تم تنفيذه:</label>
+        <textarea id="executionNotes" placeholder="اكتب بالتفصيل ما قمت به..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>النتائج والتقييم:</label>
+        <textarea id="results" placeholder="حالة الجهاز بعد العمل..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>الأخطاء والملاحظات (إن وجدت):</label>
+        <textarea id="errors" placeholder="أي مشاكل ظهرت أثناء العمل..."></textarea>
+      </div>
+
+      <button type="submit" id="submitBtn">حفظ التقرير في المستند</button>
+      <button type="button" class="btn-reset" onclick="resetCounter()">تصفير عداد الترقيم (البدء من 1000)</button>
+    </form>
+
+    <div id="statusMsg" class="status-msg"></div>
+  </div>
+
+  <script>
+    // YOUR APPS SCRIPT EXEC URL HERE
+    const API_ENDPOINT = "https://script.google.com/macros/s/AKfycbzy_hNDYOuDk5WuhKpatPfPAx1Iuo_6RZETFFbzIFwOtdui1qoCav__ew8_rlWePXtn/exec";
+
+    var today = new Date().toISOString().split("T")[0];
+    document.getElementById("reportDate").value = today;
+    document.getElementById("endDate").value = today;
+
+    var now = new Date();
+    var timeStr = (now.getHours() < 10 ? "0" : "") + now.getHours() + ":" + (now.getMinutes() < 10 ? "0" : "") + now.getMinutes();
+    document.getElementById("reportTime").value = timeStr;
+
+    var loadedCasesData = {};
+
+    function toggleActionType() {
+      var action = document.getElementById("actionType").value;
+      var taskGroup = document.getElementById("taskIdGroup");
+      if (action === "UPDATE") {
+        taskGroup.classList.remove("hidden");
+        loadCases();
       } else {
-        dropdown.innerHTML = "<option value=''>لا توجد بلاغات مسجلة بالمستند</option>";
-      }
-    } else {
-      dropdown.innerHTML = "<option value=''>فشل في جلب البيانات</option>";
-    }
-  };
-
-  function populateFormFields() {
-    var selectedId = document.getElementById("caseDropdownSelect").value;
-    if (!selectedId || !loadedCasesData[selectedId]) return;
-
-    var item = loadedCasesData[selectedId];
-
-    var taskSelect = document.getElementById("taskSelect");
-    if (setSelectValueIfExists(taskSelect, item.task)) {
-      document.getElementById("otherTaskGroup").classList.add("hidden");
-    } else {
-      taskSelect.value = "أخرى";
-      document.getElementById("otherTaskGroup").classList.remove("hidden");
-      document.getElementById("otherTaskDetails").value = item.task.replace("أخرى (", "").replace(")", "");
-    }
-
-    var deviceSelect = document.getElementById("deviceSelect");
-    if (setSelectValueIfExists(deviceSelect, item.device)) {
-      document.getElementById("newDeviceGroup").classList.add("hidden");
-    } else {
-      deviceSelect.value = "NEW_DEVICE";
-      document.getElementById("newDeviceGroup").classList.remove("hidden");
-      document.getElementById("newDeviceName").value = item.device;
-    }
-
-    var engineerSelect = document.getElementById("engineerSelect");
-    if (setSelectValueIfExists(engineerSelect, item.engineer)) {
-      document.getElementById("newEngineerGroup").classList.add("hidden");
-    } else {
-      engineerSelect.value = "NEW";
-      document.getElementById("newEngineerGroup").classList.remove("hidden");
-      document.getElementById("newEngineerName").value = item.engineer;
-    }
-
-    document.getElementById("serialNumber").value = item.serial === "غير مسجل" ? "" : item.serial;
-    document.getElementById("reportDate").value = item.reportDate || today;
-    document.getElementById("reportTime").value = item.reportTime || timeStr;
-    document.getElementById("endDate").value = item.endDate || today;
-    document.getElementById("executionNotes").value = item.notes === "لم تذكر" ? "" : item.notes;
-    document.getElementById("results").value = item.results === "لم تذكر" ? "" : item.results;
-    document.getElementById("errors").value = item.errors === "لا توجد أخطاء" ? "" : item.errors;
-  }
-
-  function setSelectValueIfExists(selectElement, val) {
-    for (var i = 0; i < selectElement.options.length; i++) {
-      if (selectElement.options[i].value === val) {
-        selectElement.selectedIndex = i;
-        return true;
+        taskGroup.classList.add("hidden");
+        document.getElementById("medicalForm").reset();
+        document.getElementById("reportDate").value = today;
+        document.getElementById("endDate").value = today;
+        document.getElementById("reportTime").value = timeStr;
       }
     }
-    return false;
-  }
 
-  function toggleInput(selectId, targetGroupId, triggerValue) {
-    var select = document.getElementById(selectId);
-    var group = document.getElementById(targetGroupId);
-    if (select.value === triggerValue) {
-      group.classList.remove("hidden");
-    } else {
-      group.classList.add("hidden");
-    }
-  }
+    function loadCases() {
+      var dropdown = document.getElementById("caseDropdownSelect");
+      dropdown.innerHTML = "<option value=''>جاري تحميل البلاغات...</option>";
 
-  document.getElementById("medicalForm").addEventListener("submit", function(e) {
-    e.preventDefault();
-    
-    var submitBtn = document.getElementById("submitBtn");
-    var statusMsg = document.getElementById("statusMsg");
-    var actionType = document.getElementById("actionType").value;
-    var taskId = document.getElementById("caseDropdownSelect").value;
+      var oldScript = document.getElementById("jsonpScript");
+      if (oldScript) oldScript.remove();
 
-    if (actionType === "UPDATE" && !taskId) {
-      alert("الرجاء اختيار كود المهمة المراد تحديثها من القائمة!");
-      return;
-    }
-    
-    submitBtn.disabled = true;
-    submitBtn.innerText = "جاري الإرسال...";
-    statusMsg.style.display = "none";
-
-    var task = document.getElementById("taskSelect").value;
-    if (task === "أخرى") {
-      var od = document.getElementById("otherTaskDetails").value.trim();
-      task = od ? "أخرى (" + od + ")" : "أخرى";
+      var script = document.createElement("script");
+      script.id = "jsonpScript";
+      script.src = API_ENDPOINT + "?callback=handleJSONPResponse&t=" + new Date().getTime();
+      document.body.appendChild(script);
     }
 
-    var device = document.getElementById("deviceSelect").value;
-    if (device === "NEW_DEVICE") {
-      var nd = document.getElementById("newDeviceName").value.trim();
-      device = nd ? nd : "جهاز جديد غير معرف";
-    }
+    window.handleJSONPResponse = function(data) {
+      var dropdown = document.getElementById("caseDropdownSelect");
+      if (data && data.status === "success" && data.casesMap) {
+        loadedCasesData = data.casesMap;
+        var keys = Object.keys(loadedCasesData);
 
-    var engineer = document.getElementById("engineerSelect").value;
-    if (engineer === "NEW") {
-      engineer = document.getElementById("newEngineerName").value.trim();
-    }
-
-    var rt = document.getElementById("reporterSelect").value;
-    var rn = document.getElementById("reporterName").value.trim();
-    var reporterFull = rn ? rt + " (" + rn + ")" : rt;
-
-    var payload = {
-      actionType: actionType,
-      taskId: taskId,
-      task: task,
-      device: device,
-      serial: document.getElementById("serialNumber").value.trim(),
-      reporter: reporterFull,
-      manager: document.getElementById("responsibleManager").value,
-      engineer: engineer,
-      reportDate: document.getElementById("reportDate").value,
-      reportTime: document.getElementById("reportTime").value,
-      endDate: document.getElementById("endDate").value,
-      executionNotes: document.getElementById("executionNotes").value.trim(),
-      results: document.getElementById("results").value.trim(),
-      errors: document.getElementById("errors").value.trim()
+        if (keys.length > 0) {
+          dropdown.innerHTML = "<option value=''>-- اختر كود المهمة المراد تحديثها --</option>";
+          keys.forEach(function(caseId) {
+            var option = document.createElement("option");
+            option.value = caseId;
+            option.text = caseId;
+            dropdown.appendChild(option);
+          });
+          dropdown.onchange = populateFormFields;
+        } else {
+          dropdown.innerHTML = "<option value=''>لا توجد بلاغات مسجلة بالمستند</option>";
+        }
+      } else {
+        dropdown.innerHTML = "<option value=''>تعذر جلب البلاغات</option>";
+      }
     };
 
-    // إرسال البيانات عبر JSONP بدلاً من fetch(no-cors) لضمان دخولها لـ Google Doc
-    var script = document.createElement("script");
-    var encodedPayload = encodeURIComponent(JSON.stringify(payload));
-    script.src = API_ENDPOINT + "?callback=handleSubmitSuccess&payload=" + encodedPayload + "&t=" + new Date().getTime();
+    function populateFormFields() {
+      var selectedId = document.getElementById("caseDropdownSelect").value;
+      if (!selectedId || !loadedCasesData[selectedId]) return;
 
-    window.handleSubmitSuccess = function(res) {
-      statusMsg.className = "status-msg status-success";
-      statusMsg.innerText = actionType === "NEW" 
-        ? "تم إضافة البلاغ بنجاح وتوثيقه بداخل المستند!" 
-        : "تم تحديث البيانات للبلاغ بنجاح بداخل المستند!";
+      var item = loadedCasesData[selectedId];
+
+      var taskSelect = document.getElementById("taskSelect");
+      if (setSelectValueIfExists(taskSelect, item.task)) {
+        document.getElementById("otherTaskGroup").classList.add("hidden");
+      } else if (item.task) {
+        taskSelect.value = "أخرى";
+        document.getElementById("otherTaskGroup").classList.remove("hidden");
+        document.getElementById("otherTaskDetails").value = item.task.replace("أخرى (", "").replace(")", "");
+      }
+
+      var deviceSelect = document.getElementById("deviceSelect");
+      if (setSelectValueIfExists(deviceSelect, item.device)) {
+        document.getElementById("newDeviceGroup").classList.add("hidden");
+      } else if (item.device) {
+        deviceSelect.value = "NEW_DEVICE";
+        document.getElementById("newDeviceGroup").classList.remove("hidden");
+        document.getElementById("newDeviceName").value = item.device;
+      }
+
+      var engineerSelect = document.getElementById("engineerSelect");
+      if (setSelectValueIfExists(engineerSelect, item.engineer)) {
+        document.getElementById("newEngineerGroup").classList.add("hidden");
+      } else if (item.engineer) {
+        engineerSelect.value = "NEW";
+        document.getElementById("newEngineerGroup").classList.remove("hidden");
+        document.getElementById("newEngineerName").value = item.engineer;
+      }
+
+      document.getElementById("serialNumber").value = item.serial || "";
+      document.getElementById("reportDate").value = item.reportDate || today;
+      document.getElementById("reportTime").value = item.reportTime || timeStr;
+      document.getElementById("endDate").value = item.endDate || today;
+      document.getElementById("executionNotes").value = item.notes || "";
+      document.getElementById("results").value = item.results || "";
+      document.getElementById("errors").value = item.errors || "";
+    }
+
+    function setSelectValueIfExists(selectElement, val) {
+      if (!val) return false;
+      for (var i = 0; i < selectElement.options.length; i++) {
+        if (selectElement.options[i].value === val) {
+          selectElement.selectedIndex = i;
+          return true;
+        }
+      }
+      return false;
+    }
+
+    function resetCounter() {
+      if (confirm("هل أنت تأكد من تصفير عداد الترقيم تلقائياً؟")) {
+        var script = document.createElement("script");
+        var payload = encodeURIComponent(JSON.stringify({ actionType: "RESET_COUNTER" }));
+        script.src = API_ENDPOINT + "?callback=handleResetResponse&payload=" + payload;
+        document.body.appendChild(script);
+      }
+    }
+
+    window.handleResetResponse = function() {
+      alert("تم تصفير العداد بنجاح.");
+    };
+
+    function toggleInput(selectId, targetGroupId, triggerValue) {
+      var select = document.getElementById(selectId);
+      var group = document.getElementById(targetGroupId);
+      if (select.value === triggerValue) {
+        group.classList.remove("hidden");
+      } else {
+        group.classList.add("hidden");
+      }
+    }
+
+    document.getElementById("medicalForm").addEventListener("submit", function(e) {
+      e.preventDefault();
       
-      document.getElementById("medicalForm").reset();
-      document.getElementById("reportDate").value = today;
-      document.getElementById("endDate").value = today;
-      document.getElementById("reportTime").value = timeStr;
+      var submitBtn = document.getElementById("submitBtn");
+      var statusMsg = document.getElementById("statusMsg");
+      var actionType = document.getElementById("actionType").value;
+      var taskId = document.getElementById("caseDropdownSelect").value;
+
+      if (actionType === "UPDATE" && !taskId) {
+        alert("الرجاء اختيار كود المهمة المراد تحديثها!");
+        return;
+      }
       
-      submitBtn.disabled = false;
-      submitBtn.innerText = "حفظ التقرير في المستند";
-      statusMsg.style.display = "block";
-      toggleActionType();
-    };
+      submitBtn.disabled = true;
+      submitBtn.innerText = "جاري الإرسال...";
+      statusMsg.style.display = "none";
 
-    script.onerror = function() {
-      statusMsg.className = "status-msg status-error";
-      statusMsg.innerText = "حدث خطأ أثناء الاتصال بالخادم.";
-      submitBtn.disabled = false;
-      submitBtn.innerText = "حفظ التقرير في المستند";
-      statusMsg.style.display = "block";
-    };
+      var task = document.getElementById("taskSelect").value;
+      if (task === "أخرى") {
+        var od = document.getElementById("otherTaskDetails").value.trim();
+        task = od ? "أخرى (" + od + ")" : "أخرى";
+      }
 
-    document.body.appendChild(script);
-  });
-</script>
+      var device = document.getElementById("deviceSelect").value;
+      if (device === "NEW_DEVICE") {
+        var nd = document.getElementById("newDeviceName").value.trim();
+        device = nd ? nd : "جهاز جديد غير معرف";
+      }
+
+      var engineer = document.getElementById("engineerSelect").value;
+      if (engineer === "NEW") {
+        engineer = document.getElementById("newEngineerName").value.trim();
+      }
+
+      var rt = document.getElementById("reporterSelect").value;
+      var rn = document.getElementById("reporterName").value.trim();
+      var reporterFull = rn ? rt + " (" + rn + ")" : rt;
+
+      var payload = {
+        actionType: actionType,
+        taskId: taskId,
+        task: task,
+        device: device,
+        serial: document.getElementById("serialNumber").value.trim(),
+        reporter: reporterFull,
+        manager: document.getElementById("responsibleManager").value,
+        engineer: engineer,
+        reportDate: document.getElementById("reportDate").value,
+        reportTime: document.getElementById("reportTime").value,
+        endDate: document.getElementById("endDate").value,
+        executionNotes: document.getElementById("executionNotes").value.trim(),
+        results: document.getElementById("results").value.trim(),
+        errors: document.getElementById("errors").value.trim()
+      };
+
+      var oldScript = document.getElementById("submitScript");
+      if (oldScript) oldScript.remove();
+
+      var script = document.createElement("script");
+      script.id = "submitScript";
+      var encodedPayload = encodeURIComponent(JSON.stringify(payload));
+      script.src = API_ENDPOINT + "?callback=handleSubmitSuccess&payload=" + encodedPayload + "&t=" + new Date().getTime();
+
+      window.handleSubmitSuccess = function(res) {
+        statusMsg.className = "status-msg status-success";
+        statusMsg.innerText = actionType === "NEW" 
+          ? "تم إضافة البلاغ بنجاح وتوثيقه بداخل المستند!" 
+          : "تم تحديث البيانات للبلاغ بنجاح بداخل المستند!";
+        
+        document.getElementById("medicalForm").reset();
+        document.getElementById("reportDate").value = today;
+        document.getElementById("endDate").value = today;
+        document.getElementById("reportTime").value = timeStr;
+        
+        submitBtn.disabled = false;
+        submitBtn.innerText = "حفظ التقرير في المستند";
+        statusMsg.style.display = "block";
+        toggleActionType();
+      };
+
+      script.onerror = function() {
+        statusMsg.className = "status-msg status-error";
+        statusMsg.innerText = "حدث خطأ أثناء الاتصال بالخادم.";
+        submitBtn.disabled = false;
+        submitBtn.innerText = "حفظ التقرير في المستند";
+        statusMsg.style.display = "block";
+      };
+
+      document.body.appendChild(script);
+    });
+  </script>
+</body>
+</html>
