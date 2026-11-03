@@ -201,8 +201,7 @@
     var timeStr = (now.getHours() < 10 ? "0" : "") + now.getHours() + ":" + (now.getMinutes() < 10 ? "0" : "") + now.getMinutes();
     document.getElementById("reportTime").value = timeStr;
 
-    // استبدل هذا الرابط بالرابط المولد الجديد
-    const API_ENDPOINT = "https://script.google.com/macros/s/AKfycbz_o_MOvIwjBYerghITFrTf3Bg_SQPrf2fYE5vSfu84i-MP4T5wqQJUGvcD451ku8gncA/exec";
+    const API_ENDPOINT = "https://script.google.com/macros/s/AKfycbyRr1k7iQbQIy8DRogaivX4-69jKwANQKMEloY0wisFsAQLxLT4mgJTme2NTN-kxhfQkQ/exec";
 
     function toggleActionType() {
       var action = document.getElementById("actionType").value;
@@ -215,6 +214,7 @@
       }
     }
 
+    // دالة استدعاء JSONP المباشرة المحسنة
     function loadCasesViaJSONP() {
       var dropdown = document.getElementById("caseDropdownSelect");
       dropdown.innerHTML = "<option value=''>جاري تحميل البلاغات...</option>";
@@ -224,15 +224,16 @@
 
       var script = document.createElement("script");
       script.id = "jsonpScript";
-      script.src = API_ENDPOINT + "?callback=handleJSONPResponse";
+      script.src = API_ENDPOINT + "?callback=handleJSONPResponse&t=" + new Date().getTime();
       
       script.onerror = function() {
-        dropdown.innerHTML = "<option value=''>تعذر الاتصال بالخادم. تحقق من الرابط الصريح.</option>";
+        dropdown.innerHTML = "<option value=''>تعذر الاتصال بالخادم.</option>";
       };
       
       document.body.appendChild(script);
     }
 
+    // معالج الدالة العالمي
     window.handleJSONPResponse = function(data) {
       var dropdown = document.getElementById("caseDropdownSelect");
       if (data && data.status === "success" && data.cases && data.cases.length > 0) {
