@@ -8,13 +8,15 @@
     * { box-sizing: border-box; }
     body {
       font-family: Arial, sans-serif;
-      background-color: #f4f6f9;
+      background-color: #f8f9fa;
       margin: 0;
       padding: 16px;
       color: #333;
+      direction: rtl;
+      text-align: right;
     }
     .container {
-      max-width: 550px;
+      max-width: 600px;
       margin: 0 auto;
       background: #ffffff;
       padding: 24px;
@@ -29,6 +31,15 @@
       padding-bottom: 8px;
       margin-bottom: 16px;
     }
+    .section-title {
+      font-size: 15px;
+      color: #1a73e8;
+      border-bottom: 1px solid #1a73e8;
+      padding-bottom: 3px;
+      margin-top: 20px;
+      margin-bottom: 12px;
+      font-weight: bold;
+    }
     .form-group {
       margin-bottom: 14px;
     }
@@ -41,11 +52,12 @@
     }
     select, input, textarea {
       width: 100%;
-      padding: 10px;
-      font-size: 14px;
+      padding: 8px 10px;
+      font-size: 13.5px;
       border: 1px solid #dadce0;
       border-radius: 6px;
       background-color: #fff;
+      font-family: inherit;
     }
     select:focus, input:focus, textarea:focus {
       outline: none;
@@ -54,7 +66,7 @@
     }
     textarea {
       resize: vertical;
-      min-height: 70px;
+      min-height: 60px;
     }
     .hidden {
       display: none;
@@ -69,7 +81,7 @@
       font-size: 16px;
       font-weight: bold;
       cursor: pointer;
-      margin-top: 10px;
+      margin-top: 15px;
       transition: background-color 0.2s;
     }
     button:hover {
@@ -80,7 +92,7 @@
       cursor: not-allowed;
     }
     .status-msg {
-      margin-top: 12px;
+      margin-top: 14px;
       padding: 10px;
       border-radius: 6px;
       text-align: center;
@@ -100,9 +112,10 @@
 <body>
 
   <div class="container">
-    <h2>توثيق مهمة هندسية طبية</h2>
+    <h2>توثيق وتفتيش مهمة هندسية طبية</h2>
     <form id="medicalForm">
       
+      <!-- نوع المهمة -->
       <div class="form-group">
         <label>نوع المهمة:</label>
         <select id="taskSelect" onchange="toggleInput('taskSelect', 'otherTaskGroup', 'أخرى')">
@@ -117,35 +130,80 @@
 
       <div class="form-group hidden" id="otherTaskGroup">
         <label>تفاصيل المهمة البديلة:</label>
-        <input type="text" id="otherTaskDetails" placeholder="أدخل تفاصيل المهمة">
+        <input type="text" id="otherTaskDetails" placeholder="أدخل تفاصيل نوع المهمة البديلة">
       </div>
 
+      <!-- نوع الجهاز (القائمة الكاملة) -->
       <div class="form-group">
         <label>نوع الجهاز:</label>
         <select id="deviceSelect" onchange="toggleInput('deviceSelect', 'newDeviceGroup', 'NEW_DEVICE')">
           <option value="INTALIGHT DREAM OCTA VG100D">INTALIGHT DREAM OCTA VG100D</option>
           <option value="INTALIGHT DREAM OCTA VG200D">INTALIGHT DREAM OCTA VG200D</option>
+          <option value="INTALIGHT DREAM OCTA VG200C">INTALIGHT DREAM OCTA VG200C</option>
           <option value="OPTOVUE SOLIX OCTA">OPTOVUE SOLIX OCTA</option>
+          <option value="OPTOVUE XRAVANTI OCTA">OPTOVUE XRAVANTI OCTA</option>
+          <option value="OPTOVUE IVUE80 OCT">OPTOVUE IVUE80 OCT</option>
+          <option value="OPTOVUE ISCAN OCT">OPTOVUE ISCAN OCT</option>
+          <option value="OPTOVUE RTVUE100 OCT">OPTOVUE RTVUE100 OCT</option>
           <option value="MOVU Argos AS OCT">MOVU Argos AS OCT</option>
           <option value="DGH Ocular UtraSound A/B Scan">DGH Ocular UtraSound A/B Scan</option>
+          <option value="DGH Ocular UtraSound A/B Scan and UBM">DGH Ocular UtraSound A/B Scan and UBM</option>
+          <option value="MicroClear Apollo Laser Retinal Fundus Camera RB">MicroClear Apollo Laser Retinal Fundus Camera RB</option>
+          <option value="MicroClear Apollo Laser Retinal Fundus Camera RGB v1.0">MicroClear Apollo Laser Retinal Fundus Camera RGB v1.0</option>
+          <option value="MicroClear ApolloLaser Retinal Fundus Camera RGB v2.0">MicroClear ApolloLaser Retinal Fundus Camera RGB v2.0</option>
           <option value="RODENSTOCK Perimat Visual Field">RODENSTOCK Perimat Visual Field</option>
+          <option value="RODENSTOCK Perimat2 Visual Field">RODENSTOCK Perimat2 Visual Field</option>
+          <option value="RODENSTOCK Refraction Unit 500">RODENSTOCK Refraction Unit 500</option>
+          <option value="RODENSTOCK Refraction Unit 1000">RODENSTOCK Refraction Unit 1000</option>
+          <option value="RODENSTOCK Tonometer Topascope">RODENSTOCK Tonometer Topascope</option>
+          <option value="Visionix Tulip Screen Portable Autorefractor autokeratometer">Visionix Tulip Screen Portable Autorefractor autokeratometer</option>
+          <option value="Visionix Tulip sidetube Portable Autorefractor autokeratometer">Visionix Tulip sidetube Portable Autorefractor autokeratometer</option>
+          <option value="REXONE EYE Resono Dry Eye Treatment">REXONE EYE Resono Dry Eye Treatment</option>
+          <option value="SBM Dry Eye Diagnostics OS-1000">SBM Dry Eye Diagnostics OS-1000</option>
+          <option value="Peschke PXL Corneal Cross linking SAPPHIRE 318">Peschke PXL Corneal Cross linking SAPPHIRE 318</option>
+          <option value="Sterlink Plasmapp FPS-15s-Plus Low temp Plasma sterilizer">Sterlink Plasmapp FPS-15s-Plus Low temp Plasma sterilizer</option>
           <option value="ENBIO Autoclave">ENBIO Autoclave</option>
+          <option value="W&H Autoclave">W&H Autoclave</option>
           <option value="NEW_DEVICE">إضافة جهاز جديد...</option>
         </select>
       </div>
 
       <div class="form-group hidden" id="newDeviceGroup">
         <label>اسم الجهاز الجديد:</label>
-        <input type="text" id="newDeviceName" placeholder="أدخل اسم وطراز الجهاز">
+        <input type="text" id="newDeviceName" placeholder="أدخل طراز الجهاز الجديد">
+      </div>
+
+      <!-- الرقم المسلسل -->
+      <div class="form-group">
+        <label>الرقم المسلسل (اختياري):</label>
+        <input type="text" id="serialNumber" placeholder="أدخل الرقم التسلسلي S/N">
+      </div>
+
+      <!-- الشخص القائم بالإبلاغ -->
+      <div class="form-group">
+        <label>الشخص القائم بالإبلاغ:</label>
+        <select id="reporterSelect">
+          <option value="مدير القسم">مدير القسم</option>
+          <option value="مدير الشركة">مدير الشركة</option>
+        </select>
       </div>
 
       <div class="form-group">
-        <label>الرقم المسلسل (S/N):</label>
-        <input type="text" id="serialNumber" placeholder="أدخل الرقم التسلسلي (اختياري)">
+        <label>اسم الشخص القائم بالإبلاغ (اختياري):</label>
+        <input type="text" id="reporterName" placeholder="أدخل اسم المبلّغ بالتفصيل">
       </div>
 
+      <!-- المهندس المسؤول -->
       <div class="form-group">
-        <label>المهندس المكلف:</label>
+        <label>المهندس المسؤول:</label>
+        <select id="responsibleManager">
+          <option value="مدير الصيانة">مدير الصيانة</option>
+        </select>
+      </div>
+
+      <!-- المهندس المكلف بالتنفيذ -->
+      <div class="form-group">
+        <label>المهندس المكلف بالتنفيذ:</label>
         <select id="engineerSelect" onchange="toggleInput('engineerSelect', 'newEngineerGroup', 'NEW')">
           <option value="عمرو عباس">عمرو عباس</option>
           <option value="محمد ابراهيم">محمد ابراهيم</option>
@@ -154,29 +212,61 @@
       </div>
 
       <div class="form-group hidden" id="newEngineerGroup">
-        <label>اسم المهندس الجديد:</label>
-        <input type="text" id="newEngineerName" placeholder="أدخل اسم المهندس بالكامل">
+        <label>اسم المهندس المكلف الجديد:</label>
+        <input type="text" id="newEngineerName" placeholder="أدخل اسم المهندس الجديد">
       </div>
 
+      <!-- التاريخ والوقت -->
       <div class="form-group">
-        <label>تاريخ الإبلاغ / التنفيذ:</label>
+        <label>تاريخ الإبلاغ:</label>
         <input type="date" id="reportDate">
       </div>
 
       <div class="form-group">
-        <label>تفاصيل ما تم تنفيذه:</label>
-        <textarea id="executionNotes" placeholder="اكتب التفاصيل والملاحظات الهندسية..."></textarea>
+        <label>وقت الإبلاغ:</label>
+        <input type="time" id="reportTime">
       </div>
 
-      <button type="submit" id="submitBtn">إرسال التقرير</button>
+      <div class="form-group">
+        <label>تاريخ الانتهاء:</label>
+        <input type="date" id="endDate">
+      </div>
+
+      <!-- تقرير التنفيذ والنتائج -->
+      <div class="section-title">تقرير التنفيذ والنتائج</div>
+
+      <div class="form-group">
+        <label>تفاصيل ما تم تنفيذه:</label>
+        <textarea id="executionNotes" placeholder="اكتب بالتفصيل ما قمت به..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>النتائج والتقييم:</label>
+        <textarea id="results" placeholder="حالة الجهاز بعد العمل..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>الأخطاء والملاحظات (إن وجدت):</label>
+        <textarea id="errors" placeholder="أي مشاكل ظهرت أثناء العمل..."></textarea>
+      </div>
+
+      <button type="submit" id="submitBtn">إرسال التقرير للمستند</button>
     </form>
 
     <div id="statusMsg" class="status-msg"></div>
   </div>
 
   <script>
-    document.getElementById("reportDate").value = new Date().toISOString().split("T")[0];
+    // تعيين التاريخ والوقت التلقائي عند فتح الصفحة
+    var today = new Date().toISOString().split("T")[0];
+    document.getElementById("reportDate").value = today;
+    document.getElementById("endDate").value = today;
 
+    var now = new Date();
+    var timeStr = (now.getHours() < 10 ? "0" : "") + now.getHours() + ":" + (now.getMinutes() < 10 ? "0" : "") + now.getMinutes();
+    document.getElementById("reportTime").value = timeStr;
+
+    // إظهار وإخفاء الحقول الديناميكية
     function toggleInput(selectId, targetGroupId, triggerValue) {
       var select = document.getElementById(selectId);
       var group = document.getElementById(targetGroupId);
@@ -187,6 +277,7 @@
       }
     }
 
+    // رابط الـ Web App الخاص بـ Google Apps Script
     const API_ENDPOINT = "https://script.google.com/macros/s/AKfycbzt0jKAlCGKo5M8so8IpyWNscO88qeJIsTi88y1U2dWJ98zhBBkAUiJXdJj8bzPdT8_NA/exec";
 
     document.getElementById("medicalForm").addEventListener("submit", function(e) {
@@ -199,31 +290,50 @@
       submitBtn.innerText = "جاري إرسال البيانات...";
       statusMsg.style.display = "none";
 
+      // تجهيز القيم من النموذج
       var task = document.getElementById("taskSelect").value;
       if (task === "أخرى") {
-        task = document.getElementById("otherTaskDetails").value.trim() || "أخرى";
+        var od = document.getElementById("otherTaskDetails").value.trim();
+        task = od ? "أخرى (" + od + ")" : "أخرى";
       }
 
       var device = document.getElementById("deviceSelect").value;
       if (device === "NEW_DEVICE") {
-        device = document.getElementById("newDeviceName").value.trim() || "جهاز غير معرف";
+        var nd = document.getElementById("newDeviceName").value.trim();
+        device = nd ? nd : "جهاز جديد غير معرف";
       }
 
       var engineer = document.getElementById("engineerSelect").value;
       if (engineer === "NEW") {
-        engineer = document.getElementById("newEngineerName").value.trim() || "غير محدد";
+        engineer = document.getElementById("newEngineerName").value.trim();
+        if (!engineer) {
+          alert("الرجاء إدخال اسم المهندس الجديد");
+          submitBtn.disabled = false;
+          submitBtn.innerText = "إرسال التقرير للمستند";
+          return;
+        }
       }
+
+      var rt = document.getElementById("reporterSelect").value;
+      var rn = document.getElementById("reporterName").value.trim();
+      var reporterFull = rn ? rt + " (" + rn + ")" : rt;
 
       var payload = {
         task: task,
         device: device,
-        serial: document.getElementById("serialNumber").value.trim() || "غير مسجل",
+        serial: document.getElementById("serialNumber").value.trim(),
+        reporter: reporterFull,
+        manager: document.getElementById("responsibleManager").value,
         engineer: engineer,
         reportDate: document.getElementById("reportDate").value,
-        notes: document.getElementById("executionNotes").value.trim() || "لا توجد ملاحظات"
+        reportTime: document.getElementById("reportTime").value,
+        endDate: document.getElementById("endDate").value,
+        executionNotes: document.getElementById("executionNotes").value.trim(),
+        results: document.getElementById("results").value.trim(),
+        errors: document.getElementById("errors").value.trim()
       };
 
-      // إرسال الطلب بطريقة تضمن عدم توقف المتصفح عند الـ Redirect الخارجي
+      // الإرسال مع وضع no-cors لتجاوز حظر المتصفح
       fetch(API_ENDPOINT, {
         method: "POST",
         mode: "no-cors",
@@ -232,18 +342,22 @@
       })
       .then(function() {
         statusMsg.className = "status-msg status-success";
-        statusMsg.innerText = "تم حفظ التقرير بنجاح في المستند!";
+        statusMsg.innerText = "تم إرسال التقرير بنجاح وإدراجه في المستند!";
         document.getElementById("medicalForm").reset();
-        document.getElementById("reportDate").value = new Date().toISOString().split("T")[0];
+        
+        // إرجاع القيم الإفتراضية للتاريخ والوقت
+        document.getElementById("reportDate").value = today;
+        document.getElementById("endDate").value = today;
+        document.getElementById("reportTime").value = timeStr;
       })
       .catch(function(err) {
         statusMsg.className = "status-msg status-error";
-        statusMsg.innerText = "تعذر إرسال البيانات. تحقق من الاتصال بالإنترنت.";
+        statusMsg.innerText = "حدث خطأ أثناء الإرسال. تحقق من اتصال الإنترنت.";
       })
       .finally(function() {
         statusMsg.style.display = "block";
         submitBtn.disabled = false;
-        submitBtn.innerText = "إرسال التقرير";
+        submitBtn.innerText = "إرسال التقرير للمستند";
       });
     });
   </script>
