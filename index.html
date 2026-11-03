@@ -1,93 +1,256 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Live Data Analytics Dashboard</title>
-  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <title>نظام توثيق الأجهزة الطبية</title>
   <style>
-    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 20px; background-color: #f4f6f9; color: #333; }
-    .container { max-width: 1100px; margin: 0 auto; }
-    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px; }
-    .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); text-align: center; }
-    .card h3 { margin: 0; font-size: 14px; color: #666; }
-    .card p { margin: 10px 0 0; font-size: 24px; font-weight: bold; color: #1a73e8; }
-    .chart-box { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); margin-bottom: 24px; }
+    * { box-sizing: border-box; }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f6f9;
+      margin: 0;
+      padding: 16px;
+      color: #333;
+    }
+    .container {
+      max-width: 550px;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 24px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    }
+    h2 {
+      margin-top: 0;
+      color: #1a73e8;
+      font-size: 20px;
+      border-bottom: 2px solid #1a73e8;
+      padding-bottom: 8px;
+      margin-bottom: 16px;
+    }
+    .form-group {
+      margin-bottom: 14px;
+    }
+    label {
+      display: block;
+      font-weight: bold;
+      font-size: 13px;
+      margin-bottom: 6px;
+      color: #202124;
+    }
+    select, input, textarea {
+      width: 100%;
+      padding: 10px;
+      font-size: 14px;
+      border: 1px solid #dadce0;
+      border-radius: 6px;
+      background-color: #fff;
+    }
+    select:focus, input:focus, textarea:focus {
+      outline: none;
+      border-color: #1a73e8;
+      box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2);
+    }
+    textarea {
+      resize: vertical;
+      min-height: 70px;
+    }
+    .hidden {
+      display: none;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #1a73e8;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background-color 0.2s;
+    }
+    button:hover {
+      background-color: #1557b0;
+    }
+    button:disabled {
+      background-color: #a0c3ff;
+      cursor: not-allowed;
+    }
+    .status-msg {
+      margin-top: 12px;
+      padding: 10px;
+      border-radius: 6px;
+      text-align: center;
+      font-size: 14px;
+      display: none;
+    }
+    .status-success {
+      background-color: #e6f4ea;
+      color: #137333;
+    }
+    .status-error {
+      background-color: #fce8e6;
+      color: #c5221f;
+    }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h2>📊 Live Analytics Dashboard</h2>
-    
-    <div class="stats-grid">
-      <div class="card"><h3>Total Records</h3><p id="totalRecords">0</p></div>
-      <div class="card"><h3>Status</h3><p id="syncStatus">Syncing...</p></div>
-    </div>
 
-    <div class="chart-box">
-      <canvas id="analyticsChart"></canvas>
-    </div>
+  <div class="container">
+    <h2>توثيق مهمة هندسية طبية</h2>
+    <form id="medicalForm">
+      
+      <div class="form-group">
+        <label>نوع المهمة:</label>
+        <select id="taskSelect" onchange="toggleInput('taskSelect', 'otherTaskGroup', 'أخرى')">
+          <option value="تجهيز جهاز طبي">تجهيز جهاز طبي</option>
+          <option value="تركيب جهاز طبي">تركيب جهاز طبي</option>
+          <option value="تفكيك جهاز طبي">تفكيك جهاز طبي</option>
+          <option value="طلب صيانة">طلب صيانة</option>
+          <option value="صيانة طوارئ">صيانة طوارئ</option>
+          <option value="أخرى">أخرى...</option>
+        </select>
+      </div>
+
+      <div class="form-group hidden" id="otherTaskGroup">
+        <label>تفاصيل المهمة البديلة:</label>
+        <input type="text" id="otherTaskDetails" placeholder="أدخل تفاصيل المهمة">
+      </div>
+
+      <div class="form-group">
+        <label>نوع الجهاز:</label>
+        <select id="deviceSelect" onchange="toggleInput('deviceSelect', 'newDeviceGroup', 'NEW_DEVICE')">
+          <option value="INTALIGHT DREAM OCTA VG100D">INTALIGHT DREAM OCTA VG100D</option>
+          <option value="INTALIGHT DREAM OCTA VG200D">INTALIGHT DREAM OCTA VG200D</option>
+          <option value="OPTOVUE SOLIX OCTA">OPTOVUE SOLIX OCTA</option>
+          <option value="MOVU Argos AS OCT">MOVU Argos AS OCT</option>
+          <option value="DGH Ocular UtraSound A/B Scan">DGH Ocular UtraSound A/B Scan</option>
+          <option value="RODENSTOCK Perimat Visual Field">RODENSTOCK Perimat Visual Field</option>
+          <option value="ENBIO Autoclave">ENBIO Autoclave</option>
+          <option value="NEW_DEVICE">إضافة جهاز جديد...</option>
+        </select>
+      </div>
+
+      <div class="form-group hidden" id="newDeviceGroup">
+        <label>اسم الجهاز الجديد:</label>
+        <input type="text" id="newDeviceName" placeholder="أدخل اسم وطراز الجهاز">
+      </div>
+
+      <div class="form-group">
+        <label>الرقم المسلسل (S/N):</label>
+        <input type="text" id="serialNumber" placeholder="أدخل الرقم التسلسلي (اختياري)">
+      </div>
+
+      <div class="form-group">
+        <label>المهندس المكلف:</label>
+        <select id="engineerSelect" onchange="toggleInput('engineerSelect', 'newEngineerGroup', 'NEW')">
+          <option value="عمرو عباس">عمرو عباس</option>
+          <option value="محمد ابراهيم">محمد ابراهيم</option>
+          <option value="NEW">إضافة مهندس جديد...</option>
+        </select>
+      </div>
+
+      <div class="form-group hidden" id="newEngineerGroup">
+        <label>اسم المهندس الجديد:</label>
+        <input type="text" id="newEngineerName" placeholder="أدخل اسم المهندس بالكامل">
+      </div>
+
+      <div class="form-group">
+        <label>تاريخ الإبلاغ / التنفيذ:</label>
+        <input type="date" id="reportDate">
+      </div>
+
+      <div class="form-group">
+        <label>تفاصيل ما تم تنفيذه:</label>
+        <textarea id="executionNotes" placeholder="اكتب التفاصيل والملاحظات الهندسية..."></textarea>
+      </div>
+
+      <button type="submit" id="submitBtn">إرسال التقرير</button>
+    </form>
+
+    <div id="statusMsg" class="status-msg"></div>
   </div>
 
   <script>
-    const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRiT8M5uAs3D74pkGPwsfLckrqPJp3V47UwBwZtiVHe6d2HRABAfm8IhKqMNrC-UqMX0WA5w0Y73SVU/pub?output=csv';
+    // تعيين تاريخ اليوم تلقائياً
+    document.getElementById("reportDate").value = new Date().toISOString().split("T")[0];
 
-    async function loadData() {
-      try {
-        const response = await fetch(CSV_URL);
-        const csvText = await response.text();
-        
-        Papa.parse(csvText, {
-          header: true,
-          skipEmptyLines: true,
-          complete: (results) => {
-            processData(results.data);
-          }
-        });
-      } catch (err) {
-        document.getElementById('syncStatus').innerText = 'Error loading data';
+    // إظهار/إخفاء الحقول الإضافية عند اختيار "أخرى" أو "جديد"
+    function toggleInput(selectId, targetGroupId, triggerValue) {
+      var select = document.getElementById(selectId);
+      var group = document.getElementById(targetGroupId);
+      if (select.value === triggerValue) {
+        group.classList.remove("hidden");
+      } else {
+        group.classList.add("hidden");
       }
     }
 
-    function processData(data) {
-      document.getElementById('totalRecords').innerText = data.length;
-      document.getElementById('syncStatus').innerText = 'Live';
+    // رابط الـ API الذي يستقبل البيانات (سواء Google Apps Script Web App أو SheetDB)
+    const API_ENDPOINT = "ضع_رابط_الـ_ENDPOINT_الخاص_بك_هنا";
 
-      if (data.length === 0) return;
+    document.getElementById("medicalForm").addEventListener("submit", async function(e) {
+      e.preventDefault();
+      
+      var submitBtn = document.getElementById("submitBtn");
+      var statusMsg = document.getElementById("statusMsg");
+      
+      submitBtn.disabled = true;
+      submitBtn.innerText = "جاري إرسال البيانات...";
+      statusMsg.style.display = "none";
 
-      const keys = Object.keys(data[0]);
-      const labelKey = keys[0]; 
-      const valueKey = keys[1]; 
+      // تجهيز القيم
+      var task = document.getElementById("taskSelect").value;
+      if (task === "أخرى") {
+        task = document.getElementById("otherTaskDetails").value.trim() || "أخرى";
+      }
 
-      const labels = data.map(row => row[labelKey]);
-      const values = data.map(row => parseFloat(row[valueKey]) || 0);
+      var device = document.getElementById("deviceSelect").value;
+      if (device === "NEW_DEVICE") {
+        device = document.getElementById("newDeviceName").value.trim() || "جهاز غير معرف";
+      }
 
-      renderChart(labels, values, labelKey, valueKey);
-    }
+      var engineer = document.getElementById("engineerSelect").value;
+      if (engineer === "NEW") {
+        engineer = document.getElementById("newEngineerName").value.trim() || "غير محدد";
+      }
 
-    function renderChart(labels, values, labelTitle, valueTitle) {
-      const ctx = document.getElementById('analyticsChart').getContext('2d');
-      new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: labels,
-          datasets: [{
-            label: valueTitle,
-            data: values,
-            backgroundColor: '#1a73e8'
-          }]
-        },
-        options: {
-          responsive: true,
-          plugins: {
-            title: { display: true, text: `${valueTitle} by ${labelTitle}` }
-          }
+      var payload = {
+        task: task,
+        device: device,
+        serial: document.getElementById("serialNumber").value.trim() || "غير مسجل",
+        engineer: engineer,
+        reportDate: document.getElementById("reportDate").value,
+        notes: document.getElementById("executionNotes").value.trim() || "لا توجد ملاحظات"
+      };
+
+      try {
+        const response = await fetch(API_ENDPOINT, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+
+        if (response.ok) {
+          statusMsg.className = "status-msg status-success";
+          statusMsg.innerText = "تم حفظ التقرير بنجاح!";
+          document.getElementById("medicalForm").reset();
+          document.getElementById("reportDate").value = new Date().toISOString().split("T")[0];
+        } else {
+          throw new Error("حدث خطأ أثناء الاستجابة من الخادم");
         }
-      });
-    }
-
-    loadData();
+      } catch (err) {
+        statusMsg.className = "status-msg status-error";
+        statusMsg.innerText = "تعذر إرسال البيانات. تحقق من رابط API أو الاتصال.";
+      } finally {
+        statusMsg.style.display = "block";
+        submitBtn.disabled = false;
+        submitBtn.innerText = "إرسال التقرير";
+      }
+    });
   </script>
 </body>
 </html>
