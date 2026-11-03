@@ -357,7 +357,7 @@
   </div>
 
   <script>
-    const API_ENDPOINT = "https://script.google.com/macros/s/AKfycbxFlWGYGlj5sMF8DCwptcjHfCW8Zpt7kg_m4M4RN3O3A3oPR-Siep_V3sU0wI-16sz-/exec";
+    const API_ENDPOINT = "https://script.google.com/macros/s/AKfycbx3Da2gm6MTPm8KWvgk13oImLDWZcBCsunQJGTXer9wzfQxCXszfhy1tZonS7YjEtT-bQ/exec";
 
     var today = new Date().toISOString().split("T")[0];
     document.getElementById("reportDate").value = today;
@@ -535,43 +535,47 @@
       submitBtn.innerText = "جاري الإرسال وتحديث المستند...";
       statusMsg.style.display = "none";
 
-      var task = document.getElementById("taskSelect").value;
-      if (task === "أخرى") {
-        var od = document.getElementById("otherTaskDetails").value.trim();
-        task = od ? "أخرى (" + od + ")" : "أخرى";
-      }
-
-      var device = document.getElementById("deviceSelect").value;
-      if (device === "NEW_DEVICE") {
-        var nd = document.getElementById("newDeviceName").value.trim();
-        device = nd ? nd : "جهاز جديد غير معرف";
-      }
-
-      var engineer = document.getElementById("engineerSelect").value;
-      if (engineer === "NEW") {
-        engineer = document.getElementById("newEngineerName").value.trim();
-      }
-
-      var rt = document.getElementById("reporterSelect").value;
-      var rn = document.getElementById("reporterName").value.trim();
-      var reporterFull = rn ? rt + " (" + rn + ")" : rt;
-
+      // تخصيص البيانات المرسلة بحسب نوع الإجراء
       var payload = {
         actionType: actionType,
-        taskId: taskId,
-        task: task,
-        device: device,
-        serial: document.getElementById("serialNumber").value.trim(),
-        reporter: reporterFull,
-        manager: document.getElementById("responsibleManager").value,
-        engineer: engineer,
-        reportDate: document.getElementById("reportDate").value,
-        reportTime: document.getElementById("reportTime").value,
-        endDate: document.getElementById("endDate").value,
-        executionNotes: document.getElementById("executionNotes").value.trim(),
-        results: document.getElementById("results").value.trim(),
-        errors: document.getElementById("errors").value.trim()
+        taskId: taskId
       };
+
+      if (actionType !== "DELETE") {
+        var task = document.getElementById("taskSelect").value;
+        if (task === "أخرى") {
+          var od = document.getElementById("otherTaskDetails").value.trim();
+          task = od ? "أخرى (" + od + ")" : "أخرى";
+        }
+
+        var device = document.getElementById("deviceSelect").value;
+        if (device === "NEW_DEVICE") {
+          var nd = document.getElementById("newDeviceName").value.trim();
+          device = nd ? nd : "جهاز جديد غير معرف";
+        }
+
+        var engineer = document.getElementById("engineerSelect").value;
+        if (engineer === "NEW") {
+          engineer = document.getElementById("newEngineerName").value.trim();
+        }
+
+        var rt = document.getElementById("reporterSelect").value;
+        var rn = document.getElementById("reporterName").value.trim();
+        var reporterFull = rn ? rt + " (" + rn + ")" : rt;
+
+        payload.task = task;
+        payload.device = device;
+        payload.serial = document.getElementById("serialNumber").value.trim();
+        payload.reporter = reporterFull;
+        payload.manager = document.getElementById("responsibleManager").value;
+        payload.engineer = engineer;
+        payload.reportDate = document.getElementById("reportDate").value;
+        payload.reportTime = document.getElementById("reportTime").value;
+        payload.endDate = document.getElementById("endDate").value;
+        payload.executionNotes = document.getElementById("executionNotes").value.trim();
+        payload.results = document.getElementById("results").value.trim();
+        payload.errors = document.getElementById("errors").value.trim();
+      }
 
       var oldScript = document.getElementById("submitScript");
       if (oldScript) oldScript.remove();
