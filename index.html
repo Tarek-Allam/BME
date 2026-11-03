@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>نظام توثيق الأجهزة الطبية | Eng. Tarek Allam</title>
-  <!-- Google Fonts for Modern Typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -30,7 +29,7 @@
     body { background-color: var(--bg-color); margin: 0; padding: 24px 12px; color: var(--text-main); direction: rtl; text-align: right; line-height: 1.6; }
     .container { max-width: 680px; margin: 0 auto; }
 
-    /* Glassmorphism Profile Header */
+    /* Profile Card Header */
     .profile-card { 
       background: linear-gradient(135deg, #0a2540 0%, #0052cc 100%); 
       color: white; 
@@ -43,17 +42,6 @@
       box-shadow: 0 8px 24px rgba(10, 37, 64, 0.15);
       position: relative;
       overflow: hidden;
-    }
-
-    .profile-card::after {
-      content: '';
-      position: absolute;
-      top: -30px;
-      left: -30px;
-      width: 120px;
-      height: 120px;
-      background: rgba(255, 255, 255, 0.08);
-      border-radius: 50%;
     }
 
     .profile-info h3 { margin: 0 0 2px 0; font-size: 20px; font-weight: 800; display: flex; align-items: center; gap: 8px; }
@@ -76,7 +64,7 @@
     }
     .linkedin-btn:hover { background-color: var(--accent-blue); transform: translateY(-1px); }
 
-    /* Form Container Styling */
+    /* Form Container */
     .form-wrapper {
       background: var(--card-bg);
       padding: 28px;
@@ -133,7 +121,6 @@
       .profile-card { flex-direction: column; align-items: flex-start; gap: 12px; }
     }
 
-    /* Action Buttons */
     .btn-submit { 
       width: 100%; 
       padding: 14px; 
@@ -166,7 +153,6 @@
     }
     .btn-reset:hover { background-color: #fff1f1; }
 
-    /* Status Notifications */
     .status-msg { 
       margin-top: 16px; 
       padding: 12px 16px; 
@@ -191,7 +177,7 @@
         <p>Biomedical Equipment Engineer (BME)</p>
       </div>
       <a href="https://www.linkedin.com/in/tarekallam-bme/" target="_blank" rel="noopener noreferrer" class="linkedin-link linkedin-btn">
-        <span>LinkedIn</span> 🔗
+        <span>LinkedIn Profile</span> 🔗
       </a>
     </div>
 
@@ -210,11 +196,12 @@
             <select id="actionType" onchange="toggleActionType()">
               <option value="NEW">➕ إضافة بلاغ جديد</option>
               <option value="UPDATE">✏️ تحديث بيانات بلاغ حالي</option>
+              <option value="DELETE">🗑️ حذف بلاغ من المستند</option>
             </select>
           </div>
 
           <div class="form-group hidden" id="taskIdGroup" style="margin-top:12px; margin-bottom:0;">
-            <label>اختر رقم البلاغ المراد تحديثه:</label>
+            <label>اختر رقم البلاغ المراد تحديثه/حذفه:</label>
             <select id="caseDropdownSelect">
               <option value="">جاري تحميل البلاغات...</option>
             </select>
@@ -371,7 +358,6 @@
           </div>
         </div>
 
-        <!-- أزرار الإرسال والإجراءات -->
         <button type="submit" id="submitBtn" class="btn-submit">حفظ التقرير وتوثيقه بالمستند</button>
         <button type="button" class="btn-reset" onclick="resetCounter()">تصفير عداد الترقيم (البدء من 1000)</button>
       </form>
@@ -381,7 +367,7 @@
   </div>
 
   <script>
-    const API_ENDPOINT = "https://script.google.com/macros/s/AKfycbw_ghlTukOvg6h-yUCPacnLsXxrFQSdxXQ8ePvpAD45reXGQvdDGQQp7o0GtwuWnNmPJg/exec";
+    const API_ENDPOINT = "https://script.google.com/macros/s/AKfycbxmPHZdeYuOg0H1LFILUUd_IlmsRBorAPen4O7XQnWpij1sO3QiJqSBO9NdtWny2u2UBQ/exec";
 
     var today = new Date().toISOString().split("T")[0];
     document.getElementById("reportDate").value = today;
@@ -396,15 +382,26 @@
     function toggleActionType() {
       var action = document.getElementById("actionType").value;
       var taskGroup = document.getElementById("taskIdGroup");
-      if (action === "UPDATE") {
+      var submitBtn = document.getElementById("submitBtn");
+
+      if (action === "UPDATE" || action === "DELETE") {
         taskGroup.classList.remove("hidden");
         loadCases();
+        if (action === "DELETE") {
+          submitBtn.innerText = "🗑️ تأكيد حذف البلاغ المحدد";
+          submitBtn.style.backgroundColor = "#da1e28";
+        } else {
+          submitBtn.innerText = "حفظ التقرير وتوثيقه بالمستند";
+          submitBtn.style.backgroundColor = "var(--primary-color)";
+        }
       } else {
         taskGroup.classList.add("hidden");
         document.getElementById("medicalForm").reset();
         document.getElementById("reportDate").value = today;
         document.getElementById("endDate").value = today;
         document.getElementById("reportTime").value = timeStr;
+        submitBtn.innerText = "حفظ التقرير وتوثيقه بالمستند";
+        submitBtn.style.backgroundColor = "var(--primary-color)";
       }
     }
 
@@ -433,7 +430,7 @@
         var keys = Object.keys(loadedCasesData);
 
         if (keys.length > 0) {
-          dropdown.innerHTML = "<option value=''>-- اختر كود المهمة المراد تحديثها --</option>";
+          dropdown.innerHTML = "<option value=''>-- اختر كود المهمة المطلوب التعامل معها --</option>";
           keys.forEach(function(caseId) {
             var option = document.createElement("option");
             option.value = caseId;
@@ -533,9 +530,15 @@
       var actionType = document.getElementById("actionType").value;
       var taskId = document.getElementById("caseDropdownSelect").value;
 
-      if (actionType === "UPDATE" && !taskId) {
-        alert("الرجاء اختيار كود المهمة المراد تحديثها!");
+      if ((actionType === "UPDATE" || actionType === "DELETE") && !taskId) {
+        alert("الرجاء اختيار كود المهمة المراد التعامل معها!");
         return;
+      }
+
+      if (actionType === "DELETE") {
+        if (!confirm("هل أنت تأكد من رغبتك في حذف البلاغ (" + taskId + ") نهائياً من المستند؟")) {
+          return;
+        }
       }
       
       submitBtn.disabled = true;
@@ -590,9 +593,14 @@
 
       window.handleSubmitSuccess = function(res) {
         statusMsg.className = "status-msg status-success";
-        statusMsg.innerText = actionType === "NEW" 
-          ? "✅ تم إضافة البلاغ بنجاح وتوثيقه بداخل المستند!" 
-          : "✅ تم تحديث البيانات للبلاغ بنجاح بداخل المستند!";
+        
+        if (actionType === "NEW") {
+          statusMsg.innerText = "✅ تم إضافة البلاغ بنجاح وتوثيقه بداخل المستند!";
+        } else if (actionType === "UPDATE") {
+          statusMsg.innerText = "✅ تم تحديث البيانات للبلاغ بنجاح بداخل المستند!";
+        } else if (actionType === "DELETE") {
+          statusMsg.innerText = "🗑️ تم حذف البلاغ بنجاح من المستند!";
+        }
         
         document.getElementById("medicalForm").reset();
         document.getElementById("reportDate").value = today;
