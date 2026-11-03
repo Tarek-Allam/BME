@@ -29,7 +29,6 @@
     body { background-color: var(--bg-color); margin: 0; padding: 24px 12px; color: var(--text-main); direction: rtl; text-align: right; line-height: 1.6; }
     .container { max-width: 680px; margin: 0 auto; }
 
-    /* Profile Card Header */
     .profile-card { 
       background: linear-gradient(135deg, #0a2540 0%, #0052cc 100%); 
       color: white; 
@@ -64,7 +63,6 @@
     }
     .linkedin-btn:hover { background-color: var(--accent-blue); transform: translateY(-1px); }
 
-    /* Form Container */
     .form-wrapper {
       background: var(--card-bg);
       padding: 28px;
@@ -76,7 +74,6 @@
     .form-header { margin-bottom: 24px; border-bottom: 2px solid var(--bg-color); padding-bottom: 12px; }
     .form-header h2 { margin: 0; font-size: 20px; color: #0a2540; font-weight: 800; }
 
-    /* Sections Breakdown */
     .form-section {
       background: #fafbfc;
       border: 1px solid var(--border-color);
@@ -170,7 +167,6 @@
 
   <div class="container">
     
-    <!-- Profile Card Widget -->
     <div class="profile-card">
       <div class="profile-info">
         <h3>Eng. Tarek Allam <span class="badge-verified">مُوثّق</span></h3>
@@ -181,7 +177,6 @@
       </a>
     </div>
 
-    <!-- Main Form Wrapper -->
     <div class="form-wrapper">
       <div class="form-header">
         <h2>نظام توثيق وتفتيش المهام الهندسية الطبية</h2>
@@ -189,7 +184,6 @@
 
       <form id="medicalForm">
 
-        <!-- 1. نوع الإجراء -->
         <div class="form-section" style="background-color: var(--accent-blue); border-color: #b8d5ff;">
           <div class="form-group" style="margin-bottom:0;">
             <label>نوع الإجراء المطلوب:</label>
@@ -208,7 +202,6 @@
           </div>
         </div>
 
-        <!-- 2. تفاصيل الجهاز والمهمة -->
         <div class="form-section">
           <div class="section-title">🛠️ تفاصيل الجهاز والمهمة</div>
 
@@ -274,7 +267,6 @@
           </div>
         </div>
 
-        <!-- 3. المسؤولون والمهندسون -->
         <div class="form-section">
           <div class="section-title">👨‍⚕️ فريق العمل والمسؤولون</div>
 
@@ -319,7 +311,6 @@
           </div>
         </div>
 
-        <!-- 4. التاريخ والوقت -->
         <div class="form-section">
           <div class="section-title">📅 المواعيد والتوقيتات</div>
           <div class="grid-2">
@@ -338,7 +329,6 @@
           </div>
         </div>
 
-        <!-- 5. التقرير الفني -->
         <div class="form-section">
           <div class="section-title">📝 التقرير الفني والنتائج</div>
 
@@ -367,7 +357,7 @@
   </div>
 
   <script>
-    const API_ENDPOINT = "https://script.google.com/macros/s/AKfycbxmPHZdeYuOg0H1LFILUUd_IlmsRBorAPen4O7XQnWpij1sO3QiJqSBO9NdtWny2u2UBQ/exec";
+    const API_ENDPOINT = "https://script.google.com/macros/s/AKfycbxFlWGYGlj5sMF8DCwptcjHfCW8Zpt7kg_m4M4RN3O3A3oPR-Siep_V3sU0wI-16sz-/exec";
 
     var today = new Date().toISOString().split("T")[0];
     document.getElementById("reportDate").value = today;
@@ -592,24 +582,34 @@
       script.src = API_ENDPOINT + "?callback=handleSubmitSuccess&payload=" + encodedPayload + "&t=" + new Date().getTime();
 
       window.handleSubmitSuccess = function(res) {
-        statusMsg.className = "status-msg status-success";
-        
-        if (actionType === "NEW") {
-          statusMsg.innerText = "✅ تم إضافة البلاغ بنجاح وتوثيقه بداخل المستند!";
-        } else if (actionType === "UPDATE") {
-          statusMsg.innerText = "✅ تم تحديث البيانات للبلاغ بنجاح بداخل المستند!";
-        } else if (actionType === "DELETE") {
-          statusMsg.innerText = "🗑️ تم حذف البلاغ بنجاح من المستند!";
+        statusMsg.style.display = "block";
+
+        if (res && res.status === "error") {
+          statusMsg.className = "status-msg status-error";
+          statusMsg.innerText = "❌ " + (res.message || "فشلت العملية");
+        } else {
+          statusMsg.className = "status-msg status-success";
+          
+          if (actionType === "NEW") {
+            statusMsg.innerText = "✅ تم إضافة البلاغ بنجاح وتوثيقه بداخل المستند!";
+          } else if (actionType === "UPDATE") {
+            statusMsg.innerText = "✅ تم تحديث البيانات للبلاغ بنجاح بداخل المستند!";
+          } else if (actionType === "DELETE") {
+            statusMsg.innerText = "🗑️ تم حذف البلاغ بنجاح من المستند!";
+          }
+
+          document.getElementById("medicalForm").reset();
+          document.getElementById("reportDate").value = today;
+          document.getElementById("endDate").value = today;
+          document.getElementById("reportTime").value = timeStr;
+          
+          if (actionType === "DELETE" || actionType === "UPDATE") {
+            loadCases();
+          }
         }
-        
-        document.getElementById("medicalForm").reset();
-        document.getElementById("reportDate").value = today;
-        document.getElementById("endDate").value = today;
-        document.getElementById("reportTime").value = timeStr;
-        
+
         submitBtn.disabled = false;
         submitBtn.innerText = "حفظ التقرير وتوثيقه بالمستند";
-        statusMsg.style.display = "block";
         toggleActionType();
       };
 
