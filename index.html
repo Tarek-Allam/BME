@@ -3,119 +3,54 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>نظام توثيق الأجهزة الطبية</title>
+  <title>نظام توثيق وتحديث الأجهزة الطبية</title>
   <style>
     * { box-sizing: border-box; }
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f8f9fa;
-      margin: 0;
-      padding: 16px;
-      color: #333;
-      direction: rtl;
-      text-align: right;
-    }
-    .container {
-      max-width: 600px;
-      margin: 0 auto;
-      background: #ffffff;
-      padding: 24px;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-    }
-    h2 {
-      margin-top: 0;
-      color: #1a73e8;
-      font-size: 20px;
-      border-bottom: 2px solid #1a73e8;
-      padding-bottom: 8px;
-      margin-bottom: 16px;
-    }
-    .section-title {
-      font-size: 15px;
-      color: #1a73e8;
-      border-bottom: 1px solid #1a73e8;
-      padding-bottom: 3px;
-      margin-top: 20px;
-      margin-bottom: 12px;
-      font-weight: bold;
-    }
-    .form-group {
-      margin-bottom: 14px;
-    }
-    label {
-      display: block;
-      font-weight: bold;
-      font-size: 13px;
-      margin-bottom: 6px;
-      color: #202124;
-    }
-    select, input, textarea {
-      width: 100%;
-      padding: 8px 10px;
-      font-size: 13.5px;
-      border: 1px solid #dadce0;
-      border-radius: 6px;
-      background-color: #fff;
-      font-family: inherit;
-    }
-    select:focus, input:focus, textarea:focus {
-      outline: none;
-      border-color: #1a73e8;
-      box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2);
-    }
-    textarea {
-      resize: vertical;
-      min-height: 60px;
-    }
-    .hidden {
-      display: none;
-    }
-    button {
-      width: 100%;
-      padding: 12px;
-      background-color: #1a73e8;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-      margin-top: 15px;
-      transition: background-color 0.2s;
-    }
-    button:hover {
-      background-color: #1557b0;
-    }
-    button:disabled {
-      background-color: #a0c3ff;
-      cursor: not-allowed;
-    }
-    .status-msg {
-      margin-top: 14px;
-      padding: 10px;
-      border-radius: 6px;
-      text-align: center;
-      font-size: 14px;
-      display: none;
-    }
-    .status-success {
-      background-color: #e6f4ea;
-      color: #137333;
-    }
-    .status-error {
-      background-color: #fce8e6;
-      color: #c5221f;
-    }
+    body { font-family: Arial, sans-serif; background-color: #f8f9fa; margin: 0; padding: 16px; color: #333; direction: rtl; text-align: right; }
+    .container { max-width: 600px; margin: 0 auto; background: #ffffff; padding: 24px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08); }
+    h2 { margin-top: 0; color: #1a73e8; font-size: 20px; border-bottom: 2px solid #1a73e8; padding-bottom: 8px; margin-bottom: 16px; }
+    .section-title { font-size: 15px; color: #1a73e8; border-bottom: 1px solid #1a73e8; padding-bottom: 3px; margin-top: 20px; margin-bottom: 12px; font-weight: bold; }
+    .form-group { margin-bottom: 14px; }
+    label { display: block; font-weight: bold; font-size: 13px; margin-bottom: 6px; color: #202124; }
+    select, input, textarea { width: 100%; padding: 8px 10px; font-size: 13.5px; border: 1px solid #dadce0; border-radius: 6px; background-color: #fff; font-family: inherit; }
+    select:focus, input:focus, textarea:focus { outline: none; border-color: #1a73e8; box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2); }
+    textarea { resize: vertical; min-height: 60px; }
+    .hidden { display: none; }
+    .highlight-box { background-color: #e8f0fe; border: 1px solid #1a73e8; padding: 12px; border-radius: 6px; margin-bottom: 16px; }
+    button { width: 100%; padding: 12px; background-color: #1a73e8; color: white; border: none; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 15px; }
+    button:hover { background-color: #1557b0; }
+    button:disabled { background-color: #a0c3ff; cursor: not-allowed; }
+    .status-msg { margin-top: 14px; padding: 10px; border-radius: 6px; text-align: center; font-size: 14px; display: none; }
+    .status-success { background-color: #e6f4ea; color: #137333; }
+    .status-error { background-color: #fce8e6; color: #c5221f; }
   </style>
 </head>
 <body>
 
   <div class="container">
-    <h2>توثيق وتفتيش مهمة هندسية طبية</h2>
+    <h2>نظام توثيق وتحديث الأجهزة الطبية</h2>
     <form id="medicalForm">
+
+      <!-- Action Type Selection -->
+      <div class="highlight-box">
+        <div class="form-group" style="margin-bottom:0;">
+          <label>نوع الإجراء المطلوب:</label>
+          <select id="actionType" onchange="toggleActionType()">
+            <option value="NEW">إضافة بلاغ جديد (توليد كود تلقائي)</option>
+            <option value="UPDATE">تحديث بيانات بلاغ حالي</option>
+          </select>
+        </div>
+
+        <!-- Dynamic Cases Dropdown List -->
+        <div class="form-group hidden" id="taskIdGroup" style="margin-top:12px; margin-bottom:0;">
+          <label>اختر رقم البلاغ المراد تحديثه:</label>
+          <select id="caseDropdownSelect">
+            <option value="">جاري تحميل البلاغات...</option>
+          </select>
+        </div>
+      </div>
       
-      <!-- نوع المهمة -->
+      <!-- Task Type -->
       <div class="form-group">
         <label>نوع المهمة:</label>
         <select id="taskSelect" onchange="toggleInput('taskSelect', 'otherTaskGroup', 'أخرى')">
@@ -133,37 +68,15 @@
         <input type="text" id="otherTaskDetails" placeholder="أدخل تفاصيل نوع المهمة البديلة">
       </div>
 
-      <!-- نوع الجهاز (القائمة الكاملة) -->
+      <!-- Device Type -->
       <div class="form-group">
         <label>نوع الجهاز:</label>
         <select id="deviceSelect" onchange="toggleInput('deviceSelect', 'newDeviceGroup', 'NEW_DEVICE')">
           <option value="INTALIGHT DREAM OCTA VG100D">INTALIGHT DREAM OCTA VG100D</option>
           <option value="INTALIGHT DREAM OCTA VG200D">INTALIGHT DREAM OCTA VG200D</option>
-          <option value="INTALIGHT DREAM OCTA VG200C">INTALIGHT DREAM OCTA VG200C</option>
           <option value="OPTOVUE SOLIX OCTA">OPTOVUE SOLIX OCTA</option>
-          <option value="OPTOVUE XRAVANTI OCTA">OPTOVUE XRAVANTI OCTA</option>
-          <option value="OPTOVUE IVUE80 OCT">OPTOVUE IVUE80 OCT</option>
-          <option value="OPTOVUE ISCAN OCT">OPTOVUE ISCAN OCT</option>
-          <option value="OPTOVUE RTVUE100 OCT">OPTOVUE RTVUE100 OCT</option>
           <option value="MOVU Argos AS OCT">MOVU Argos AS OCT</option>
-          <option value="DGH Ocular UtraSound A/B Scan">DGH Ocular UtraSound A/B Scan</option>
-          <option value="DGH Ocular UtraSound A/B Scan and UBM">DGH Ocular UtraSound A/B Scan and UBM</option>
-          <option value="MicroClear Apollo Laser Retinal Fundus Camera RB">MicroClear Apollo Laser Retinal Fundus Camera RB</option>
-          <option value="MicroClear Apollo Laser Retinal Fundus Camera RGB v1.0">MicroClear Apollo Laser Retinal Fundus Camera RGB v1.0</option>
-          <option value="MicroClear ApolloLaser Retinal Fundus Camera RGB v2.0">MicroClear ApolloLaser Retinal Fundus Camera RGB v2.0</option>
-          <option value="RODENSTOCK Perimat Visual Field">RODENSTOCK Perimat Visual Field</option>
-          <option value="RODENSTOCK Perimat2 Visual Field">RODENSTOCK Perimat2 Visual Field</option>
-          <option value="RODENSTOCK Refraction Unit 500">RODENSTOCK Refraction Unit 500</option>
-          <option value="RODENSTOCK Refraction Unit 1000">RODENSTOCK Refraction Unit 1000</option>
-          <option value="RODENSTOCK Tonometer Topascope">RODENSTOCK Tonometer Topascope</option>
-          <option value="Visionix Tulip Screen Portable Autorefractor autokeratometer">Visionix Tulip Screen Portable Autorefractor autokeratometer</option>
-          <option value="Visionix Tulip sidetube Portable Autorefractor autokeratometer">Visionix Tulip sidetube Portable Autorefractor autokeratometer</option>
-          <option value="REXONE EYE Resono Dry Eye Treatment">REXONE EYE Resono Dry Eye Treatment</option>
-          <option value="SBM Dry Eye Diagnostics OS-1000">SBM Dry Eye Diagnostics OS-1000</option>
-          <option value="Peschke PXL Corneal Cross linking SAPPHIRE 318">Peschke PXL Corneal Cross linking SAPPHIRE 318</option>
-          <option value="Sterlink Plasmapp FPS-15s-Plus Low temp Plasma sterilizer">Sterlink Plasmapp FPS-15s-Plus Low temp Plasma sterilizer</option>
           <option value="ENBIO Autoclave">ENBIO Autoclave</option>
-          <option value="W&H Autoclave">W&H Autoclave</option>
           <option value="NEW_DEVICE">إضافة جهاز جديد...</option>
         </select>
       </div>
@@ -173,13 +86,13 @@
         <input type="text" id="newDeviceName" placeholder="أدخل طراز الجهاز الجديد">
       </div>
 
-      <!-- الرقم المسلسل -->
+      <!-- Serial Number -->
       <div class="form-group">
-        <label>الرقم المسلسل (اختياري):</label>
+        <label>الرقم المسلسل (S/N):</label>
         <input type="text" id="serialNumber" placeholder="أدخل الرقم التسلسلي S/N">
       </div>
 
-      <!-- الشخص القائم بالإبلاغ -->
+      <!-- Reporter -->
       <div class="form-group">
         <label>الشخص القائم بالإبلاغ:</label>
         <select id="reporterSelect">
@@ -193,7 +106,7 @@
         <input type="text" id="reporterName" placeholder="أدخل اسم المبلّغ بالتفصيل">
       </div>
 
-      <!-- المهندس المسؤول -->
+      <!-- Responsible Engineer -->
       <div class="form-group">
         <label>المهندس المسؤول:</label>
         <select id="responsibleManager">
@@ -201,7 +114,7 @@
         </select>
       </div>
 
-      <!-- المهندس المكلف بالتنفيذ -->
+      <!-- Assigned Engineer -->
       <div class="form-group">
         <label>المهندس المكلف بالتنفيذ:</label>
         <select id="engineerSelect" onchange="toggleInput('engineerSelect', 'newEngineerGroup', 'NEW')">
@@ -216,7 +129,7 @@
         <input type="text" id="newEngineerName" placeholder="أدخل اسم المهندس الجديد">
       </div>
 
-      <!-- التاريخ والوقت -->
+      <!-- Dates & Times -->
       <div class="form-group">
         <label>تاريخ الإبلاغ:</label>
         <input type="date" id="reportDate">
@@ -232,7 +145,6 @@
         <input type="date" id="endDate">
       </div>
 
-      <!-- تقرير التنفيذ والنتائج -->
       <div class="section-title">تقرير التنفيذ والنتائج</div>
 
       <div class="form-group">
@@ -250,14 +162,13 @@
         <textarea id="errors" placeholder="أي مشاكل ظهرت أثناء العمل..."></textarea>
       </div>
 
-      <button type="submit" id="submitBtn">إرسال التقرير للمستند</button>
+      <button type="submit" id="submitBtn">حفظ البلاغ</button>
     </form>
 
     <div id="statusMsg" class="status-msg"></div>
   </div>
 
   <script>
-    // تعيين التاريخ والوقت التلقائي عند فتح الصفحة
     var today = new Date().toISOString().split("T")[0];
     document.getElementById("reportDate").value = today;
     document.getElementById("endDate").value = today;
@@ -266,7 +177,45 @@
     var timeStr = (now.getHours() < 10 ? "0" : "") + now.getHours() + ":" + (now.getMinutes() < 10 ? "0" : "") + now.getMinutes();
     document.getElementById("reportTime").value = timeStr;
 
-    // إظهار وإخفاء الحقول الديناميكية
+    const API_ENDPOINT = "https://script.google.com/macros/s/AKfycbzt0jKAlCGKo5M8so8IpyWNscO88qeJIsTi88y1U2dWJ98zhBBkAUiJXdJj8bzPdT8_NA/exec";
+
+    function toggleActionType() {
+      var action = document.getElementById("actionType").value;
+      var taskGroup = document.getElementById("taskIdGroup");
+      
+      if (action === "UPDATE") {
+        taskGroup.classList.remove("hidden");
+        fetchCreatedCases();
+      } else {
+        taskGroup.classList.add("hidden");
+      }
+    }
+
+    // Fetch existing case IDs and populate the dropdown list
+    async function fetchCreatedCases() {
+      var dropdown = document.getElementById("caseDropdownSelect");
+      dropdown.innerHTML = "<option value=''>جاري تحميل القائمة...</option>";
+
+      try {
+        const response = await fetch(API_ENDPOINT);
+        const data = await response.json();
+
+        if (data.status === "success" && data.cases && data.cases.length > 0) {
+          dropdown.innerHTML = "<option value=''>-- اختر كود المهمة --</option>";
+          data.cases.forEach(function(caseId) {
+            var option = document.createElement("option");
+            option.value = caseId;
+            option.text = caseId;
+            dropdown.appendChild(option);
+          });
+        } else {
+          dropdown.innerHTML = "<option value=''>لا توجد بلاغات سابقة مسجلة</option>";
+        }
+      } catch (err) {
+        dropdown.innerHTML = "<option value=''>فشل في جلب القائمة</option>";
+      }
+    }
+
     function toggleInput(selectId, targetGroupId, triggerValue) {
       var select = document.getElementById(selectId);
       var group = document.getElementById(targetGroupId);
@@ -277,20 +226,23 @@
       }
     }
 
-    // رابط الـ Web App الخاص بـ Google Apps Script
-    const API_ENDPOINT = "https://script.google.com/macros/s/AKfycbzt0jKAlCGKo5M8so8IpyWNscO88qeJIsTi88y1U2dWJ98zhBBkAUiJXdJj8bzPdT8_NA/exec";
-
     document.getElementById("medicalForm").addEventListener("submit", function(e) {
       e.preventDefault();
       
       var submitBtn = document.getElementById("submitBtn");
       var statusMsg = document.getElementById("statusMsg");
+      var actionType = document.getElementById("actionType").value;
+      var taskId = document.getElementById("caseDropdownSelect").value;
+
+      if (actionType === "UPDATE" && !taskId) {
+        alert("الرجاء اختيار كود المهمة المراد تحديثها من القائمة المنسدلة!");
+        return;
+      }
       
       submitBtn.disabled = true;
-      submitBtn.innerText = "جاري إرسال البيانات...";
+      submitBtn.innerText = "جاري الحفظ...";
       statusMsg.style.display = "none";
 
-      // تجهيز القيم من النموذج
       var task = document.getElementById("taskSelect").value;
       if (task === "أخرى") {
         var od = document.getElementById("otherTaskDetails").value.trim();
@@ -306,12 +258,6 @@
       var engineer = document.getElementById("engineerSelect").value;
       if (engineer === "NEW") {
         engineer = document.getElementById("newEngineerName").value.trim();
-        if (!engineer) {
-          alert("الرجاء إدخال اسم المهندس الجديد");
-          submitBtn.disabled = false;
-          submitBtn.innerText = "إرسال التقرير للمستند";
-          return;
-        }
       }
 
       var rt = document.getElementById("reporterSelect").value;
@@ -319,6 +265,8 @@
       var reporterFull = rn ? rt + " (" + rn + ")" : rt;
 
       var payload = {
+        actionType: actionType,
+        taskId: taskId,
         task: task,
         device: device,
         serial: document.getElementById("serialNumber").value.trim(),
@@ -333,7 +281,6 @@
         errors: document.getElementById("errors").value.trim()
       };
 
-      // الإرسال مع وضع no-cors لتجاوز حظر المتصفح
       fetch(API_ENDPOINT, {
         method: "POST",
         mode: "no-cors",
@@ -342,13 +289,14 @@
       })
       .then(function() {
         statusMsg.className = "status-msg status-success";
-        statusMsg.innerText = "تم إرسال التقرير بنجاح وإدراجه في المستند!";
+        statusMsg.innerText = actionType === "NEW" 
+          ? "تم إضافة البلاغ بنجاح وتوليد الكود بداخل المستند!" 
+          : "تم تحديث البيانات للبلاغ (" + taskId + ") بنجاح!";
         document.getElementById("medicalForm").reset();
-        
-        // إرجاع القيم الإفتراضية للتاريخ والوقت
         document.getElementById("reportDate").value = today;
         document.getElementById("endDate").value = today;
         document.getElementById("reportTime").value = timeStr;
+        toggleActionType();
       })
       .catch(function(err) {
         statusMsg.className = "status-msg status-error";
@@ -357,7 +305,7 @@
       .finally(function() {
         statusMsg.style.display = "block";
         submitBtn.disabled = false;
-        submitBtn.innerText = "إرسال التقرير للمستند";
+        submitBtn.innerText = "حفظ البلاغ";
       });
     });
   </script>
