@@ -38,7 +38,7 @@
         <div class="form-group" style="margin-bottom:0;">
           <label>نوع الإجراء المطلوب:</label>
           <select id="actionType" onchange="toggleActionType()">
-            <option value="NEW">إضافة بلاغ جديد (الأخير في الأعلى)</option>
+            <option value="NEW">إضافة بلاغ جديد</option>
             <option value="UPDATE">تحديث بيانات بلاغ حالي</option>
           </select>
         </div>
@@ -334,7 +334,7 @@
       .then(function() {
         statusMsg.className = "status-msg status-success";
         statusMsg.innerText = actionType === "NEW" 
-          ? "تم إضافة البلاغ بنجاح في أعلى المستند!" 
+          ? "تم إضافة البلاغ بنجاح في المستند!" 
           : "تم تحديث البيانات للبلاغ بنجاح!";
         document.getElementById("medicalForm").reset();
         document.getElementById("reportDate").value = today;
