@@ -167,7 +167,6 @@
 <body>
 
   <div class="container">
-    
     <div class="profile-card">
       <div class="profile-info">
         <h3>Eng. Tarek Allam <span class="badge-verified">مُوثّق</span></h3>
@@ -184,7 +183,6 @@
       </div>
 
       <form id="medicalForm">
-
         <!-- اختيار نوع الإجراء -->
         <div class="form-section" style="background-color: var(--accent-blue); border-color: #b8d5ff;">
           <div class="form-group" style="margin-bottom:0;">
@@ -204,9 +202,8 @@
           </div>
         </div>
 
-        <!-- تفاصيل النموذج (تختفي أوتوماتيكياً عند اختيار الحذف) -->
+        <!-- أجزاء النموذج التفصيلية -->
         <div id="formDetailsBody">
-          <!-- تفاصيل الجهاز والمهمة -->
           <div class="form-section">
             <div class="section-title">🛠️ تفاصيل الجهاز والمهمة</div>
 
@@ -272,7 +269,6 @@
             </div>
           </div>
 
-          <!-- فريق العمل والمسؤولون -->
           <div class="form-section">
             <div class="section-title">👨‍⚕️ فريق العمل والمسؤولون</div>
 
@@ -317,7 +313,6 @@
             </div>
           </div>
 
-          <!-- المواعيد والتوقيتات -->
           <div class="form-section">
             <div class="section-title">📅 المواعيد والتوقيتات</div>
             <div class="grid-2">
@@ -336,7 +331,6 @@
             </div>
           </div>
 
-          <!-- التقرير الفني -->
           <div class="form-section">
             <div class="section-title">📝 التقرير الفني والنتائج</div>
 
@@ -366,7 +360,7 @@
   </div>
 
   <script>
-    const API_ENDPOINT = "https://script.google.com/macros/s/AKfycbxb6_Xh2aDww10dxm-bUOWm5yotJ_zazRx6eicF49Y5j_yzJZXpQUjh4BT03cn1gDl80w/exec";
+    const API_ENDPOINT = "https://script.google.com/macros/s/AKfycbxQH9eFuHzOp7jkn7hmXV7J2KRqbbqWUx6pfBIywfvouooGn_peqfhTmWKYOZAVp7bmCw/exec";
 
     var today = new Date().toISOString().split("T")[0];
     document.getElementById("reportDate").value = today;
@@ -399,10 +393,6 @@
       } else {
         taskGroup.classList.add("hidden");
         detailsBody.classList.remove("hidden");
-        document.getElementById("medicalForm").reset();
-        document.getElementById("reportDate").value = today;
-        document.getElementById("endDate").value = today;
-        document.getElementById("reportTime").value = timeStr;
         submitBtn.innerText = "حفظ التقرير وتوثيقه بالمستند";
         submitBtn.style.backgroundColor = "var(--primary-color)";
       }
@@ -614,7 +604,11 @@
             statusMsg.innerText = "🗑️ تم حذف البلاغ بنجاح من المستند!";
           }
 
+          // إعادة ضبط الحقول بدون مسح قيمة actionType المحددة
+          var currentAction = document.getElementById("actionType").value;
           document.getElementById("medicalForm").reset();
+          document.getElementById("actionType").value = currentAction;
+
           document.getElementById("reportDate").value = today;
           document.getElementById("endDate").value = today;
           document.getElementById("reportTime").value = timeStr;
@@ -625,15 +619,14 @@
         }
 
         submitBtn.disabled = false;
-        submitBtn.innerText = "حفظ التقرير وتوثيقه بالمستند";
-        toggleActionType();
+        submitBtn.innerText = actionType === "DELETE" ? "🗑️ تأكيد حذف البلاغ المحدد" : "حفظ التقرير وتوثيقه بالمستند";
       };
 
       script.onerror = function() {
         statusMsg.className = "status-msg status-error";
         statusMsg.innerText = "❌ حدث خطأ أثناء الاتصال بالخادم.";
         submitBtn.disabled = false;
-        submitBtn.innerText = "حفظ التقرير وتوثيقه بالمستند";
+        submitBtn.innerText = actionType === "DELETE" ? "🗑️ تأكيد حذف البلاغ المحدد" : "حفظ التقرير وتوثيقه بالمستند";
         statusMsg.style.display = "block";
       };
 
