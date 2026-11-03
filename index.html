@@ -201,7 +201,8 @@
     var timeStr = (now.getHours() < 10 ? "0" : "") + now.getHours() + ":" + (now.getMinutes() < 10 ? "0" : "") + now.getMinutes();
     document.getElementById("reportTime").value = timeStr;
 
-    const API_ENDPOINT = "https://script.google.com/macros/s/AKfycbyBsOmyo_eNq4V6fTMxiytjKFBxuP7avcqBEqwosrw8-MewQCzXwmSJqq9ZibnRuYmJdg/exec";
+    // استبدل هذا الرابط بالرابط المولد الجديد
+    const API_ENDPOINT = "https://script.google.com/macros/s/AKfycbz_o_MOvIwjBYerghITFrTf3Bg_SQPrf2fYE5vSfu84i-MP4T5wqQJUGvcD451ku8gncA/exec";
 
     function toggleActionType() {
       var action = document.getElementById("actionType").value;
@@ -226,7 +227,7 @@
       script.src = API_ENDPOINT + "?callback=handleJSONPResponse";
       
       script.onerror = function() {
-        dropdown.innerHTML = "<option value=''>فشل في جلب القائمة (تأكد من النشر بـ New Version)</option>";
+        dropdown.innerHTML = "<option value=''>تعذر الاتصال بالخادم. تحقق من الرابط الصريح.</option>";
       };
       
       document.body.appendChild(script);
@@ -255,7 +256,7 @@
           headers: { "Content-Type": "text/plain;charset=utf-8" },
           body: JSON.stringify({ actionType: "RESET_COUNTER" })
         }).then(function() {
-          alert("تم تصفير العداد بنجاح. البلاغ القادم سيبدأ من 1001.");
+          alert("تم تصفير العداد بنجاح.");
         });
       }
     }
