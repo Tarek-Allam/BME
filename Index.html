@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Data Analytics Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 20px; background-color: #f4f6f9; color: #333; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px; }
+    .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); text-align: center; }
+    .card h3 { margin: 0; font-size: 14px; color: #666; }
+    .card p { margin: 10px 0 0; font-size: 24px; font-weight: bold; color: #1a73e8; }
+    .chart-box { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); margin-bottom: 24px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>📊 Live Analytics Dashboard</h2>
+    
+    <div class="stats-grid">
+      <div class="card"><h3>Total Records</h3><p id="totalRecords">0</p></div>
+      <div class="card"><h3>Status</h3><p id="syncStatus">Syncing...</p></div>
+    </div>
+
+    <div class="chart-box">
+      <canvas id="analyticsChart"></canvas>
+    </div>
+  </div>
+
+  <script>
+    const CSV_URL = 'YOUR_PUBLISHED_CSV_URL_HERE';
+
+    async function loadData() {
+      try {
+        const response = await fetch(CSV_URL);
+        const csvText = await response.text();
+        
+        Papa.parse(csvText, {
+          header: true,
+          skipEmptyLines: true,
+          complete: (results) => {
+            processData(results.data);
+          }
+        });
+      } catch (err) {
+        document.getElementById('syncStatus').innerText = 'Error loading data';
+      }
+    }
+
+    function processData(data) {
+      document.getElementById('totalRecords').innerText = data.length;
+      document.getElementById('syncStatus').innerText = 'Live';
+
+      if (data.length === 0) return;
+
+      const keys = Object.keys(data[0]);
+      const labelKey = keys[0]; 
+      const valueKey = keys[1]; 
+
+      const labels = data.map(row => row[labelKey]);
+      const values = data.map(row => parseFloat(row[valueKey]) || 0);
+
+      renderChart(labels, values, labelKey, valueKey);
+    }
+
+    function renderChart(labels, values, labelTitle, valueTitle) {
+      const ctx = document.getElementById('analyticsChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: valueTitle,
+            data: values,
+            backgroundColor: '#1a73e8'
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            title: { display: true, text: `${valueTitle} by ${labelTitle}` }
+          }
+        }
+      });
+    }
+
+    loadData();
+  </script>
+</body>
+</html>
