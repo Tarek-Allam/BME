@@ -80,6 +80,7 @@
       padding: 16px;
       border-radius: 10px;
       margin-bottom: 20px;
+      transition: all 0.3s ease;
     }
     .section-title { font-size: 14px; color: var(--primary-color); margin-top: 0; margin-bottom: 14px; font-weight: 700; display: flex; align-items: center; gap: 6px; }
 
@@ -105,7 +106,7 @@
     }
 
     textarea { resize: vertical; min-height: 80px; }
-    .hidden { display: none; }
+    .hidden { display: none !important; }
 
     .grid-2 {
       display: grid;
@@ -184,6 +185,7 @@
 
       <form id="medicalForm">
 
+        <!-- اختيار نوع الإجراء -->
         <div class="form-section" style="background-color: var(--accent-blue); border-color: #b8d5ff;">
           <div class="form-group" style="margin-bottom:0;">
             <label>نوع الإجراء المطلوب:</label>
@@ -202,149 +204,156 @@
           </div>
         </div>
 
-        <div class="form-section">
-          <div class="section-title">🛠️ تفاصيل الجهاز والمهمة</div>
+        <!-- الحقول التي سيتم إخفاؤها تلقائياً أثناء تحديد خيار الحذف -->
+        <div id="formDetailsBody">
+          <!-- تفاصيل الجهاز والمهمة -->
+          <div class="form-section">
+            <div class="section-title">🛠️ تفاصيل الجهاز والمهمة</div>
 
-          <div class="form-group">
-            <label>نوع المهمة:</label>
-            <select id="taskSelect" onchange="toggleInput('taskSelect', 'otherTaskGroup', 'أخرى')">
-              <option value="تجهيز جهاز طبي">تجهيز جهاز طبي</option>
-              <option value="تركيب جهاز طبي">تركيب جهاز طبي</option>
-              <option value="تفكيك جهاز طبي">تفكيك جهاز طبي</option>
-              <option value="طلب صيانة">طلب صيانة</option>
-              <option value="صيانة طوارئ">صيانة طوارئ</option>
-              <option value="أخرى">أخرى...</option>
-            </select>
-          </div>
-
-          <div class="form-group hidden" id="otherTaskGroup">
-            <label>تفاصيل المهمة البديلة:</label>
-            <input type="text" id="otherTaskDetails" placeholder="أدخل تفاصيل نوع المهمة البديلة">
-          </div>
-
-          <div class="form-group">
-            <label>نوع الجهاز:</label>
-            <select id="deviceSelect" onchange="toggleInput('deviceSelect', 'newDeviceGroup', 'NEW_DEVICE')">
-              <option value="INTALIGHT DREAM OCTA VG100D">INTALIGHT DREAM OCTA VG100D</option>
-              <option value="INTALIGHT DREAM OCTA VG200D">INTALIGHT DREAM OCTA VG200D</option>
-              <option value="INTALIGHT DREAM OCTA VG200C">INTALIGHT DREAM OCTA VG200C</option>
-              <option value="OPTOVUE SOLIX OCTA">OPTOVUE SOLIX OCTA</option>
-              <option value="OPTOVUE XRAVANTI OCTA">OPTOVUE XRAVANTI OCTA</option>
-              <option value="OPTOVUE IVUE80 OCT">OPTOVUE IVUE80 OCT</option>
-              <option value="OPTOVUE ISCAN OCT">OPTOVUE ISCAN OCT</option>
-              <option value="OPTOVUE RTVUE100 OCT">OPTOVUE RTVUE100 OCT</option>
-              <option value="MOVU Argos AS OCT">MOVU Argos AS OCT</option>
-              <option value="DGH Ocular UtraSound A/B Scan">DGH Ocular UtraSound A/B Scan</option>
-              <option value="DGH Ocular UtraSound A/B Scan and UBM">DGH Ocular UtraSound A/B Scan and UBM</option>
-              <option value="MicroClear Apollo Laser Retinal Fundus Camera RB">MicroClear Apollo Laser Retinal Fundus Camera RB</option>
-              <option value="MicroClear Apollo Laser Retinal Fundus Camera RGB v1.0">MicroClear Apollo Laser Retinal Fundus Camera RGB v1.0</option>
-              <option value="MicroClear ApolloLaser Retinal Fundus Camera RGB v2.0">MicroClear ApolloLaser Retinal Fundus Camera RGB v2.0</option>
-              <option value="RODENSTOCK Perimat Visual Field">RODENSTOCK Perimat Visual Field</option>
-              <option value="RODENSTOCK Perimat2 Visual Field">RODENSTOCK Perimat2 Visual Field</option>
-              <option value="RODENSTOCK Refraction Unit 500">RODENSTOCK Refraction Unit 500</option>
-              <option value="RODENSTOCK Refraction Unit 1000">RODENSTOCK Refraction Unit 1000</option>
-              <option value="RODENSTOCK Tonometer Topascope">RODENSTOCK Tonometer Topascope</option>
-              <option value="Visionix Tulip Screen Portable Autorefractor autokeratometer">Visionix Tulip Screen Portable Autorefractor autokeratometer</option>
-              <option value="Visionix Tulip sidetube Portable Autorefractor autokeratometer">Visionix Tulip sidetube Portable Autorefractor autokeratometer</option>
-              <option value="REXONE EYE Resono Dry Eye Treatment">REXONE EYE Resono Dry Eye Treatment</option>
-              <option value="SBM Dry Eye Diagnostics OS-1000">SBM Dry Eye Diagnostics OS-1000</option>
-              <option value="Peschke PXL Corneal Cross linking SAPPHIRE 318">Peschke PXL Corneal Cross linking SAPPHIRE 318</option>
-              <option value="Sterlink Plasmapp FPS-15s-Plus Low temp Plasma sterilizer">Sterlink Plasmapp FPS-15s-Plus Low temp Plasma sterilizer</option>
-              <option value="ENBIO Autoclave">ENBIO Autoclave</option>
-              <option value="W&H Autoclave">W&H Autoclave</option>
-              <option value="NEW_DEVICE">إضافة جهاز جديد...</option>
-            </select>
-          </div>
-
-          <div class="form-group hidden" id="newDeviceGroup">
-            <label>اسم الجهاز الجديد:</label>
-            <input type="text" id="newDeviceName" placeholder="أدخل طراز الجهاز الجديد">
-          </div>
-
-          <div class="form-group">
-            <label>الرقم المسلسل (S/N):</label>
-            <input type="text" id="serialNumber" placeholder="أدخل الرقم التسلسلي S/N">
-          </div>
-        </div>
-
-        <div class="form-section">
-          <div class="section-title">👨‍⚕️ فريق العمل والمسؤولون</div>
-
-          <div class="grid-2">
             <div class="form-group">
-              <label>الشخص القائم بالإبلاغ:</label>
-              <select id="reporterSelect">
-                <option value="مدير القسم">مدير القسم</option>
-                <option value="مدير الشركة">مدير الشركة</option>
+              <label>نوع المهمة:</label>
+              <select id="taskSelect" onchange="toggleInput('taskSelect', 'otherTaskGroup', 'أخرى')">
+                <option value="تجهيز جهاز طبي">تجهيز جهاز طبي</option>
+                <option value="تركيب جهاز طبي">تركيب جهاز طبي</option>
+                <option value="تفكيك جهاز طبي">تفكيك جهاز طبي</option>
+                <option value="طلب صيانة">طلب صيانة</option>
+                <option value="صيانة طوارئ">صيانة طوارئ</option>
+                <option value="أخرى">أخرى...</option>
               </select>
             </div>
 
-            <div class="form-group">
-              <label>اسم القائم بالإبلاغ (اختياري):</label>
-              <input type="text" id="reporterName" placeholder="الاسم بالتفصيل">
+            <div class="form-group hidden" id="otherTaskGroup">
+              <label>تفاصيل المهمة البديلة:</label>
+              <input type="text" id="otherTaskDetails" placeholder="أدخل تفاصيل نوع المهمة البديلة">
             </div>
-          </div>
 
-          <div class="grid-2">
             <div class="form-group">
-              <label>المهندس المسؤول:</label>
-              <select id="responsibleManager">
-                <option value="طارق علام (مدير الصيانة)">طارق علام (مدير الصيانة)</option>
-                <option value="مدير الصيانة">مدير الصيانة</option>
+              <label>نوع الجهاز:</label>
+              <select id="deviceSelect" onchange="toggleInput('deviceSelect', 'newDeviceGroup', 'NEW_DEVICE')">
+                <option value="INTALIGHT DREAM OCTA VG100D">INTALIGHT DREAM OCTA VG100D</option>
+                <option value="INTALIGHT DREAM OCTA VG200D">INTALIGHT DREAM OCTA VG200D</option>
+                <option value="INTALIGHT DREAM OCTA VG200C">INTALIGHT DREAM OCTA VG200C</option>
+                <option value="OPTOVUE SOLIX OCTA">OPTOVUE SOLIX OCTA</option>
+                <option value="OPTOVUE XRAVANTI OCTA">OPTOVUE XRAVANTI OCTA</option>
+                <option value="OPTOVUE IVUE80 OCT">OPTOVUE IVUE80 OCT</option>
+                <option value="OPTOVUE ISCAN OCT">OPTOVUE ISCAN OCT</option>
+                <option value="OPTOVUE RTVUE100 OCT">OPTOVUE RTVUE100 OCT</option>
+                <option value="MOVU Argos AS OCT">MOVU Argos AS OCT</option>
+                <option value="DGH Ocular UtraSound A/B Scan">DGH Ocular UtraSound A/B Scan</option>
+                <option value="DGH Ocular UtraSound A/B Scan and UBM">DGH Ocular UtraSound A/B Scan and UBM</option>
+                <option value="MicroClear Apollo Laser Retinal Fundus Camera RB">MicroClear Apollo Laser Retinal Fundus Camera RB</option>
+                <option value="MicroClear Apollo Laser Retinal Fundus Camera RGB v1.0">MicroClear Apollo Laser Retinal Fundus Camera RGB v1.0</option>
+                <option value="MicroClear ApolloLaser Retinal Fundus Camera RGB v2.0">MicroClear ApolloLaser Retinal Fundus Camera RGB v2.0</option>
+                <option value="RODENSTOCK Perimat Visual Field">RODENSTOCK Perimat Visual Field</option>
+                <option value="RODENSTOCK Perimat2 Visual Field">RODENSTOCK Perimat2 Visual Field</option>
+                <option value="RODENSTOCK Refraction Unit 500">RODENSTOCK Refraction Unit 500</option>
+                <option value="RODENSTOCK Refraction Unit 1000">RODENSTOCK Refraction Unit 1000</option>
+                <option value="RODENSTOCK Tonometer Topascope">RODENSTOCK Tonometer Topascope</option>
+                <option value="Visionix Tulip Screen Portable Autorefractor autokeratometer">Visionix Tulip Screen Portable Autorefractor autokeratometer</option>
+                <option value="Visionix Tulip sidetube Portable Autorefractor autokeratometer">Visionix Tulip sidetube Portable Autorefractor autokeratometer</option>
+                <option value="REXONE EYE Resono Dry Eye Treatment">REXONE EYE Resono Dry Eye Treatment</option>
+                <option value="SBM Dry Eye Diagnostics OS-1000">SBM Dry Eye Diagnostics OS-1000</option>
+                <option value="Peschke PXL Corneal Cross linking SAPPHIRE 318">Peschke PXL Corneal Cross linking SAPPHIRE 318</option>
+                <option value="Sterlink Plasmapp FPS-15s-Plus Low temp Plasma sterilizer">Sterlink Plasmapp FPS-15s-Plus Low temp Plasma sterilizer</option>
+                <option value="ENBIO Autoclave">ENBIO Autoclave</option>
+                <option value="W&H Autoclave">W&H Autoclave</option>
+                <option value="NEW_DEVICE">إضافة جهاز جديد...</option>
               </select>
             </div>
 
+            <div class="form-group hidden" id="newDeviceGroup">
+              <label>اسم الجهاز الجديد:</label>
+              <input type="text" id="newDeviceName" placeholder="أدخل طراز الجهاز الجديد">
+            </div>
+
             <div class="form-group">
-              <label>المهندس المكلف بالتنفيذ:</label>
-              <select id="engineerSelect" onchange="toggleInput('engineerSelect', 'newEngineerGroup', 'NEW')">
-                <option value="طارق علام">طارق علام</option>
-                <option value="عمرو عباس">عمرو عباس</option>
-                <option value="محمد ابراهيم">محمد ابراهيم</option>
-                <option value="NEW">إضافة مهندس جديد...</option>
-              </select>
+              <label>الرقم المسلسل (S/N):</label>
+              <input type="text" id="serialNumber" placeholder="أدخل الرقم التسلسلي S/N">
             </div>
           </div>
 
-          <div class="form-group hidden" id="newEngineerGroup">
-            <label>اسم المهندس المكلف الجديد:</label>
-            <input type="text" id="newEngineerName" placeholder="أدخل اسم المهندس الجديد">
-          </div>
-        </div>
+          <!-- فريق العمل والمسؤولون -->
+          <div class="form-section">
+            <div class="section-title">👨‍⚕️ فريق العمل والمسؤولون</div>
 
-        <div class="form-section">
-          <div class="section-title">📅 المواعيد والتوقيتات</div>
-          <div class="grid-2">
-            <div class="form-group">
-              <label>تاريخ الإبلاغ:</label>
-              <input type="date" id="reportDate">
+            <div class="grid-2">
+              <div class="form-group">
+                <label>الشخص القائم بالإبلاغ:</label>
+                <select id="reporterSelect">
+                  <option value="مدير القسم">مدير القسم</option>
+                  <option value="مدير الشركة">مدير الشركة</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label>اسم القائم بالإبلاغ (اختياري):</label>
+                <input type="text" id="reporterName" placeholder="الاسم بالتفصيل">
+              </div>
+            </div>
+
+            <div class="grid-2">
+              <div class="form-group">
+                <label>المهندس المسؤول:</label>
+                <select id="responsibleManager">
+                  <option value="طارق علام (مدير الصيانة)">طارق علام (مدير الصيانة)</option>
+                  <option value="مدير الصيانة">مدير الصيانة</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label>المهندس المكلف بالتنفيذ:</label>
+                <select id="engineerSelect" onchange="toggleInput('engineerSelect', 'newEngineerGroup', 'NEW')">
+                  <option value="طارق علام">طارق علام</option>
+                  <option value="عمرو عباس">عمرو عباس</option>
+                  <option value="محمد ابراهيم">محمد ابراهيم</option>
+                  <option value="NEW">إضافة مهندس جديد...</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group hidden" id="newEngineerGroup">
+              <label>اسم المهندس المكلف الجديد:</label>
+              <input type="text" id="newEngineerName" placeholder="أدخل اسم المهندس الجديد">
+            </div>
+          </div>
+
+          <!-- المواعيد والتوقيتات -->
+          <div class="form-section">
+            <div class="section-title">📅 المواعيد والتوقيتات</div>
+            <div class="grid-2">
+              <div class="form-group">
+                <label>تاريخ الإبلاغ:</label>
+                <input type="date" id="reportDate">
+              </div>
+              <div class="form-group">
+                <label>وقت الإبلاغ:</label>
+                <input type="time" id="reportTime">
+              </div>
             </div>
             <div class="form-group">
-              <label>وقت الإبلاغ:</label>
-              <input type="time" id="reportTime">
+              <label>تاريخ الانتهاء المتوقع/الفعلي:</label>
+              <input type="date" id="endDate">
             </div>
           </div>
-          <div class="form-group">
-            <label>تاريخ الانتهاء المتوقع/الفعلي:</label>
-            <input type="date" id="endDate">
-          </div>
-        </div>
 
-        <div class="form-section">
-          <div class="section-title">📝 التقرير الفني والنتائج</div>
+          <!-- التتقرير الفني -->
+          <div class="form-section">
+            <div class="section-title">📝 التقرير الفني والنتائج</div>
 
-          <div class="form-group">
-            <label>تفاصيل ما تم تنفيذه:</label>
-            <textarea id="executionNotes" placeholder="اكتب بالتفصيل خطوات العمل والإجراءات التي تمت..."></textarea>
-          </div>
+            <div class="form-group">
+              <label>تفاصيل ما تم تنفيذه:</label>
+              <textarea id="executionNotes" placeholder="اكتب بالتفصيل خطوات العمل والإجراءات التي تمت..."></textarea>
+            </div>
 
-          <div class="form-group">
-            <label>النتائج والتقييم النهائي:</label>
-            <textarea id="results" placeholder="حالة الجهاز وكفاءة العمل بعد التنفيذ..."></textarea>
-          </div>
+            <div class="form-group">
+              <label>النتائج والتقييم النهائي:</label>
+              <textarea id="results" placeholder="حالة الجهاز وكفاءة العمل بعد التنفيذ..."></textarea>
+            </div>
 
-          <div class="form-group">
-            <label>الأخطاء والملاحظات (إن وجدت):</label>
-            <textarea id="errors" placeholder="أي عقبات أو قطع غيار مطلوبة مستقبلاً..."></textarea>
+            <div class="form-group">
+              <label>الأخطاء والملاحظات (إن وجدت):</label>
+              <textarea id="errors" placeholder="أي عقبات أو قطع غيار مطلوبة مستقبلاً..."></textarea>
+            </div>
           </div>
         </div>
 
@@ -357,7 +366,7 @@
   </div>
 
   <script>
-    const API_ENDPOINT = "https://script.google.com/macros/s/AKfycbx3Da2gm6MTPm8KWvgk13oImLDWZcBCsunQJGTXer9wzfQxCXszfhy1tZonS7YjEtT-bQ/exec";
+    const API_ENDPOINT = "https://script.google.com/macros/s/AKfycbyLBjR4GO2qobasUudDabcl5_0-3JZrcJWlx94KAbUh4omWUGDn5jiW6iBdDFEp1I9Gww/exec";
 
     var today = new Date().toISOString().split("T")[0];
     document.getElementById("reportDate").value = today;
@@ -372,20 +381,24 @@
     function toggleActionType() {
       var action = document.getElementById("actionType").value;
       var taskGroup = document.getElementById("taskIdGroup");
+      var detailsBody = document.getElementById("formDetailsBody");
       var submitBtn = document.getElementById("submitBtn");
 
       if (action === "UPDATE" || action === "DELETE") {
         taskGroup.classList.remove("hidden");
         loadCases();
         if (action === "DELETE") {
+          detailsBody.classList.add("hidden");
           submitBtn.innerText = "🗑️ تأكيد حذف البلاغ المحدد";
           submitBtn.style.backgroundColor = "#da1e28";
         } else {
+          detailsBody.classList.remove("hidden");
           submitBtn.innerText = "حفظ التقرير وتوثيقه بالمستند";
           submitBtn.style.backgroundColor = "var(--primary-color)";
         }
       } else {
         taskGroup.classList.add("hidden");
+        detailsBody.classList.remove("hidden");
         document.getElementById("medicalForm").reset();
         document.getElementById("reportDate").value = today;
         document.getElementById("endDate").value = today;
@@ -535,7 +548,6 @@
       submitBtn.innerText = "جاري الإرسال وتحديث المستند...";
       statusMsg.style.display = "none";
 
-      // تخصيص البيانات المرسلة بحسب نوع الإجراء
       var payload = {
         actionType: actionType,
         taskId: taskId
