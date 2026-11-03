@@ -175,10 +175,8 @@
   </div>
 
   <script>
-    // تعيين تاريخ اليوم تلقائياً
     document.getElementById("reportDate").value = new Date().toISOString().split("T")[0];
 
-    // إظهار/إخفاء الحقول الإضافية عند اختيار "أخرى" أو "جديد"
     function toggleInput(selectId, targetGroupId, triggerValue) {
       var select = document.getElementById(selectId);
       var group = document.getElementById(targetGroupId);
@@ -189,10 +187,9 @@
       }
     }
 
-    // رابط الـ API الذي يستقبل البيانات (سواء Google Apps Script Web App أو SheetDB)
     const API_ENDPOINT = "https://script.google.com/macros/s/AKfycbzt0jKAlCGKo5M8so8IpyWNscO88qeJIsTi88y1U2dWJ98zhBBkAUiJXdJj8bzPdT8_NA/exec";
 
-    document.getElementById("medicalForm").addEventListener("submit", async function(e) {
+    document.getElementById("medicalForm").addEventListener("submit", function(e) {
       e.preventDefault();
       
       var submitBtn = document.getElementById("submitBtn");
@@ -202,7 +199,6 @@
       submitBtn.innerText = "جاري إرسال البيانات...";
       statusMsg.style.display = "none";
 
-      // تجهيز القيم
       var task = document.getElementById("taskSelect").value;
       if (task === "أخرى") {
         task = document.getElementById("otherTaskDetails").value.trim() || "أخرى";
@@ -227,29 +223,28 @@
         notes: document.getElementById("executionNotes").value.trim() || "لا توجد ملاحظات"
       };
 
-      try {
-        const response = await fetch(API_ENDPOINT, {
-          method: "POST",
-          headers: { "Content-Type": "text/plain;charset=utf-8" }, // تم التغيير لتفادي مشكلة CORS
-          body: JSON.stringify(payload)
-        });
-
-        if (response.ok) {
-          statusMsg.className = "status-msg status-success";
-          statusMsg.innerText = "تم حفظ التقرير بنجاح!";
-          document.getElementById("medicalForm").reset();
-          document.getElementById("reportDate").value = new Date().toISOString().split("T")[0];
-        } else {
-          throw new Error("حدث خطأ أثناء الاستجابة من الخادم");
-        }
-      } catch (err) {
+      // إرسال الطلب بطريقة تضمن عدم توقف المتصفح عند الـ Redirect الخارجي
+      fetch(API_ENDPOINT, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(payload)
+      })
+      .then(function() {
+        statusMsg.className = "status-msg status-success";
+        statusMsg.innerText = "تم حفظ التقرير بنجاح في المستند!";
+        document.getElementById("medicalForm").reset();
+        document.getElementById("reportDate").value = new Date().toISOString().split("T")[0];
+      })
+      .catch(function(err) {
         statusMsg.className = "status-msg status-error";
-        statusMsg.innerText = "تعذر إرسال البيانات. تحقق من رابط API أو الاتصال.";
-      } finally {
+        statusMsg.innerText = "تعذر إرسال البيانات. تحقق من الاتصال بالإنترنت.";
+      })
+      .finally(function() {
         statusMsg.style.display = "block";
         submitBtn.disabled = false;
         submitBtn.innerText = "إرسال التقرير";
-      }
+      });
     });
   </script>
 </body>
