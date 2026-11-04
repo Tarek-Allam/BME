@@ -15,7 +15,6 @@
       --bg-color: #f4f7fb;
       --card-bg: #ffffff;
       --text-main: #161616;
-      --text-muted: #525252;
       --border-color: #e0e0e0;
       --accent-blue: #e8f1ff;
       --success-bg: #def8ee;
@@ -31,85 +30,56 @@
 
     .profile-card {
       background: linear-gradient(135deg, #0a2540 0%, #0052cc 100%);
-      color: white;
-      padding: 20px 24px;
-      border-radius: var(--radius);
-      margin-bottom: 24px;
-      display: flex;
-      align-items: center;
+      color: white; padding: 20px 24px; border-radius: var(--radius);
+      margin-bottom: 24px; display: flex; align-items: center;
       justify-content: space-between;
       box-shadow: 0 8px 24px rgba(10, 37, 64, 0.15);
-      position: relative;
-      overflow: hidden;
     }
-
     .profile-info h3 { margin: 0 0 2px 0; font-size: 20px; font-weight: 800; display: flex; align-items: center; gap: 8px; }
     .profile-info p { margin: 0; font-size: 13px; color: #d0e2ff; }
     .badge-verified { background: rgba(255, 255, 255, 0.2); font-size: 11px; padding: 2px 8px; border-radius: 20px; font-weight: normal; }
 
     .action-btns { display: flex; gap: 8px; align-items: center; }
-
     .header-btn {
-      background-color: #ffffff;
-      color: #0052cc;
-      padding: 8px 14px;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 13px;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
+      background-color: #ffffff; color: #0052cc;
+      padding: 8px 14px; border-radius: 8px; text-decoration: none;
+      font-weight: 700; font-size: 13px;
+      display: inline-flex; align-items: center; gap: 6px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.1);
       transition: all 0.2s ease;
     }
     .header-btn:hover { background-color: var(--accent-blue); transform: translateY(-1px); }
 
     .form-wrapper {
-      background: var(--card-bg);
-      padding: 28px;
-      border-radius: var(--radius);
+      background: var(--card-bg); padding: 28px; border-radius: var(--radius);
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
       border: 1px solid rgba(0,0,0,0.03);
     }
-
     .form-header { margin-bottom: 24px; border-bottom: 2px solid var(--bg-color); padding-bottom: 12px; }
     .form-header h2 { margin: 0; font-size: 20px; color: #0a2540; font-weight: 800; }
 
     .form-section {
-      background: #fafbfc;
-      border: 1px solid var(--border-color);
-      padding: 16px;
-      border-radius: 10px;
-      margin-bottom: 20px;
-      transition: all 0.3s ease;
+      background: #fafbfc; border: 1px solid var(--border-color);
+      padding: 16px; border-radius: 10px; margin-bottom: 20px;
     }
     .section-title { font-size: 14px; color: var(--primary-color); margin-top: 0; margin-bottom: 14px; font-weight: 700; display: flex; align-items: center; gap: 6px; }
 
     .form-group { margin-bottom: 16px; }
     .form-group:last-child { margin-bottom: 0; }
-    label { display: block; font-weight: 700; font-size: 13px; margin-bottom: 6px; color: var(--text-main); }
+    label { display: block; font-weight: 700; font-size: 13px; margin-bottom: 6px; }
 
     select, input, textarea {
-      width: 100%;
-      padding: 10px 12px;
-      font-size: 14px;
-      border: 1.5px solid var(--border-color);
-      border-radius: 8px;
-      background-color: #fff;
-      color: var(--text-main);
+      width: 100%; padding: 10px 12px; font-size: 14px;
+      border: 1.5px solid var(--border-color); border-radius: 8px;
+      background-color: #fff; color: var(--text-main);
       transition: all 0.2s ease-in-out;
     }
-
     select:focus, input:focus, textarea:focus {
-      outline: none;
-      border-color: var(--primary-color);
+      outline: none; border-color: var(--primary-color);
       box-shadow: 0 0 0 3px rgba(15, 98, 254, 0.15);
     }
-
     textarea { resize: vertical; min-height: 80px; }
     .hidden { display: none !important; }
-
     .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
     @media (max-width: 500px) {
@@ -120,45 +90,24 @@
     }
 
     .btn-submit {
-      width: 100%;
-      padding: 14px;
-      background-color: var(--primary-color);
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
-      font-weight: 700;
-      cursor: pointer;
-      margin-top: 10px;
+      width: 100%; padding: 14px; background-color: var(--primary-color);
+      color: white; border: none; border-radius: 8px;
+      font-size: 16px; font-weight: 700; cursor: pointer; margin-top: 10px;
       box-shadow: 0 4px 12px rgba(15, 98, 254, 0.25);
       transition: all 0.2s ease;
     }
     .btn-submit:hover { background-color: var(--primary-hover); transform: translateY(-1px); }
-    .btn-submit:disabled { background-color: #a8a8a8; cursor: not-allowed; box-shadow: none; }
+    .btn-submit:disabled { background-color: #a8a8a8; cursor: not-allowed; }
 
     .btn-reset {
-      width: 100%;
-      background-color: transparent;
-      color: #da1e28;
-      border: 1px dashed #da1e28;
-      margin-top: 12px;
-      font-size: 13px;
-      padding: 10px;
-      border-radius: 8px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.2s;
+      width: 100%; background-color: transparent; color: #da1e28;
+      border: 1px dashed #da1e28; margin-top: 12px; font-size: 13px;
+      padding: 10px; border-radius: 8px; font-weight: 700; cursor: pointer;
     }
-    .btn-reset:hover { background-color: #fff1f1; }
 
     .status-msg {
-      margin-top: 16px;
-      padding: 12px 16px;
-      border-radius: 8px;
-      text-align: center;
-      font-size: 14px;
-      font-weight: 700;
-      display: none;
+      margin-top: 16px; padding: 12px 16px; border-radius: 8px;
+      text-align: center; font-size: 14px; font-weight: 700; display: none;
     }
     .status-success { background-color: var(--success-bg); color: var(--success-text); border: 1px solid #a7e1c4; }
     .status-error { background-color: var(--error-bg); color: var(--error-text); border: 1px solid #f8b4b4; }
@@ -166,522 +115,214 @@
 </head>
 <body>
 
-  <div class="container">
+<div class="container">
 
-    <div class="profile-card">
-      <div class="profile-info">
-        <h3>Eng. Tarek Allam <span class="badge-verified">مُوثّق</span></h3>
-        <p>Biomedical Equipment Engineer (BME)</p>
-      </div>
-
-      <div class="action-btns">
-        <a href="https://docs.google.com/document/d/1lRtJn33qK8Ozlv0C7zCtmJpBU-N4VXqvyYnQEnj-aGk/edit?tab=t.0" target="_blank" rel="noopener noreferrer" class="header-btn">
-          <span>📄 فتح المستند</span>
-        </a>
-        <a href="https://www.linkedin.com/in/tarekallam-bme/" target="_blank" rel="noopener noreferrer" class="header-btn">
-          <span>LinkedIn</span> 🔗
-        </a>
-      </div>
+  <div class="profile-card">
+    <div class="profile-info">
+      <h3>Eng. Tarek Allam <span class="badge-verified">مُوثّق</span></h3>
+      <p>Biomedical Equipment Engineer (BME)</p>
     </div>
-
-    <div class="form-wrapper">
-      <div class="form-header">
-        <h2>نظام توثيق وتفتيش المهام الهندسية الطبية</h2>
-      </div>
-
-      <form id="medicalForm">
-
-        <!-- اختيار نوع الإجراء -->
-        <div class="form-section" style="background-color: var(--accent-blue); border-color: #b8d5ff;">
-          <div class="form-group" style="margin-bottom:0;">
-            <label>نوع الإجراء المطلوب:</label>
-            <select id="actionType" onchange="toggleActionType()">
-              <option value="NEW">➕ إضافة بلاغ جديد</option>
-              <option value="UPDATE">✏️ تحديث بيانات بلاغ حالي</option>
-              <option value="DELETE">🗑️ حذف بلاغ من المستند</option>
-            </select>
-          </div>
-
-          <div class="form-group hidden" id="taskIdGroup" style="margin-top:12px; margin-bottom:0;">
-            <label>اختر رقم البلاغ المراد تحديثه/حذفه:</label>
-            <select id="caseDropdownSelect">
-              <option value="">جاري تحميل البلاغات...</option>
-            </select>
-          </div>
-        </div>
-
-        <div id="formDetailsBody">
-          <!-- تفاصيل الجهاز والمهمة -->
-          <div class="form-section">
-            <div class="section-title">🛠️ تفاصيل الجهاز والمهمة</div>
-
-            <div class="form-group">
-              <label>نوع المهمة:</label>
-              <select id="taskSelect" onchange="toggleInput('taskSelect', 'otherTaskGroup', 'أخرى')">
-                <option value="تجهيز جهاز طبي">تجهيز جهاز طبي</option>
-                <option value="تركيب جهاز طبي">تركيب جهاز طبي</option>
-                <option value="تركيب جهاز ديمو">تركيب جهاز ديمو</option>
-                <option value="تفكيك جهاز طبي">تفكيك جهاز طبي</option>
-                <option value="طلب صيانة">طلب صيانة</option>
-                <option value="صيانة طوارئ">صيانة طوارئ</option>
-                <option value="أخرى">أخرى...</option>
-              </select>
-            </div>
-
-            <div class="form-group hidden" id="otherTaskGroup">
-              <label>تفاصيل المهمة البديلة:</label>
-              <input type="text" id="otherTaskDetails" placeholder="أدخل تفاصيل نوع المهمة البديلة">
-            </div>
-
-            <div class="form-group">
-              <label>الجهة المراد تنفيذ المهمة بها:</label>
-              <input type="text" id="location" placeholder="اسم المركز / العيادة / المستشفى / المدينة">
-            </div>
-
-            <div class="form-group">
-              <label>نوع الجهاز:</label>
-              <select id="deviceSelect" onchange="toggleInput('deviceSelect', 'newDeviceGroup', 'NEW_DEVICE')">
-                <option value="INTALIGHT DREAM OCTA VG100D">INTALIGHT DREAM OCTA VG100D</option>
-                <option value="INTALIGHT DREAM OCTA VG200D">INTALIGHT DREAM OCTA VG200D</option>
-                <option value="INTALIGHT DREAM OCTA VG200C">INTALIGHT DREAM OCTA VG200C</option>
-                <option value="OPTOVUE SOLIX OCTA">OPTOVUE SOLIX OCTA</option>
-                <option value="OPTOVUE XRAVANTI OCTA">OPTOVUE XRAVANTI OCTA</option>
-                <option value="OPTOVUE IVUE80 OCT">OPTOVUE IVUE80 OCT</option>
-                <option value="OPTOVUE ISCAN OCT">OPTOVUE ISCAN OCT</option>
-                <option value="OPTOVUE RTVUE100 OCT">OPTOVUE RTVUE100 OCT</option>
-                <option value="MOVU Argos AS OCT">MOVU Argos AS OCT</option>
-                <option value="DGH Ocular UtraSound A/B Scan">DGH Ocular UtraSound A/B Scan</option>
-                <option value="DGH Ocular UtraSound A/B Scan and UBM">DGH Ocular UtraSound A/B Scan and UBM</option>
-                <option value="MicroClear Apollo Laser Retinal Fundus Camera RB">MicroClear Apollo Laser Retinal Fundus Camera RB</option>
-                <option value="MicroClear Apollo Laser Retinal Fundus Camera RGB v1.0">MicroClear Apollo Laser Retinal Fundus Camera RGB v1.0</option>
-                <option value="MicroClear ApolloLaser Retinal Fundus Camera RGB v2.0">MicroClear ApolloLaser Retinal Fundus Camera RGB v2.0</option>
-                <option value="RODENSTOCK Perimat Visual Field">RODENSTOCK Perimat Visual Field</option>
-                <option value="RODENSTOCK Perimat2 Visual Field">RODENSTOCK Perimat2 Visual Field</option>
-                <option value="RODENSTOCK Refraction Unit 500">RODENSTOCK Refraction Unit 500</option>
-                <option value="RODENSTOCK Refraction Unit 1000">RODENSTOCK Refraction Unit 1000</option>
-                <option value="RODENSTOCK Tonometer Topascope">RODENSTOCK Tonometer Topascope</option>
-                <option value="Visionix Tulip Screen Portable Autorefractor autokeratometer">Visionix Tulip Screen Portable Autorefractor autokeratometer</option>
-                <option value="Visionix Tulip sidetube Portable Autorefractor autokeratometer">Visionix Tulip sidetube Portable Autorefractor autokeratometer</option>
-                <option value="REXONE EYE Resono Dry Eye Treatment">REXONE EYE Resono Dry Eye Treatment</option>
-                <option value="SBM Dry Eye Diagnostics OS-1000">SBM Dry Eye Diagnostics OS-1000</option>
-                <option value="Peschke PXL Corneal Cross linking SAPPHIRE 318">Peschke PXL Corneal Cross linking SAPPHIRE 318</option>
-                <option value="Sterlink Plasmapp FPS-15s-Plus Low temp Plasma sterilizer">Sterlink Plasmapp FPS-15s-Plus Low temp Plasma sterilizer</option>
-                <option value="ENBIO Autoclave">ENBIO Autoclave</option>
-                <option value="W&H Autoclave">W&H Autoclave</option>
-                <option value="NEW_DEVICE">إضافة جهاز جديد...</option>
-              </select>
-            </div>
-
-            <div class="form-group hidden" id="newDeviceGroup">
-              <label>اسم الجهاز الجديد:</label>
-              <input type="text" id="newDeviceName" placeholder="أدخل طراز الجهاز الجديد">
-            </div>
-
-            <div class="form-group">
-              <label>الرقم المسلسل (S/N):</label>
-              <input type="text" id="serialNumber" placeholder="أدخل الرقم التسلسلي S/N">
-            </div>
-          </div>
-
-          <!-- فريق العمل والمسؤولون -->
-          <div class="form-section">
-            <div class="section-title">👨‍⚕️ فريق العمل والمسؤولون</div>
-
-            <div class="grid-2">
-              <div class="form-group">
-                <label>الشخص القائم بالإبلاغ:</label>
-                <select id="reporterSelect">
-                  <option value="مدير القسم">مدير القسم</option>
-                  <option value="مدير الشركة">مدير الشركة</option>
-                </select>
-              </div>
-
-              <div class="form-group">
-                <label>اسم القائم بالإبلاغ (اختياري):</label>
-                <input type="text" id="reporterName" placeholder="الاسم بالتفصيل">
-              </div>
-            </div>
-
-            <div class="grid-2">
-              <div class="form-group">
-                <label>المهندس المسؤول:</label>
-                <select id="responsibleManager">
-                  <option value="طارق علام (مدير الصيانة)">طارق علام (مدير الصيانة)</option>
-                  <option value="مدير الصيانة">مدير الصيانة</option>
-                </select>
-              </div>
-
-              <div class="form-group">
-                <label>المهندس المكلف بالتنفيذ:</label>
-                <select id="engineerSelect" onchange="toggleInput('engineerSelect', 'newEngineerGroup', 'NEW')">
-                  <option value="طارق علام">طارق علام</option>
-                  <option value="عمرو عباس">عمرو عباس</option>
-                  <option value="محمد ابراهيم">محمد ابراهيم</option>
-                  <option value="NEW">إضافة مهندس جديد...</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="form-group hidden" id="newEngineerGroup">
-              <label>اسم المهندس المكلف الجديد:</label>
-              <input type="text" id="newEngineerName" placeholder="أدخل اسم المهندس الجديد">
-            </div>
-          </div>
-
-          <!-- المواعيد والتوقيتات -->
-          <div class="form-section">
-            <div class="section-title">📅 المواعيد والتوقيتات</div>
-            <div class="grid-2">
-              <div class="form-group">
-                <label>تاريخ الإبلاغ:</label>
-                <input type="date" id="reportDate">
-              </div>
-              <div class="form-group">
-                <label>وقت الإبلاغ:</label>
-                <input type="time" id="reportTime">
-              </div>
-            </div>
-            <div class="form-group">
-              <label>تاريخ الانتهاء المتوقع/الفعلي:</label>
-              <input type="date" id="endDate">
-            </div>
-          </div>
-
-          <!-- التقرير الفني -->
-          <div class="form-section">
-            <div class="section-title">📝 التقرير الفني والنتائج</div>
-
-            <div class="form-group">
-              <label>تفاصيل ما تم تنفيذه:</label>
-              <textarea id="executionNotes" placeholder="اكتب بالتفصيل خطوات العمل والإجراءات التي تمت..."></textarea>
-            </div>
-
-            <div class="form-group">
-              <label>النتائج والتقييم النهائي:</label>
-              <textarea id="results" placeholder="حالة الجهاز وكفاءة العمل بعد التنفيذ..."></textarea>
-            </div>
-
-            <div class="form-group">
-              <label>الأخطاء والملاحظات (إن وجدت):</label>
-              <textarea id="errors" placeholder="أي عقبات أو قطع غيار مطلوبة مستقبلاً..."></textarea>
-            </div>
-          </div>
-        </div>
-
-        <button type="submit" id="submitBtn" class="btn-submit">حفظ التقرير وتوثيقه بالمستند</button>
-        <button type="button" class="btn-reset" onclick="resetCounter()">تصفير عداد الترقيم (البدء من 1000)</button>
-      </form>
-
-      <div id="statusMsg" class="status-msg"></div>
+    <div class="action-btns">
+      <a href="https://docs.google.com/document/d/1lRtJn33qK8Ozlv0C7zCtmJpBU-N4VXqvyYnQEnj-aGk/edit?tab=t.0" target="_blank" rel="noopener noreferrer" class="header-btn">📄 فتح المستند</a>
+      <a href="https://www.linkedin.com/in/tarekallam-bme/" target="_blank" rel="noopener noreferrer" class="header-btn">LinkedIn 🔗</a>
     </div>
   </div>
 
-  <script>
-    // The deployed URL shown in Apps Script → Manage deployments → Web app URL.
-    const API_ENDPOINT = "https://script.google.com/macros/s/AKfycbwhU-JVFdDt_zezs1Up5gJBZxcWbTlco-s32Vnlr-01J_OIW5eRoJnNjqIZ8UYok6_dHg/exec";
+  <div class="form-wrapper">
+    <div class="form-header">
+      <h2>نظام توثيق وتفتيش المهام الهندسية الطبية</h2>
+    </div>
 
-    // Optional shared secret — must match ENFORCE_SECRET/SHARED_SECRET in googlescript.txt
-    const SHARED_SECRET = "";
-    function withSecret(url) {
-      return SHARED_SECRET ? url + "&secret=" + encodeURIComponent(SHARED_SECRET) : url;
-    }
+    <form id="medicalForm">
 
-    var today = new Date().toISOString().split("T")[0];
-    document.getElementById("reportDate").value = today;
-    document.getElementById("endDate").value = today;
+      <div class="form-section" style="background-color: var(--accent-blue); border-color: #b8d5ff;">
+        <div class="form-group" style="margin-bottom:0;">
+          <label>نوع الإجراء المطلوب:</label>
+          <select id="actionType" onchange="toggleActionType()">
+            <option value="NEW">➕ إضافة بلاغ جديد</option>
+            <option value="UPDATE">✏️ تحديث بيانات بلاغ حالي</option>
+            <option value="DELETE">🗑️ حذف بلاغ من المستند</option>
+          </select>
+        </div>
+        <div class="form-group hidden" id="taskIdGroup" style="margin-top:12px; margin-bottom:0;">
+          <label>اختر رقم البلاغ المراد تحديثه/حذفه:</label>
+          <select id="caseDropdownSelect"><option value="">جاري تحميل البلاغات...</option></select>
+        </div>
+      </div>
 
-    var now = new Date();
-    var timeStr = (now.getHours() < 10 ? "0" : "") + now.getHours() + ":" + (now.getMinutes() < 10 ? "0" : "") + now.getMinutes();
-    document.getElementById("reportTime").value = timeStr;
+      <div id="formDetailsBody">
+        <div class="form-section">
+          <div class="section-title">🛠️ تفاصيل الجهاز والمهمة</div>
 
-    var loadedCasesData = {};
+          <div class="form-group">
+            <label>نوع المهمة:</label>
+            <select id="taskSelect" onchange="toggleInput('taskSelect', 'otherTaskGroup', 'أخرى')">
+              <option value="تجهيز جهاز طبي">تجهيز جهاز طبي</option>
+              <option value="تركيب جهاز طبي">تركيب جهاز طبي</option>
+              <option value="تركيب جهاز ديمو">تركيب جهاز ديمو</option>
+              <option value="تفكيك جهاز طبي">تفكيك جهاز طبي</option>
+              <option value="طلب صيانة">طلب صيانة</option>
+              <option value="صيانة طوارئ">صيانة طوارئ</option>
+              <option value="أخرى">أخرى...</option>
+            </select>
+          </div>
 
-    function toggleActionType() {
-      var action = document.getElementById("actionType").value;
-      var taskGroup = document.getElementById("taskIdGroup");
-      var detailsBody = document.getElementById("formDetailsBody");
-      var submitBtn = document.getElementById("submitBtn");
-      var statusMsg = document.getElementById("statusMsg");
+          <div class="form-group hidden" id="otherTaskGroup">
+            <label>تفاصيل المهمة البديلة:</label>
+            <input type="text" id="otherTaskDetails" placeholder="أدخل تفاصيل نوع المهمة البديلة">
+          </div>
 
-      statusMsg.style.display = "none";
-      statusMsg.className = "status-msg";
+          <div class="form-group">
+            <label>الجهة المراد تنفيذ المهمة بها:</label>
+            <input type="text" id="location" placeholder="اسم المركز / العيادة / المستشفى / المدينة">
+          </div>
 
-      if (action === "UPDATE" || action === "DELETE") {
-        taskGroup.classList.remove("hidden");
-        loadCases();
-        if (action === "DELETE") {
-          detailsBody.classList.add("hidden");
-          submitBtn.innerText = "🗑️ تأكيد حذف البلاغ المحدد";
-          submitBtn.style.backgroundColor = "#da1e28";
-        } else {
-          detailsBody.classList.remove("hidden");
-          submitBtn.innerText = "حفظ التقرير وتوثيقه بالمستند";
-          submitBtn.style.backgroundColor = "var(--primary-color)";
-        }
-      } else {
-        taskGroup.classList.add("hidden");
-        detailsBody.classList.remove("hidden");
-        submitBtn.innerText = "حفظ التقرير وتوثيقه بالمستند";
-        submitBtn.style.backgroundColor = "var(--primary-color)";
-      }
-    }
+          <div class="form-group">
+            <label>نوع الجهاز:</label>
+            <select id="deviceSelect" onchange="toggleInput('deviceSelect', 'newDeviceGroup', 'NEW_DEVICE')">
+              <option value="INTALIGHT DREAM OCTA VG100D">INTALIGHT DREAM OCTA VG100D</option>
+              <option value="INTALIGHT DREAM OCTA VG200D">INTALIGHT DREAM OCTA VG200D</option>
+              <option value="INTALIGHT DREAM OCTA VG200C">INTALIGHT DREAM OCTA VG200C</option>
+              <option value="OPTOVUE SOLIX OCTA">OPTOVUE SOLIX OCTA</option>
+              <option value="OPTOVUE XRAVANTI OCTA">OPTOVUE XRAVANTI OCTA</option>
+              <option value="OPTOVUE IVUE80 OCT">OPTOVUE IVUE80 OCT</option>
+              <option value="OPTOVUE ISCAN OCT">OPTOVUE ISCAN OCT</option>
+              <option value="OPTOVUE RTVUE100 OCT">OPTOVUE RTVUE100 OCT</option>
+              <option value="MOVU Argos AS OCT">MOVU Argos AS OCT</option>
+              <option value="DGH Ocular UtraSound A/B Scan">DGH Ocular UtraSound A/B Scan</option>
+              <option value="DGH Ocular UtraSound A/B Scan and UBM">DGH Ocular UtraSound A/B Scan and UBM</option>
+              <option value="MicroClear Apollo Laser Retinal Fundus Camera RB">MicroClear Apollo Laser Retinal Fundus Camera RB</option>
+              <option value="MicroClear Apollo Laser Retinal Fundus Camera RGB v1.0">MicroClear Apollo Laser Retinal Fundus Camera RGB v1.0</option>
+              <option value="MicroClear ApolloLaser Retinal Fundus Camera RGB v2.0">MicroClear ApolloLaser Retinal Fundus Camera RGB v2.0</option>
+              <option value="RODENSTOCK Perimat Visual Field">RODENSTOCK Perimat Visual Field</option>
+              <option value="RODENSTOCK Perimat2 Visual Field">RODENSTOCK Perimat2 Visual Field</option>
+              <option value="RODENSTOCK Refraction Unit 500">RODENSTOCK Refraction Unit 500</option>
+              <option value="RODENSTOCK Refraction Unit 1000">RODENSTOCK Refraction Unit 1000</option>
+              <option value="RODENSTOCK Tonometer Topascope">RODENSTOCK Tonometer Topascope</option>
+              <option value="Visionix Tulip Screen Portable Autorefractor autokeratometer">Visionix Tulip Screen Portable Autorefractor autokeratometer</option>
+              <option value="Visionix Tulip sidetube Portable Autorefractor autokeratometer">Visionix Tulip sidetube Portable Autorefractor autokeratometer</option>
+              <option value="REXONE EYE Resono Dry Eye Treatment">REXONE EYE Resono Dry Eye Treatment</option>
+              <option value="SBM Dry Eye Diagnostics OS-1000">SBM Dry Eye Diagnostics OS-1000</option>
+              <option value="Peschke PXL Corneal Cross linking SAPPHIRE 318">Peschke PXL Corneal Cross linking SAPPHIRE 318</option>
+              <option value="Sterlink Plasmapp FPS-15s-Plus Low temp Plasma sterilizer">Sterlink Plasmapp FPS-15s-Plus Low temp Plasma sterilizer</option>
+              <option value="ENBIO Autoclave">ENBIO Autoclave</option>
+              <option value="W&H Autoclave">W&H Autoclave</option>
+              <option value="NEW_DEVICE">إضافة جهاز جديد...</option>
+            </select>
+          </div>
 
-    function loadCases() {
-      var dropdown = document.getElementById("caseDropdownSelect");
-      dropdown.innerHTML = "<option value=''>جاري تحميل البلاغات...</option>";
+          <div class="form-group hidden" id="newDeviceGroup">
+            <label>اسم الجهاز الجديد:</label>
+            <input type="text" id="newDeviceName" placeholder="أدخل طراز الجهاز الجديد">
+          </div>
 
-      var oldScript = document.getElementById("jsonpScript");
-      if (oldScript) oldScript.remove();
+          <div class="form-group">
+            <label>الرقم المسلسل (S/N):</label>
+            <input type="text" id="serialNumber" placeholder="أدخل الرقم التسلسلي S/N">
+          </div>
+        </div>
 
-      var script = document.createElement("script");
-      script.id = "jsonpScript";
-      script.src = withSecret(API_ENDPOINT + "?callback=handleJSONPResponse&t=" + new Date().getTime());
+        <div class="form-section">
+          <div class="section-title">👨‍⚕️ فريق العمل والمسؤولون</div>
+          <div class="grid-2">
+            <div class="form-group">
+              <label>الشخص القائم بالإبلاغ:</label>
+              <select id="reporterSelect">
+                <option value="مدير القسم">مدير القسم</option>
+                <option value="مدير الشركة">مدير الشركة</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>اسم القائم بالإبلاغ (اختياري):</label>
+              <input type="text" id="reporterName" placeholder="الاسم بالتفصيل">
+            </div>
+          </div>
+          <div class="grid-2">
+            <div class="form-group">
+              <label>المهندس المسؤول:</label>
+              <select id="responsibleManager">
+                <option value="طارق علام (مدير الصيانة)">طارق علام (مدير الصيانة)</option>
+                <option value="مدير الصيانة">مدير الصيانة</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>المهندس المكلف بالتنفيذ:</label>
+              <select id="engineerSelect" onchange="toggleInput('engineerSelect', 'newEngineerGroup', 'NEW')">
+                <option value="طارق علام">طارق علام</option>
+                <option value="عمرو عباس">عمرو عباس</option>
+                <option value="محمد ابراهيم">محمد ابراهيم</option>
+                <option value="NEW">إضافة مهندس جديد...</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group hidden" id="newEngineerGroup">
+            <label>اسم المهندس المكلف الجديد:</label>
+            <input type="text" id="newEngineerName" placeholder="أدخل اسم المهندس الجديد">
+          </div>
+        </div>
 
-      script.onerror = function() {
-        dropdown.innerHTML = "<option value=''>تعذر الاتصال بالخادم.</option>";
-      };
+        <div class="form-section">
+          <div class="section-title">📅 المواعيد والتوقيتات</div>
+          <div class="grid-2">
+            <div class="form-group">
+              <label>تاريخ الإبلاغ:</label>
+              <input type="date" id="reportDate">
+            </div>
+            <div class="form-group">
+              <label>وقت الإبلاغ:</label>
+              <input type="time" id="reportTime">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>تاريخ الانتهاء المتوقع/الفعلي:</label>
+            <input type="date" id="endDate">
+          </div>
+        </div>
 
-      document.body.appendChild(script);
-    }
+        <div class="form-section">
+          <div class="section-title">📝 التقرير الفني والنتائج</div>
+          <div class="form-group">
+            <label>تفاصيل ما تم تنفيذه:</label>
+            <textarea id="executionNotes" placeholder="اكتب بالتفصيل خطوات العمل والإجراءات التي تمت..."></textarea>
+          </div>
+          <div class="form-group">
+            <label>النتائج والتقييم النهائي:</label>
+            <textarea id="results" placeholder="حالة الجهاز وكفاءة العمل بعد التنفيذ..."></textarea>
+          </div>
+          <div class="form-group">
+            <label>الأخطاء والملاحظات (إن وجدت):</label>
+            <textarea id="errors" placeholder="أي عقبات أو قطع غيار مطلوبة مستقبلاً..."></textarea>
+          </div>
+        </div>
+      </div>
 
-    window.handleJSONPResponse = function(data) {
-      var dropdown = document.getElementById("caseDropdownSelect");
-      if (data && data.status === "success" && data.casesMap) {
-        loadedCasesData = data.casesMap;
-        var keys = Object.keys(loadedCasesData);
+      <button type="submit" id="submitBtn" class="btn-submit">حفظ التقرير وتوثيقه بالمستند</button>
+      <button type="button" class="btn-reset" onclick="resetCounter()">تصفير عداد الترقيم (البدء من 1000)</button>
+    </form>
 
-        if (keys.length > 0) {
-          dropdown.innerHTML = "<option value=''>-- اختر كود المهمة المطلوب التعامل معها --</option>";
-          keys.forEach(function(caseId) {
-            var option = document.createElement("option");
-            option.value = caseId;
-            option.text = caseId;
-            dropdown.appendChild(option);
-          });
-          dropdown.onchange = populateFormFields;
-        } else {
-          dropdown.innerHTML = "<option value=''>لا توجد بلاغات مسجلة بالمستند</option>";
-        }
-      } else {
-        dropdown.innerHTML = "<option value=''>تعذر جلب البلاغات</option>";
-      }
-    };
+    <div id="statusMsg" class="status-msg"></div>
+  </div>
+</div>
 
-    function populateFormFields() {
-      var selectedId = document.getElementById("caseDropdownSelect").value;
-      if (!selectedId || !loadedCasesData[selectedId]) return;
+<script>
+  // ⚠️ IMPORTANT: replace this URL with the Web app URL shown in
+  // Apps Script → Deploy → Manage deployments → Web app URL.
+  // Never use "Deploy → New deployment" — always edit the existing
+  // deployment and publish a "New version" so this URL stays valid.
+  const API_ENDPOINT = "https://script.google.com/macros/s/AKfycbzyVGgzVq6CguwmsQ2fmM2s30ID28jb9XxWoF6EnwO4KcqNgeQCX85-A7EYjGAzKHy-rw/exec";
 
-      var item = loadedCasesData[selectedId];
+  var today = new Date().toISOString().split("T")[0];
+  document.getElementById("reportDate").value = today;
+  document.getElementById("endDate").value = today;
 
-      var taskSelect = document.getElementById("taskSelect");
-      if (setSelectValueIfExists(taskSelect, item.task)) {
-        document.getElementById("otherTaskGroup").classList.add("hidden");
-      } else if (item.task) {
-        taskSelect.value = "أخرى";
-        document.getElementById("otherTaskGroup").classList.remove("hidden");
-        document.getElementById("otherTaskDetails").value = item.task.replace("أخرى (", "").replace(")", "");
-      }
+  var now = new Date();
+  var timeStr = (now.getHours() < 10 ? "0" : "") + now.getHours() + ":" + (now.getMinutes() < 10 ? "0" : "") + now.getMinutes();
+  document.getElementById("reportTime").value = timeStr;
 
-      document.getElementById("location").value = item.location || "";
+  var loadedCasesData = {};
 
-      var deviceSelect = document.getElementById("deviceSelect");
-      if (setSelectValueIfExists(deviceSelect, item.device)) {
-        document.getElementById("newDeviceGroup").classList.add("hidden");
-      } else if (item.device) {
-        deviceSelect.value = "NEW_DEVICE";
-        document.getElementById("newDeviceGroup").classList.remove("hidden");
-        document.getElementById("newDeviceName").value = item.device;
-      }
-
-      var engineerSelect = document.getElementById("engineerSelect");
-      if (setSelectValueIfExists(engineerSelect, item.engineer)) {
-        document.getElementById("newEngineerGroup").classList.add("hidden");
-      } else if (item.engineer) {
-        engineerSelect.value = "NEW";
-        document.getElementById("newEngineerGroup").classList.remove("hidden");
-        document.getElementById("newEngineerName").value = item.engineer;
-      }
-
-      document.getElementById("serialNumber").value = item.serial === "غير مسجل" ? "" : (item.serial || "");
-      document.getElementById("reportDate").value = item.reportDate || today;
-      document.getElementById("reportTime").value = item.reportTime || timeStr;
-      document.getElementById("endDate").value = item.endDate || today;
-      document.getElementById("executionNotes").value = item.notes === "لم تذكر" ? "" : (item.notes || "");
-      document.getElementById("results").value = item.results === "لم تذكر" ? "" : (item.results || "");
-      document.getElementById("errors").value = item.errors === "لا توجد أخطاء" ? "" : (item.errors || "");
-    }
-
-    function setSelectValueIfExists(selectElement, val) {
-      if (!val) return false;
-      for (var i = 0; i < selectElement.options.length; i++) {
-        if (selectElement.options[i].value === val) {
-          selectElement.selectedIndex = i;
-          return true;
-        }
-      }
-      return false;
-    }
-
-    function resetCounter() {
-      if (confirm("هل أنت تأكد من تصفير عداد الترقيم تلقائياً؟")) {
-        var script = document.createElement("script");
-        var payload = encodeURIComponent(JSON.stringify({ actionType: "RESET_COUNTER" }));
-        script.src = withSecret(API_ENDPOINT + "?callback=handleResetResponse&payload=" + payload + "&t=" + new Date().getTime());
-        document.body.appendChild(script);
-      }
-    }
-
-    window.handleResetResponse = function() {
-      alert("تم تصفير العداد بنجاح.");
-    };
-
-    function toggleInput(selectId, targetGroupId, triggerValue) {
-      var select = document.getElementById(selectId);
-      var group = document.getElementById(targetGroupId);
-      if (select.value === triggerValue) {
-        group.classList.remove("hidden");
-      } else {
-        group.classList.add("hidden");
-      }
-    }
-
-    document.getElementById("medicalForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-
-      var submitBtn = document.getElementById("submitBtn");
-      var statusMsg = document.getElementById("statusMsg");
-      var actionType = document.getElementById("actionType").value;
-      var taskId = document.getElementById("caseDropdownSelect").value;
-
-      if ((actionType === "UPDATE" || actionType === "DELETE") && !taskId) {
-        alert("الرجاء اختيار كود المهمة المراد التعامل معها!");
-        return;
-      }
-
-      if (actionType === "DELETE") {
-        if (!confirm("هل أنت تأكد من رغبتك في حذف البلاغ (" + taskId + ") نهائياً من المستند؟")) {
-          return;
-        }
-      }
-
-      submitBtn.disabled = true;
-      submitBtn.innerText = "جاري الإرسال وتحديث المستند...";
-      statusMsg.style.display = "none";
-
-      var payload = {
-        actionType: actionType,
-        taskId: taskId
-      };
-
-      if (actionType !== "DELETE") {
-        var task = document.getElementById("taskSelect").value;
-        if (task === "أخرى") {
-          var od = document.getElementById("otherTaskDetails").value.trim();
-          task = od ? "أخرى (" + od + ")" : "أخرى";
-        }
-
-        var device = document.getElementById("deviceSelect").value;
-        if (device === "NEW_DEVICE") {
-          var nd = document.getElementById("newDeviceName").value.trim();
-          device = nd ? nd : "جهاز جديد غير معرف";
-        }
-
-        var engineer = document.getElementById("engineerSelect").value;
-        if (engineer === "NEW") {
-          engineer = document.getElementById("newEngineerName").value.trim();
-        }
-
-        var rt = document.getElementById("reporterSelect").value;
-        var rn = document.getElementById("reporterName").value.trim();
-        var reporterFull = rn ? rt + " (" + rn + ")" : rt;
-
-        payload.task = task;
-        payload.location = document.getElementById("location").value.trim();
-        payload.device = device;
-        payload.serial = document.getElementById("serialNumber").value.trim();
-        payload.reporter = reporterFull;
-        payload.manager = document.getElementById("responsibleManager").value;
-        payload.engineer = engineer;
-        payload.reportDate = document.getElementById("reportDate").value;
-        payload.reportTime = document.getElementById("reportTime").value;
-        payload.endDate = document.getElementById("endDate").value;
-        payload.executionNotes = document.getElementById("executionNotes").value.trim();
-        payload.results = document.getElementById("results").value.trim();
-        payload.errors = document.getElementById("errors").value.trim();
-      }
-
-      var oldScript = document.getElementById("submitScript");
-      if (oldScript) oldScript.remove();
-
-      var script = document.createElement("script");
-      script.id = "submitScript";
-      var encodedPayload = encodeURIComponent(JSON.stringify(payload));
-
-      var url = API_ENDPOINT
-        + "?callback=handleSubmitSuccess"
-        + "&actionType=" + encodeURIComponent(actionType)
-        + "&taskId=" + encodeURIComponent(taskId)
-        + "&payload=" + encodedPayload
-        + "&t=" + new Date().getTime();
-      script.src = withSecret(url);
-
-      window.handleSubmitSuccess = function(res) {
-        statusMsg.style.display = "block";
-
-        if (res && res.status === "error") {
-          statusMsg.className = "status-msg status-error";
-          statusMsg.innerText = "❌ " + (res.message || "فشلت العملية");
-        } else {
-          statusMsg.className = "status-msg status-success";
-
-          if (actionType === "NEW") {
-            statusMsg.innerText = "✅ تم إضافة البلاغ بنجاح وتوثيقه بداخل المستند!";
-          } else if (actionType === "UPDATE") {
-            statusMsg.innerText = "✅ تم تحديث البيانات للبلاغ بنجاح بداخل المستند!";
-          } else if (actionType === "DELETE") {
-            statusMsg.innerText = "🗑️ " + (res.message || "تم حذف البلاغ بنجاح من المستند!") +
-              (res.deletedAt ? " | " + res.deletedAt : "");
-          }
-
-          var currentAction = document.getElementById("actionType").value;
-          document.getElementById("medicalForm").reset();
-
-          document.getElementById("reportDate").value = today;
-          document.getElementById("endDate").value = today;
-          document.getElementById("reportTime").value = timeStr;
-
-          if (actionType === "DELETE" || actionType === "UPDATE") {
-            document.getElementById("actionType").value = "NEW";
-            toggleActionType();
-            loadCases();
-          } else {
-            document.getElementById("actionType").value = currentAction;
-          }
-        }
-
-        submitBtn.disabled = false;
-        var mode = document.getElementById("actionType").value;
-        submitBtn.innerText = (mode === "DELETE")
-          ? "🗑️ تأكيد حذف البلاغ المحدد"
-          : "حفظ التقرير وتوثيقه بالمستند";
-        submitBtn.style.backgroundColor = (mode === "DELETE")
-          ? "#da1e28"
-          : "var(--primary-color)";
-      };
-
-      script.onerror = function() {
-        statusMsg.className = "status-msg status-error";
-        statusMsg.innerText = "❌ حدث خطأ أثناء الاتصال بالخادم.";
-        statusMsg.style.display = "block";
-        submitBtn.disabled = false;
-        var mode = document.getElementById("actionType").value;
-        submitBtn.innerText = (mode === "DELETE")
-          ? "🗑️ تأكيد حذف البلاغ المحدد"
-          : "حفظ التقرير وتوثيقه بالمستند";
-      };
-
-      document.body.appendChild(script);
-    });
-  </script>
-</body>
-</html>
+  function toggleActionType() {
+    var action = document.getElementById("actionType").value;
+    var taskGroup = document.getElementById("taskIdGroup");
+    var detailsBody = document.getElementById("formDetailsBody");
+    var submit
