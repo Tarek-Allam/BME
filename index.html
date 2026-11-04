@@ -453,7 +453,7 @@
     if (confirm("هل أنت تأكد من تصفير عداد الترقيم تلقائياً؟")) {
       var script = document.createElement("script");
       var payload = encodeURIComponent(JSON.stringify({ actionType: "RESET_COUNTER" }));
-      script.src = API_ENDPOINT + "?callback=handleResetResponse&payload=" + payload;
+      script.src = API_ENDPOINT + "?callback=handleResetResponse&actionType=RESET_COUNTER&payload=" + payload;
       document.body.appendChild(script);
     }
   }
@@ -534,7 +534,12 @@
     script.id = "submitScript";
     var encodedPayload = encodeURIComponent(JSON.stringify(payload));
     
-    script.src = API_ENDPOINT + "?callback=handleSubmitSuccess&actionType=" + encodeURIComponent(actionType) + "&taskId=" + encodeURIComponent(taskId) + "&payload=" + encodedPayload + "&t=" + new Date().getTime();
+    // Explicit parameters appended directly to prevent backend payload fallback
+    script.src = API_ENDPOINT + "?callback=handleSubmitSuccess" +
+      "&actionType=" + encodeURIComponent(actionType) + 
+      "&taskId=" + encodeURIComponent(taskId) + 
+      "&payload=" + encodedPayload + 
+      "&t=" + new Date().getTime();
 
     window.handleSubmitSuccess = function(res) {
       statusMsg.style.display = "block";
