@@ -305,10 +305,6 @@
 </div>
 
 <script>
-  // ⚠️ IMPORTANT: replace this URL with the Web app URL shown in
-  // Apps Script → Deploy → Manage deployments → Web app URL.
-  // Never use "Deploy → New deployment" — always edit the existing
-  // deployment and publish a "New version" so this URL stays valid.
   const API_ENDPOINT = "https://script.google.com/macros/s/AKfycbzyVGgzVq6CguwmsQ2fmM2s30ID28jb9XxWoF6EnwO4KcqNgeQCX85-A7EYjGAzKHy-rw/exec";
 
   var today = new Date().toISOString().split("T")[0];
@@ -325,4 +321,265 @@
     var action = document.getElementById("actionType").value;
     var taskGroup = document.getElementById("taskIdGroup");
     var detailsBody = document.getElementById("formDetailsBody");
-    var submit
+    var submitBtn = document.getElementById("submitBtn");
+
+    if (action === "UPDATE" || action === "DELETE") {
+      taskGroup.classList.remove("hidden");
+      loadCases();
+      if (action === "DELETE") {
+        detailsBody.classList.add("hidden");
+        submitBtn.innerText = "🗑️ تأكيد حذف البلاغ المحدد";
+        submitBtn.style.backgroundColor = "#da1e28";
+      } else {
+        detailsBody.classList.remove("hidden");
+        submitBtn.innerText = "حفظ التقرير وتوثيقه بالمستند";
+        submitBtn.style.backgroundColor = "var(--primary-color)";
+      }
+    } else {
+      taskGroup.classList.add("hidden");
+      detailsBody.classList.remove("hidden");
+      submitBtn.innerText = "حفظ التقرير وتوثيقه بالمستند";
+      submitBtn.style.backgroundColor = "var(--primary-color)";
+    }
+  }
+
+  function toggleInput(selectId, targetGroupId, triggerValue) {
+    var select = document.getElementById(selectId);
+    var group = document.getElementById(targetGroupId);
+    if (select.value === triggerValue) {
+      group.classList.remove("hidden");
+    } else {
+      group.classList.add("hidden");
+    }
+  }
+
+  function loadCases() {
+    var dropdown = document.getElementById("caseDropdownSelect");
+    dropdown.innerHTML = "<option value=''>جاري تحميل البلاغات...</option>";
+
+    var oldScript = document.getElementById("jsonpScript");
+    if (oldScript) oldScript.remove();
+
+    var script = document.createElement("script");
+    script.id = "jsonpScript";
+    script.src = API_ENDPOINT + "?callback=handleJSONPResponse&t=" + new Date().getTime();
+    
+    script.onerror = function() {
+      dropdown.innerHTML = "<option value=''>تعذر الاتصال بالخادم.</option>";
+    };
+
+    document.body.appendChild(script);
+  }
+
+  window.handleJSONPResponse = function(data) {
+    var dropdown = document.getElementById("caseDropdownSelect");
+    if (data && data.status === "success" && data.casesMap) {
+      loadedCasesData = data.casesMap;
+      var keys = Object.keys(loadedCasesData);
+
+      if (keys.length > 0) {
+        dropdown.innerHTML = "<option value=''>-- اختر كود المهمة المطلوب التعامل معها --</option>";
+        keys.forEach(function(caseId) {
+          var option = document.createElement("option");
+          option.value = caseId;
+          option.text = caseId;
+          dropdown.appendChild(option);
+        });
+        dropdown.onchange = populateFormFields;
+      } else {
+        dropdown.innerHTML = "<option value=''>لا توجد بلاغات مسجلة بالمستند</option>";
+      }
+    } else {
+      dropdown.innerHTML = "<option value=''>تعذر جلب البلاغات</option>";
+    }
+  };
+
+  function populateFormFields() {
+    var selectedId = document.getElementById("caseDropdownSelect").value;
+    if (!selectedId || !loadedCasesData[selectedId]) return;
+
+    var item = loadedCasesData[selectedId];
+
+    var taskSelect = document.getElementById("taskSelect");
+    if (setSelectValueIfExists(taskSelect, item.task)) {
+      document.getElementById("otherTaskGroup").classList.add("hidden");
+    } else if (item.task) {
+      taskSelect.value = "أخرى";
+      document.getElementById("otherTaskGroup").classList.remove("hidden");
+      document.getElementById("otherTaskDetails").value = item.task.replace("أخرى (", "").replace(")", "");
+    }
+
+    document.getElementById("location").value = item.location === "غير مسجلة" ? "" : (item.location || "");
+
+    var deviceSelect = document.getElementById("deviceSelect");
+    if (setSelectValueIfExists(deviceSelect, item.device)) {
+      document.getElementById("newDeviceGroup").classList.add("hidden");
+    } else if (item.device) {
+      deviceSelect.value = "NEW_DEVICE";
+      document.getElementById("newDeviceGroup").classList.remove("hidden");
+      document.getElementById("newDeviceName").value = item.device;
+    }
+
+    var engineerSelect = document.getElementById("engineerSelect");
+    if (setSelectValueIfExists(engineerSelect, item.engineer)) {
+      document.getElementById("newEngineerGroup").classList.add("hidden");
+    } else if (item.engineer) {
+      engineerSelect.value = "NEW";
+      document.getElementById("newEngineerGroup").classList.remove("hidden");
+      document.getElementById("newEngineerName").value = item.engineer;
+    }
+
+    document.getElementById("serialNumber").value = item.serial === "غير مسجل" ? "" : (item.serial || "");
+    document.getElementById("reportDate").value = item.reportDate || today;
+    document.getElementById("reportTime").value = item.reportTime || timeStr;
+    document.getElementById("endDate").value = item.endDate || today;
+    document.getElementById("executionNotes").value = item.notes === "لم تذكر" ? "" : (item.notes || "");
+    document.getElementById("results").value = item.results === "لم تذكر" ? "" : (item.results || "");
+    document.getElementById("errors").value = item.errors === "لا توجد أخطاء" ? "" : (item.errors || "");
+  }
+
+  function setSelectValueIfExists(selectElement, val) {
+    if (!val) return false;
+    for (var i = 0; i < selectElement.options.length; i++) {
+      if (selectElement.options[i].value === val) {
+        selectElement.selectedIndex = i;
+        return true;
+      }
+    }
+    return false;
+  }
+
+  function resetCounter() {
+    if (confirm("هل أنت تأكد من تصفير عداد الترقيم تلقائياً؟")) {
+      var script = document.createElement("script");
+      var payload = encodeURIComponent(JSON.stringify({ actionType: "RESET_COUNTER" }));
+      script.src = API_ENDPOINT + "?callback=handleResetResponse&payload=" + payload;
+      document.body.appendChild(script);
+    }
+  }
+
+  window.handleResetResponse = function() {
+    alert("تم تصفير العداد بنجاح.");
+  };
+
+  document.getElementById("medicalForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    
+    var submitBtn = document.getElementById("submitBtn");
+    var statusMsg = document.getElementById("statusMsg");
+    var actionType = document.getElementById("actionType").value;
+    var taskId = document.getElementById("caseDropdownSelect").value;
+
+    if ((actionType === "UPDATE" || actionType === "DELETE") && !taskId) {
+      alert("الرجاء اختيار كود المهمة المراد التعامل معها!");
+      return;
+    }
+
+    if (actionType === "DELETE") {
+      if (!confirm("هل أنت تأكد من رغبتك في حذف البلاغ (" + taskId + ") نهائياً من المستند؟")) {
+        return;
+      }
+    }
+    
+    submitBtn.disabled = true;
+    submitBtn.innerText = "جاري الإرسال وتحديث المستند...";
+    statusMsg.style.display = "none";
+
+    var payload = {
+      actionType: actionType,
+      taskId: taskId
+    };
+
+    if (actionType !== "DELETE") {
+      var task = document.getElementById("taskSelect").value;
+      if (task === "أخرى") {
+        var od = document.getElementById("otherTaskDetails").value.trim();
+        task = od ? "أخرى (" + od + ")" : "أخرى";
+      }
+
+      var device = document.getElementById("deviceSelect").value;
+      if (device === "NEW_DEVICE") {
+        var nd = document.getElementById("newDeviceName").value.trim();
+        device = nd ? nd : "جهاز جديد غير معرف";
+      }
+
+      var engineer = document.getElementById("engineerSelect").value;
+      if (engineer === "NEW") {
+        engineer = document.getElementById("newEngineerName").value.trim();
+      }
+
+      var rt = document.getElementById("reporterSelect").value;
+      var rn = document.getElementById("reporterName").value.trim();
+      var reporterFull = rn ? rt + " (" + rn + ")" : rt;
+
+      payload.task = task;
+      payload.location = document.getElementById("location").value.trim();
+      payload.device = device;
+      payload.serial = document.getElementById("serialNumber").value.trim();
+      payload.reporter = reporterFull;
+      payload.manager = document.getElementById("responsibleManager").value;
+      payload.engineer = engineer;
+      payload.reportDate = document.getElementById("reportDate").value;
+      payload.reportTime = document.getElementById("reportTime").value;
+      payload.endDate = document.getElementById("endDate").value;
+      payload.executionNotes = document.getElementById("executionNotes").value.trim();
+      payload.results = document.getElementById("results").value.trim();
+      payload.errors = document.getElementById("errors").value.trim();
+    }
+
+    var oldScript = document.getElementById("submitScript");
+    if (oldScript) oldScript.remove();
+
+    var script = document.createElement("script");
+    script.id = "submitScript";
+    var encodedPayload = encodeURIComponent(JSON.stringify(payload));
+    
+    script.src = API_ENDPOINT + "?callback=handleSubmitSuccess&actionType=" + encodeURIComponent(actionType) + "&taskId=" + encodeURIComponent(taskId) + "&payload=" + encodedPayload + "&t=" + new Date().getTime();
+
+    window.handleSubmitSuccess = function(res) {
+      statusMsg.style.display = "block";
+
+      if (res && res.status === "error") {
+        statusMsg.className = "status-msg status-error";
+        statusMsg.innerText = "❌ " + (res.message || "فشلت العملية");
+      } else {
+        statusMsg.className = "status-msg status-success";
+        
+        if (actionType === "NEW") {
+          statusMsg.innerText = "✅ تم إضافة البلاغ بنجاح وتوثيقه بداخل المستند!";
+        } else if (actionType === "UPDATE") {
+          statusMsg.innerText = "✅ تم تحديث البيانات للبلاغ بنجاح بداخل المستند!";
+        } else if (actionType === "DELETE") {
+          statusMsg.innerText = "🗑️ تم حذف البلاغ بنجاح من المستند!";
+        }
+
+        var currentAction = document.getElementById("actionType").value;
+        document.getElementById("medicalForm").reset();
+        document.getElementById("actionType").value = currentAction;
+
+        document.getElementById("reportDate").value = today;
+        document.getElementById("endDate").value = today;
+        document.getElementById("reportTime").value = timeStr;
+        
+        if (actionType === "DELETE" || actionType === "UPDATE") {
+          loadCases();
+        }
+      }
+
+      submitBtn.disabled = false;
+      submitBtn.innerText = actionType === "DELETE" ? "🗑️ تأكيد حذف البلاغ المحدد" : "حفظ التقرير وتوثيقه بالمستند";
+    };
+
+    script.onerror = function() {
+      statusMsg.className = "status-msg status-error";
+      statusMsg.innerText = "❌ حدث خطأ أثناء الاتصال بالخادم.";
+      submitBtn.disabled = false;
+      submitBtn.innerText = actionType === "DELETE" ? "🗑️ تأكيد حذف البلاغ المحدد" : "حفظ التقرير وتوثيقه بالمستند";
+      statusMsg.style.display = "block";
+    };
+
+    document.body.appendChild(script);
+  });
+</script>
+</body>
+</html>
