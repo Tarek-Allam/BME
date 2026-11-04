@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
-  
+
   <style>
     :root {
       --primary-color: #0f62fe;
@@ -29,14 +29,14 @@
     body { background-color: var(--bg-color); margin: 0; padding: 24px 12px; color: var(--text-main); direction: rtl; text-align: right; line-height: 1.6; }
     .container { max-width: 680px; margin: 0 auto; }
 
-    .profile-card { 
-      background: linear-gradient(135deg, #0a2540 0%, #0052cc 100%); 
-      color: white; 
-      padding: 20px 24px; 
-      border-radius: var(--radius); 
-      margin-bottom: 24px; 
-      display: flex; 
-      align-items: center; 
+    .profile-card {
+      background: linear-gradient(135deg, #0a2540 0%, #0052cc 100%);
+      color: white;
+      padding: 20px 24px;
+      border-radius: var(--radius);
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
       justify-content: space-between;
       box-shadow: 0 8px 24px rgba(10, 37, 64, 0.15);
       position: relative;
@@ -47,20 +47,16 @@
     .profile-info p { margin: 0; font-size: 13px; color: #d0e2ff; }
     .badge-verified { background: rgba(255, 255, 255, 0.2); font-size: 11px; padding: 2px 8px; border-radius: 20px; font-weight: normal; }
 
-    .action-btns {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-    }
+    .action-btns { display: flex; gap: 8px; align-items: center; }
 
-    .header-btn { 
-      background-color: #ffffff; 
-      color: #0052cc; 
-      padding: 8px 14px; 
-      border-radius: 8px; 
-      text-decoration: none; 
-      font-weight: 700; 
-      font-size: 13px; 
+    .header-btn {
+      background-color: #ffffff;
+      color: #0052cc;
+      padding: 8px 14px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 13px;
       display: inline-flex;
       align-items: center;
       gap: 6px;
@@ -93,32 +89,28 @@
     .form-group { margin-bottom: 16px; }
     .form-group:last-child { margin-bottom: 0; }
     label { display: block; font-weight: 700; font-size: 13px; margin-bottom: 6px; color: var(--text-main); }
-    
-    select, input, textarea { 
-      width: 100%; 
-      padding: 10px 12px; 
-      font-size: 14px; 
-      border: 1.5px solid var(--border-color); 
-      border-radius: 8px; 
-      background-color: #fff; 
+
+    select, input, textarea {
+      width: 100%;
+      padding: 10px 12px;
+      font-size: 14px;
+      border: 1.5px solid var(--border-color);
+      border-radius: 8px;
+      background-color: #fff;
       color: var(--text-main);
       transition: all 0.2s ease-in-out;
     }
 
-    select:focus, input:focus, textarea:focus { 
-      outline: none; 
-      border-color: var(--primary-color); 
-      box-shadow: 0 0 0 3px rgba(15, 98, 254, 0.15); 
+    select:focus, input:focus, textarea:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(15, 98, 254, 0.15);
     }
 
     textarea { resize: vertical; min-height: 80px; }
     .hidden { display: none !important; }
 
-    .grid-2 {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
     @media (max-width: 500px) {
       .grid-2 { grid-template-columns: 1fr; }
@@ -127,31 +119,31 @@
       .header-btn { width: 100%; justify-content: center; }
     }
 
-    .btn-submit { 
-      width: 100%; 
-      padding: 14px; 
-      background-color: var(--primary-color); 
-      color: white; 
-      border: none; 
-      border-radius: 8px; 
-      font-size: 16px; 
-      font-weight: 700; 
-      cursor: pointer; 
-      margin-top: 10px; 
+    .btn-submit {
+      width: 100%;
+      padding: 14px;
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 10px;
       box-shadow: 0 4px 12px rgba(15, 98, 254, 0.25);
       transition: all 0.2s ease;
     }
     .btn-submit:hover { background-color: var(--primary-hover); transform: translateY(-1px); }
     .btn-submit:disabled { background-color: #a8a8a8; cursor: not-allowed; box-shadow: none; }
 
-    .btn-reset { 
+    .btn-reset {
       width: 100%;
-      background-color: transparent; 
+      background-color: transparent;
       color: #da1e28;
       border: 1px dashed #da1e28;
-      margin-top: 12px; 
-      font-size: 13px; 
-      padding: 10px; 
+      margin-top: 12px;
+      font-size: 13px;
+      padding: 10px;
       border-radius: 8px;
       font-weight: 700;
       cursor: pointer;
@@ -159,14 +151,14 @@
     }
     .btn-reset:hover { background-color: #fff1f1; }
 
-    .status-msg { 
-      margin-top: 16px; 
-      padding: 12px 16px; 
-      border-radius: 8px; 
-      text-align: center; 
-      font-size: 14px; 
+    .status-msg {
+      margin-top: 16px;
+      padding: 12px 16px;
+      border-radius: 8px;
+      text-align: center;
+      font-size: 14px;
       font-weight: 700;
-      display: none; 
+      display: none;
     }
     .status-success { background-color: var(--success-bg); color: var(--success-text); border: 1px solid #a7e1c4; }
     .status-error { background-color: var(--error-bg); color: var(--error-text); border: 1px solid #f8b4b4; }
@@ -175,7 +167,7 @@
 <body>
 
   <div class="container">
-    
+
     <div class="profile-card">
       <div class="profile-info">
         <h3>Eng. Tarek Allam <span class="badge-verified">مُوثّق</span></h3>
@@ -183,12 +175,9 @@
       </div>
 
       <div class="action-btns">
-        <!-- زر فتح مستند Google Doc -->
         <a href="https://docs.google.com/document/d/1lRtJn33qK8Ozlv0C7zCtmJpBU-N4VXqvyYnQEnj-aGk/edit?tab=t.0" target="_blank" rel="noopener noreferrer" class="header-btn">
           <span>📄 فتح المستند</span>
         </a>
-
-        <!-- زر LinkedIn -->
         <a href="https://www.linkedin.com/in/tarekallam-bme/" target="_blank" rel="noopener noreferrer" class="header-btn">
           <span>LinkedIn</span> 🔗
         </a>
@@ -382,7 +371,14 @@
   </div>
 
   <script>
-    const API_ENDPOINT = "https://script.google.com/macros/s/AKfycbxQH9eFuHzOp7jkn7hmXV7J2KRqbbqWUx6pfBIywfvouooGn_peqfhTmWKYOZAVp7bmCw/exec";
+    const API_ENDPOINT = "https://script.google.com/macros/s/AKfycbyOAzcmibHV1LKDpb-a43AX_ZUg8kBoprFQr9yrZL1ikLjMcyteQpMLwEfTqhZ8g8mcMQ/exec";
+
+    // Optional shared secret — must match ENFORCE_SECRET/SHARED_SECRET in googlescript.txt
+    // Leave empty string if backend has ENFORCE_SECRET = false
+    const SHARED_SECRET = "";
+    function withSecret(url) {
+      return SHARED_SECRET ? url + "&secret=" + encodeURIComponent(SHARED_SECRET) : url;
+    }
 
     var today = new Date().toISOString().split("T")[0];
     document.getElementById("reportDate").value = today;
@@ -399,6 +395,10 @@
       var taskGroup = document.getElementById("taskIdGroup");
       var detailsBody = document.getElementById("formDetailsBody");
       var submitBtn = document.getElementById("submitBtn");
+      var statusMsg = document.getElementById("statusMsg");
+
+      statusMsg.style.display = "none";
+      statusMsg.className = "status-msg";
 
       if (action === "UPDATE" || action === "DELETE") {
         taskGroup.classList.remove("hidden");
@@ -429,8 +429,8 @@
 
       var script = document.createElement("script");
       script.id = "jsonpScript";
-      script.src = API_ENDPOINT + "?callback=handleJSONPResponse&t=" + new Date().getTime();
-      
+      script.src = withSecret(API_ENDPOINT + "?callback=handleJSONPResponse&t=" + new Date().getTime());
+
       script.onerror = function() {
         dropdown.innerHTML = "<option value=''>تعذر الاتصال بالخادم.</option>";
       };
@@ -518,7 +518,7 @@
       if (confirm("هل أنت تأكد من تصفير عداد الترقيم تلقائياً؟")) {
         var script = document.createElement("script");
         var payload = encodeURIComponent(JSON.stringify({ actionType: "RESET_COUNTER" }));
-        script.src = API_ENDPOINT + "?callback=handleResetResponse&payload=" + payload;
+        script.src = withSecret(API_ENDPOINT + "?callback=handleResetResponse&payload=" + payload + "&t=" + new Date().getTime());
         document.body.appendChild(script);
       }
     }
@@ -539,7 +539,7 @@
 
     document.getElementById("medicalForm").addEventListener("submit", function(e) {
       e.preventDefault();
-      
+
       var submitBtn = document.getElementById("submitBtn");
       var statusMsg = document.getElementById("statusMsg");
       var actionType = document.getElementById("actionType").value;
@@ -555,7 +555,7 @@
           return;
         }
       }
-      
+
       submitBtn.disabled = true;
       submitBtn.innerText = "جاري الإرسال وتحديث المستند...";
       statusMsg.style.display = "none";
@@ -607,8 +607,14 @@
       var script = document.createElement("script");
       script.id = "submitScript";
       var encodedPayload = encodeURIComponent(JSON.stringify(payload));
-      
-      script.src = API_ENDPOINT + "?callback=handleSubmitSuccess&actionType=" + encodeURIComponent(actionType) + "&taskId=" + encodeURIComponent(taskId) + "&payload=" + encodedPayload + "&t=" + new Date().getTime();
+
+      var url = API_ENDPOINT
+        + "?callback=handleSubmitSuccess"
+        + "&actionType=" + encodeURIComponent(actionType)
+        + "&taskId=" + encodeURIComponent(taskId)
+        + "&payload=" + encodedPayload
+        + "&t=" + new Date().getTime();
+      script.src = withSecret(url);
 
       window.handleSubmitSuccess = function(res) {
         statusMsg.style.display = "block";
@@ -618,7 +624,7 @@
           statusMsg.innerText = "❌ " + (res.message || "فشلت العملية");
         } else {
           statusMsg.className = "status-msg status-success";
-          
+
           if (actionType === "NEW") {
             statusMsg.innerText = "✅ تم إضافة البلاغ بنجاح وتوثيقه بداخل المستند!";
           } else if (actionType === "UPDATE") {
@@ -629,27 +635,39 @@
 
           var currentAction = document.getElementById("actionType").value;
           document.getElementById("medicalForm").reset();
-          document.getElementById("actionType").value = currentAction;
 
           document.getElementById("reportDate").value = today;
           document.getElementById("endDate").value = today;
           document.getElementById("reportTime").value = timeStr;
-          
+
           if (actionType === "DELETE" || actionType === "UPDATE") {
+            document.getElementById("actionType").value = "NEW";
+            toggleActionType();
             loadCases();
+          } else {
+            document.getElementById("actionType").value = currentAction;
           }
         }
 
         submitBtn.disabled = false;
-        submitBtn.innerText = actionType === "DELETE" ? "🗑️ تأكيد حذف البلاغ المحدد" : "حفظ التقرير وتوثيقه بالمستند";
+        var mode = document.getElementById("actionType").value;
+        submitBtn.innerText = (mode === "DELETE")
+          ? "🗑️ تأكيد حذف البلاغ المحدد"
+          : "حفظ التقرير وتوثيقه بالمستند";
+        submitBtn.style.backgroundColor = (mode === "DELETE")
+          ? "#da1e28"
+          : "var(--primary-color)";
       };
 
       script.onerror = function() {
         statusMsg.className = "status-msg status-error";
         statusMsg.innerText = "❌ حدث خطأ أثناء الاتصال بالخادم.";
-        submitBtn.disabled = false;
-        submitBtn.innerText = actionType === "DELETE" ? "🗑️ تأكيد حذف البلاغ المحدد" : "حفظ التقرير وتوثيقه بالمستند";
         statusMsg.style.display = "block";
+        submitBtn.disabled = false;
+        var mode = document.getElementById("actionType").value;
+        submitBtn.innerText = (mode === "DELETE")
+          ? "🗑️ تأكيد حذف البلاغ المحدد"
+          : "حفظ التقرير وتوثيقه بالمستند";
       };
 
       document.body.appendChild(script);
