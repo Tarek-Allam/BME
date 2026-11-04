@@ -220,6 +220,7 @@
               <select id="taskSelect" onchange="toggleInput('taskSelect', 'otherTaskGroup', 'أخرى')">
                 <option value="تجهيز جهاز طبي">تجهيز جهاز طبي</option>
                 <option value="تركيب جهاز طبي">تركيب جهاز طبي</option>
+                <option value="تركيب جهاز ديمو">تركيب جهاز ديمو</option>
                 <option value="تفكيك جهاز طبي">تفكيك جهاز طبي</option>
                 <option value="طلب صيانة">طلب صيانة</option>
                 <option value="صيانة طوارئ">صيانة طوارئ</option>
@@ -230,6 +231,11 @@
             <div class="form-group hidden" id="otherTaskGroup">
               <label>تفاصيل المهمة البديلة:</label>
               <input type="text" id="otherTaskDetails" placeholder="أدخل تفاصيل نوع المهمة البديلة">
+            </div>
+
+            <div class="form-group">
+              <label>الجهة المراد تنفيذ المهمة بها:</label>
+              <input type="text" id="location" placeholder="اسم المركز / العيادة / المستشفى / المدينة">
             </div>
 
             <div class="form-group">
@@ -371,10 +377,9 @@
   </div>
 
   <script>
-    const API_ENDPOINT = "https://script.google.com/macros/s/AKfycbyOAzcmibHV1LKDpb-a43AX_ZUg8kBoprFQr9yrZL1ikLjMcyteQpMLwEfTqhZ8g8mcMQ/exec";
+    const API_ENDPOINT = "https://script.google.com/macros/s/AKfycby_arYh8DiSvR2lA7KoHGW51NPRMRP_spLaE00rIg9xADILtHaxKgsahxqKboL4o5ZrzA/exec";
 
     // Optional shared secret — must match ENFORCE_SECRET/SHARED_SECRET in googlescript.txt
-    // Leave empty string if backend has ENFORCE_SECRET = false
     const SHARED_SECRET = "";
     function withSecret(url) {
       return SHARED_SECRET ? url + "&secret=" + encodeURIComponent(SHARED_SECRET) : url;
@@ -475,6 +480,9 @@
         document.getElementById("otherTaskGroup").classList.remove("hidden");
         document.getElementById("otherTaskDetails").value = item.task.replace("أخرى (", "").replace(")", "");
       }
+
+      // NEW: location
+      document.getElementById("location").value = item.location || "";
 
       var deviceSelect = document.getElementById("deviceSelect");
       if (setSelectValueIfExists(deviceSelect, item.device)) {
@@ -588,6 +596,7 @@
         var reporterFull = rn ? rt + " (" + rn + ")" : rt;
 
         payload.task = task;
+        payload.location = document.getElementById("location").value.trim();   // NEW
         payload.device = device;
         payload.serial = document.getElementById("serialNumber").value.trim();
         payload.reporter = reporterFull;
@@ -630,7 +639,8 @@
           } else if (actionType === "UPDATE") {
             statusMsg.innerText = "✅ تم تحديث البيانات للبلاغ بنجاح بداخل المستند!";
           } else if (actionType === "DELETE") {
-            statusMsg.innerText = "🗑️ تم حذف البلاغ بنجاح من المستند!";
+            statusMsg.innerText = "🗑️ " + (res.message || "تم حذف البلاغ بنجاح من المستند!") +
+              (res.deletedAt ? " | " + res.deletedAt : "");
           }
 
           var currentAction = document.getElementById("actionType").value;
