@@ -47,10 +47,16 @@
     .profile-info p { margin: 0; font-size: 13px; color: #d0e2ff; }
     .badge-verified { background: rgba(255, 255, 255, 0.2); font-size: 11px; padding: 2px 8px; border-radius: 20px; font-weight: normal; }
 
-    .linkedin-btn { 
+    .action-btns {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .header-btn { 
       background-color: #ffffff; 
       color: #0052cc; 
-      padding: 8px 16px; 
+      padding: 8px 14px; 
       border-radius: 8px; 
       text-decoration: none; 
       font-weight: 700; 
@@ -61,7 +67,7 @@
       box-shadow: 0 2px 6px rgba(0,0,0,0.1);
       transition: all 0.2s ease;
     }
-    .linkedin-btn:hover { background-color: var(--accent-blue); transform: translateY(-1px); }
+    .header-btn:hover { background-color: var(--accent-blue); transform: translateY(-1px); }
 
     .form-wrapper {
       background: var(--card-bg);
@@ -117,6 +123,8 @@
     @media (max-width: 500px) {
       .grid-2 { grid-template-columns: 1fr; }
       .profile-card { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .action-btns { flex-direction: column; width: 100%; }
+      .header-btn { width: 100%; justify-content: center; }
     }
 
     .btn-submit { 
@@ -167,14 +175,24 @@
 <body>
 
   <div class="container">
+    
     <div class="profile-card">
       <div class="profile-info">
         <h3>Eng. Tarek Allam <span class="badge-verified">مُوثّق</span></h3>
         <p>Biomedical Equipment Engineer (BME)</p>
       </div>
-      <a href="https://www.linkedin.com/in/tarekallam-bme/" target="_blank" rel="noopener noreferrer" class="linkedin-link linkedin-btn">
-        <span>LinkedIn Profile</span> 🔗
-      </a>
+
+      <div class="action-btns">
+        <!-- زر فتح مستند Google Doc -->
+        <a href="https://docs.google.com/document/d/1lRtJn33qK8Ozlv0C7zCtmJpBU-N4VXqvyYnQEnj-aGk/edit?tab=t.0" target="_blank" rel="noopener noreferrer" class="header-btn">
+          <span>📄 فتح المستند</span>
+        </a>
+
+        <!-- زر LinkedIn -->
+        <a href="https://www.linkedin.com/in/tarekallam-bme/" target="_blank" rel="noopener noreferrer" class="header-btn">
+          <span>LinkedIn</span> 🔗
+        </a>
+      </div>
     </div>
 
     <div class="form-wrapper">
@@ -183,6 +201,7 @@
       </div>
 
       <form id="medicalForm">
+
         <!-- اختيار نوع الإجراء -->
         <div class="form-section" style="background-color: var(--accent-blue); border-color: #b8d5ff;">
           <div class="form-group" style="margin-bottom:0;">
@@ -202,8 +221,8 @@
           </div>
         </div>
 
-        <!-- أجزاء النموذج التفصيلية -->
         <div id="formDetailsBody">
+          <!-- تفاصيل الجهاز والمهمة -->
           <div class="form-section">
             <div class="section-title">🛠️ تفاصيل الجهاز والمهمة</div>
 
@@ -269,6 +288,7 @@
             </div>
           </div>
 
+          <!-- فريق العمل والمسؤولون -->
           <div class="form-section">
             <div class="section-title">👨‍⚕️ فريق العمل والمسؤولون</div>
 
@@ -313,6 +333,7 @@
             </div>
           </div>
 
+          <!-- المواعيد والتوقيتات -->
           <div class="form-section">
             <div class="section-title">📅 المواعيد والتوقيتات</div>
             <div class="grid-2">
@@ -331,6 +352,7 @@
             </div>
           </div>
 
+          <!-- التقرير الفني -->
           <div class="form-section">
             <div class="section-title">📝 التقرير الفني والنتائج</div>
 
@@ -585,7 +607,8 @@
       var script = document.createElement("script");
       script.id = "submitScript";
       var encodedPayload = encodeURIComponent(JSON.stringify(payload));
-      script.src = API_ENDPOINT + "?callback=handleSubmitSuccess&payload=" + encodedPayload + "&t=" + new Date().getTime();
+      
+      script.src = API_ENDPOINT + "?callback=handleSubmitSuccess&actionType=" + encodeURIComponent(actionType) + "&taskId=" + encodeURIComponent(taskId) + "&payload=" + encodedPayload + "&t=" + new Date().getTime();
 
       window.handleSubmitSuccess = function(res) {
         statusMsg.style.display = "block";
@@ -604,7 +627,6 @@
             statusMsg.innerText = "🗑️ تم حذف البلاغ بنجاح من المستند!";
           }
 
-          // إعادة ضبط الحقول بدون مسح قيمة actionType المحددة
           var currentAction = document.getElementById("actionType").value;
           document.getElementById("medicalForm").reset();
           document.getElementById("actionType").value = currentAction;
