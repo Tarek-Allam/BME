@@ -377,8 +377,10 @@
   </div>
 
   <script>
-    const API_ENDPOINT = "https://script.google.com/macros/s/AKfycbxLSyhlL7_HMGfvHg2gUgtwtB9_d4K4enP1KvJbTmivRMIeCjQrzFfN6DU0mYiyH6nADw/exec";
+    // The deployed URL shown in Apps Script → Manage deployments → Web app URL.
+    const API_ENDPOINT = "https://script.google.com/macros/s/AKfycbyLhk_ldI3aAcVNZCsdySzYo07VcJ2Hx4rA1rXJtLd3nFoFkdm-FUynJAt3tAKfd6FnEg/exec";
 
+    // Optional shared secret — must match ENFORCE_SECRET/SHARED_SECRET in googlescript.txt
     const SHARED_SECRET = "";
     function withSecret(url) {
       return SHARED_SECRET ? url + "&secret=" + encodeURIComponent(SHARED_SECRET) : url;
