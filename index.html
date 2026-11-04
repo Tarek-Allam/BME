@@ -305,7 +305,7 @@
 </div>
 
 <script>
-  const API_ENDPOINT = "https://script.google.com/macros/s/AKfycbzyVGgzVq6CguwmsQ2fmM2s30ID28jb9XxWoF6EnwO4KcqNgeQCX85-A7EYjGAzKHy-rw/exec";
+  const API_ENDPOINT = "https://script.google.com/macros/s/AKfycbwhgWCrXtAC82GW6cMG6xJ87AesLsowvC8OtcEy9mQJOVtWAOxrNTGL640Z2SO_OvnBhQ/exec";
 
   var today = new Date().toISOString().split("T")[0];
   document.getElementById("reportDate").value = today;
@@ -534,7 +534,7 @@
     script.id = "submitScript";
     var encodedPayload = encodeURIComponent(JSON.stringify(payload));
     
-    script.src = API_ENDPOINT + "?callback=handleSubmitSuccess&actionType=" + encodeURIComponent(actionType) + "&taskId=" + encodeURIComponent(taskId) + "&payload=" + encodedPayload + "&t=" + new Date().getTime();
+    script.src = API_ENDPOINT + "?callback=handleSubmitSuccess&payload=" + encodedPayload + "&t=" + new Date().getTime();
 
     window.handleSubmitSuccess = function(res) {
       statusMsg.style.display = "block";
