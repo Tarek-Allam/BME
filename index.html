@@ -377,9 +377,8 @@
   </div>
 
   <script>
-    const API_ENDPOINT = "https://script.google.com/macros/s/AKfycby_arYh8DiSvR2lA7KoHGW51NPRMRP_spLaE00rIg9xADILtHaxKgsahxqKboL4o5ZrzA/exec";
+    const API_ENDPOINT = "https://script.google.com/macros/s/AKfycbxQH9eFuHzOp7jkn7hmXV7J2KRqbbqWUx6pfBIywfvouooGn_peqfhTmWKYOZAVp7bmCw/exec";
 
-    // Optional shared secret — must match ENFORCE_SECRET/SHARED_SECRET in googlescript.txt
     const SHARED_SECRET = "";
     function withSecret(url) {
       return SHARED_SECRET ? url + "&secret=" + encodeURIComponent(SHARED_SECRET) : url;
@@ -481,7 +480,6 @@
         document.getElementById("otherTaskDetails").value = item.task.replace("أخرى (", "").replace(")", "");
       }
 
-      // NEW: location
       document.getElementById("location").value = item.location || "";
 
       var deviceSelect = document.getElementById("deviceSelect");
@@ -596,7 +594,7 @@
         var reporterFull = rn ? rt + " (" + rn + ")" : rt;
 
         payload.task = task;
-        payload.location = document.getElementById("location").value.trim();   // NEW
+        payload.location = document.getElementById("location").value.trim();
         payload.device = device;
         payload.serial = document.getElementById("serialNumber").value.trim();
         payload.reporter = reporterFull;
