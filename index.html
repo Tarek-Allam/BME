@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>نظام توثيق مهام الأجهزة الطبية | Eng. Tarek Allam</title>
+  <title>نظام توثيق المهام الهندسية الطبية | Eng. Tarek Allam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -130,8 +130,8 @@
 
   <div class="profile-card">
     <div class="profile-info">
-      <h3>Eng. Tarek Allam <span class="badge-verified">مُوثّق</span></h3>
-      <p>Biomedical Service Lead</p>
+      <h3>Eng. Tarek Allam <span class="badge-verified">Biomedical Service Lead</span></h3>
+      <p>System Management & Documentation</p>
     </div>
     <div class="action-btns">
       <a href="https://docs.google.com/document/d/1lRtJn33qK8Ozlv0C7zCtmJpBU-N4VXqvyYnQEnj-aGk/edit?tab=t.0" target="_blank" rel="noopener noreferrer" class="header-btn">📄 فتح المستند</a>
@@ -301,7 +301,7 @@
             </div>
           </div>
           
-          <!-- حقول تواريخ الديمو (تظهر فقط عند اختيار تركيب جهاز ديمو) -->
+          <!-- تواريخ الديمو -->
           <div class="grid-2 hidden" id="demoDatesGroup" style="margin-top: 16px; background: var(--accent-blue); padding: 12px; border-radius: 8px;">
             <div class="form-group" style="margin-bottom:0;">
               <label style="color: var(--primary-color);">⏳ تاريخ بداية الديمو:</label>
@@ -345,7 +345,7 @@
 </div>
 
 <script>
-  const API_ENDPOINT = "https://script.google.com/macros/s/AKfycbxZBEz6_vj3y4TDPw4KE2hmPknocEDeTqdic-K3vA3BsH8mbK-WzVlkPrAS36m5DzGtmQ/exec";
+  const API_ENDPOINT = "https://script.google.com/macros/s/AKfycby1DSNTzdTTP2F_0oPD2YaP6fgw8oLRyhZ2LvEjXXXh5aMJEyKzMoabIy64io6_fcumnA/exec";
 
   window.addEventListener("DOMContentLoaded", function() {
     if (sessionStorage.getItem("isLoggedIn") === "true") {
@@ -435,20 +435,17 @@
     else group.classList.add("hidden");
   }
 
-  // التحكم في ظهور حقول تواريخ الديمو بناءً على نوع المهمة
   function checkTaskType() {
     var taskVal = document.getElementById("taskSelect").value;
     var demoGroup = document.getElementById("demoDatesGroup");
     var otherGroup = document.getElementById("otherTaskGroup");
 
-    // التحقق من المهمة البديلة (أخرى)
     if (taskVal === "أخرى") {
       otherGroup.classList.remove("hidden");
     } else {
       otherGroup.classList.add("hidden");
     }
 
-    // التحقق من تركيب جهاز ديمو
     if (taskVal === "تركيب جهاز ديمو") {
       demoGroup.classList.remove("hidden");
     } else {
@@ -560,10 +557,29 @@
     taskSelect.value = item.task && taskSelect.querySelector("option[value='" + item.task + "']") ? item.task : "أخرى";
     checkTaskType();
 
+    // اختيار الجهاز بدقة من القائمة أو تعيينه كجهاز جديد
+    var deviceSelect = document.getElementById("deviceSelect");
+    var deviceFound = false;
+    for (var i = 0; i < deviceSelect.options.length; i++) {
+      if (deviceSelect.options[i].value === item.device) {
+        deviceSelect.selectedIndex = i;
+        deviceFound = true;
+        break;
+      }
+    }
+
+    if (deviceFound) {
+      document.getElementById("newDeviceGroup").classList.add("hidden");
+    } else if (item.device && item.device !== "غير مسجل") {
+      deviceSelect.value = "NEW_DEVICE";
+      document.getElementById("newDeviceGroup").classList.remove("hidden");
+      document.getElementById("newDeviceName").value = item.device;
+    }
+
     document.getElementById("serialNumber").value = item.serial === "غير مسجل" ? "" : (item.serial || "");
-    document.getElementById("reportDate").value = item.reportDate || today;
-    document.getElementById("reportTime").value = item.reportTime || timeStr;
-    document.getElementById("endDate").value = item.endDate || today;
+    document.getElementById("reportDate").value = item.reportDate || "";
+    document.getElementById("reportTime").value = item.reportTime || "";
+    document.getElementById("endDate").value = item.endDate || "";
     document.getElementById("executionNotes").value = item.notes === "لم تذكر" ? "" : (item.notes || "");
     document.getElementById("results").value = item.results === "لم تذكر" ? "" : (item.results || "");
     document.getElementById("errors").value = item.errors === "لا توجد أخطاء" ? "" : (item.errors || "");
@@ -608,14 +624,19 @@
         taskVal = od ? "أخرى (" + od + ")" : "أخرى";
       }
 
-      // إذا كانت المهمة ديمو، نقوم بدمج فترتها في تفاصيل التنفيذ أو البيانات المرسلة بوضوح
+      var deviceVal = document.getElementById("deviceSelect").value;
+      if (deviceVal === "NEW_DEVICE") {
+        var nd = document.getElementById("newDeviceName").value.trim();
+        deviceVal = nd ? nd : "جهاز جديد غير معرف";
+      }
+
       var demoStart = document.getElementById("demoStartDate").value;
       var demoEnd = document.getElementById("demoEndDate").value;
       
       payload.task = taskVal;
       payload.location = locationVal;
       payload.taskStatus = taskStatusVal;
-      payload.device = document.getElementById("deviceSelect").value;
+      payload.device = deviceVal;
       payload.serial = document.getElementById("serialNumber").value.trim();
       payload.reporter = document.getElementById("reporterSelect").value;
       payload.manager = document.getElementById("responsibleManager").value;
@@ -652,7 +673,7 @@
         statusMsg.innerText = "❌ " + (res.message || "فشلت العملية");
       } else {
         statusMsg.className = "status-msg status-success";
-        statusMsg.innerText = actionType === "DELETE" ? "🗑️ تم الحذف بنجاح!" : "✅ تم حفظ وتوثيق بيانات الديمو بالمستند بنجاح!";
+        statusMsg.innerText = actionType === "DELETE" ? "🗑️ تم الحذف بنجاح!" : "✅ تم حفظ التقرير وتوثيقه بالمستند بنجاح!";
         document.getElementById("medicalForm").reset();
         document.getElementById("actionType").value = actionType;
         checkTaskType();
