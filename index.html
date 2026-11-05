@@ -135,7 +135,7 @@
 </head>
 <body>
 
-<!-- 1. واجهة تسجيل الدخول (تظهر افتراضياً) -->
+<!-- 1. واجهة تسجيل الدخول -->
 <div id="loginSection" class="login-wrapper">
   <div class="login-header">
     <h2>🔐 تسجيل الدخول للنظام</h2>
@@ -155,7 +155,7 @@
   <div id="loginStatusMsg" class="status-msg"></div>
 </div>
 
-<!-- 2. النظام الأساسي (مخفي لحين تسجيل الدخول) -->
+<!-- 2. النظام الأساسي -->
 <div id="mainAppSection" class="container hidden">
 
   <div class="profile-card">
@@ -347,16 +347,14 @@
 </div>
 
 <script>
-  const API_ENDPOINT = "https://script.google.com/macros/s/AKfycbwB4HZ4NbrmFk-6dqvA9qzmP_TDAytsbW5Lu3uy5LRUXhDIelq7R2LqG41-6cMPhR8VdQ/exec";
+  const API_ENDPOINT = "https://script.google.com/macros/s/AKfycbzJzGXww1dpbknhFrZdPckV_ewJ6YPsbmrIjXFi9WT25l_y88frQphD98qer01ELDbziQ/exec";
 
-  // التحقق من حالة الجلسة عند فتح الصفحة
   window.addEventListener("DOMContentLoaded", function() {
     if (sessionStorage.getItem("isLoggedIn") === "true") {
       showMainApp();
     }
   });
 
-  // معالجة تسجيل الدخول
   document.getElementById("loginForm").addEventListener("submit", function(e) {
     e.preventDefault();
     var u = document.getElementById("usernameInput").value.trim();
@@ -404,7 +402,6 @@
     document.getElementById("loginSection").classList.add("hidden");
     document.getElementById("mainAppSection").classList.remove("hidden");
     
-    // تهيئة التواريخ
     var today = new Date().toISOString().split("T")[0];
     document.getElementById("reportDate").value = today;
     document.getElementById("endDate").value = today;
@@ -420,6 +417,9 @@
   }
 
   var loadedCasesData = {};
+  var today = new Date().toISOString().split("T")[0];
+  var now = new Date();
+  var timeStr = (now.getHours() < 10 ? "0" : "") + now.getHours() + ":" + (now.getMinutes() < 10 ? "0" : "") + now.getMinutes();
 
   function toggleActionType() {
     var action = document.getElementById("actionType").value;
@@ -504,6 +504,8 @@
 
     var item = loadedCasesData[selectedId];
 
+    document.getElementById("location").value = (item.location && item.location !== "غير مسجلة") ? item.location : "";
+
     var taskSelect = document.getElementById("taskSelect");
     if (setSelectValueIfExists(taskSelect, item.task)) {
       document.getElementById("otherTaskGroup").classList.add("hidden");
@@ -512,8 +514,6 @@
       document.getElementById("otherTaskGroup").classList.remove("hidden");
       document.getElementById("otherTaskDetails").value = item.task.replace("أخرى (", "").replace(")", "");
     }
-
-    document.getElementById("location").value = item.location === "غير مسجلة" ? "" : (item.location || "");
 
     var deviceSelect = document.getElementById("deviceSelect");
     if (setSelectValueIfExists(deviceSelect, item.device)) {
@@ -594,6 +594,8 @@
       taskId: taskId
     };
 
+    var locationVal = document.getElementById("location").value.trim();
+
     if (actionType !== "DELETE") {
       var task = document.getElementById("taskSelect").value;
       if (task === "أخرى") {
@@ -617,7 +619,7 @@
       var reporterFull = rn ? rt + " (" + rn + ")" : rt;
 
       payload.task = task;
-      payload.location = document.getElementById("location").value.trim();
+      payload.location = locationVal;
       payload.device = device;
       payload.serial = document.getElementById("serialNumber").value.trim();
       payload.reporter = reporterFull;
@@ -638,7 +640,12 @@
     script.id = "submitScript";
     var encodedPayload = encodeURIComponent(JSON.stringify(payload));
     
-    script.src = API_ENDPOINT + "?callback=handleSubmitSuccess&actionType=" + encodeURIComponent(actionType) + "&taskId=" + encodeURIComponent(taskId) + "&payload=" + encodedPayload + "&t=" + new Date().getTime();
+    script.src = API_ENDPOINT + "?callback=handleSubmitSuccess" +
+      "&actionType=" + encodeURIComponent(actionType) + 
+      "&taskId=" + encodeURIComponent(taskId) + 
+      "&location=" + encodeURIComponent(locationVal) + 
+      "&payload=" + encodedPayload + 
+      "&t=" + new Date().getTime();
 
     window.handleSubmitSuccess = function(res) {
       statusMsg.style.display = "block";
@@ -661,11 +668,8 @@
         document.getElementById("medicalForm").reset();
         document.getElementById("actionType").value = currentAction;
 
-        var today = new Date().toISOString().split("T")[0];
         document.getElementById("reportDate").value = today;
         document.getElementById("endDate").value = today;
-        var now = new Date();
-        var timeStr = (now.getHours() < 10 ? "0" : "") + now.getHours() + ":" + (now.getMinutes() < 10 ? "0" : "") + now.getMinutes();
         document.getElementById("reportTime").value = timeStr;
         
         if (actionType === "DELETE" || actionType === "UPDATE") {
