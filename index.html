@@ -141,7 +141,7 @@
 
   <div class="form-wrapper">
     <div class="form-header">
-      <h2>نظام توثيق المهام الهندسية </h2>
+      <h2>نظام توثيق المهام الهندسية</h2>
       <button type="button" class="btn-logout" onclick="logout()">🚪 تسجيل الخروج</button>
     </div>
 
@@ -180,7 +180,7 @@
           <div class="grid-2">
             <div class="form-group">
               <label>نوع المهمة:</label>
-              <select id="taskSelect" onchange="toggleInput('taskSelect', 'otherTaskGroup', 'أخرى')">
+              <select id="taskSelect" onchange="checkTaskType()">
                 <option value="تجهيز جهاز طبي">تجهيز جهاز طبي</option>
                 <option value="تركيب جهاز طبي">تركيب جهاز طبي</option>
                 <option value="تركيب جهاز ديمو">تركيب جهاز ديمو</option>
@@ -214,8 +214,30 @@
             <label>نوع الجهاز:</label>
             <select id="deviceSelect" onchange="toggleInput('deviceSelect', 'newDeviceGroup', 'NEW_DEVICE')">
               <option value="INTALIGHT DREAM OCTA VG100D">INTALIGHT DREAM OCTA VG100D</option>
+              <option value="INTALIGHT DREAM OCTA VG200D">INTALIGHT DREAM OCTA VG200D</option>
+              <option value="INTALIGHT DREAM OCTA VG200C">INTALIGHT DREAM OCTA VG200C</option>
               <option value="OPTOVUE SOLIX OCTA">OPTOVUE SOLIX OCTA</option>
+              <option value="OPTOVUE XRAVANTI OCTA">OPTOVUE XRAVANTI OCTA</option>
+              <option value="OPTOVUE IVUE80 OCT">OPTOVUE IVUE80 OCT</option>
+              <option value="OPTOVUE ISCAN OCT">OPTOVUE ISCAN OCT</option>
               <option value="OPTOVUE RTVUE100 OCT">OPTOVUE RTVUE100 OCT</option>
+              <option value="MOVU Argos AS OCT">MOVU Argos AS OCT</option>
+              <option value="DGH Ocular UltraSound A/B Scan">DGH Ocular UltraSound A/B Scan</option>
+              <option value="DGH Ocular UltraSound A/B Scan and UBM">DGH Ocular UltraSound A/B Scan and UBM</option>
+              <option value="MicroClear Apollo Laser Retinal Fundus Camera RB">MicroClear Apollo Laser Retinal Fundus Camera RB</option>
+              <option value="MicroClear Apollo Laser Retinal Fundus Camera RGB v1.0">MicroClear Apollo Laser Retinal Fundus Camera RGB v1.0</option>
+              <option value="MicroClear ApolloLaser Retinal Fundus Camera RGB v2.0">MicroClear ApolloLaser Retinal Fundus Camera RGB v2.0</option>
+              <option value="RODENSTOCK Perimat Visual Field">RODENSTOCK Perimat Visual Field</option>
+              <option value="RODENSTOCK Perimat2 Visual Field">RODENSTOCK Perimat2 Visual Field</option>
+              <option value="RODENSTOCK Refraction Unit 500">RODENSTOCK Refraction Unit 500</option>
+              <option value="RODENSTOCK Refraction Unit 1000">RODENSTOCK Refraction Unit 1000</option>
+              <option value="RODENSTOCK Tonometer Topascope">RODENSTOCK Tonometer Topascope</option>
+              <option value="Visionix Tulip Screen Portable Autorefractor autokeratometer">Visionix Tulip Screen Portable Autorefractor autokeratometer</option>
+              <option value="Visionix Tulip sidetube Portable Autorefractor autokeratometer">Visionix Tulip sidetube Portable Autorefractor autokeratometer</option>
+              <option value="REXONE EYE Resono Dry Eye Treatment">REXONE EYE Resono Dry Eye Treatment</option>
+              <option value="SBM Dry Eye Diagnostics OS-1000">SBM Dry Eye Diagnostics OS-1000</option>
+              <option value="Peschke PXL Corneal Cross linking SAPPHIRE 318">Peschke PXL Corneal Cross linking SAPPHIRE 318</option>
+              <option value="Sterlink Plasmapp FPS-15s-Plus Low temp Plasma sterilizer">Sterlink Plasmapp FPS-15s-Plus Low temp Plasma sterilizer</option>
               <option value="ENBIO Autoclave">ENBIO Autoclave</option>
               <option value="W&H Autoclave">W&H Autoclave</option>
               <option value="NEW_DEVICE">إضافة جهاز جديد...</option>
@@ -278,8 +300,21 @@
               <input type="time" id="reportTime">
             </div>
           </div>
-          <div class="form-group">
-            <label>تاريخ الانتهاء:</label>
+          
+          <!-- حقول تواريخ الديمو (تظهر فقط عند اختيار تركيب جهاز ديمو) -->
+          <div class="grid-2 hidden" id="demoDatesGroup" style="margin-top: 16px; background: var(--accent-blue); padding: 12px; border-radius: 8px;">
+            <div class="form-group" style="margin-bottom:0;">
+              <label style="color: var(--primary-color);">⏳ تاريخ بداية الديمو:</label>
+              <input type="date" id="demoStartDate">
+            </div>
+            <div class="form-group" style="margin-bottom:0;">
+              <label style="color: var(--primary-color);">⏳ تاريخ نهاية الديمو:</label>
+              <input type="date" id="demoEndDate">
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-top: 16px;">
+            <label>تاريخ الانتهاء العام / التسليم:</label>
             <input type="date" id="endDate">
           </div>
         </div>
@@ -310,7 +345,7 @@
 </div>
 
 <script>
-  const API_ENDPOINT = "https://script.google.com/macros/s/AKfycbxUdoxcKtj7yagNK8sMJoZQv1ou0SIu8nJj_EhN82SaogC378lRPrQ1M1psmwEHospfhQ/exec";
+  const API_ENDPOINT = "https://script.google.com/macros/s/AKfycby4hxa91o-iQhRx09wKhPMAkFS6KVwRDSux1wI1FefRlPD23dXzsFzT3dUMHb1Vc68xrg/exec";
 
   window.addEventListener("DOMContentLoaded", function() {
     if (sessionStorage.getItem("isLoggedIn") === "true") {
@@ -357,6 +392,8 @@
     var today = new Date().toISOString().split("T")[0];
     document.getElementById("reportDate").value = today;
     document.getElementById("endDate").value = today;
+    document.getElementById("demoStartDate").value = today;
+    document.getElementById("demoEndDate").value = today;
     var now = new Date();
     document.getElementById("reportTime").value = (now.getHours() < 10 ? "0" : "") + now.getHours() + ":" + (now.getMinutes() < 10 ? "0" : "") + now.getMinutes();
   }
@@ -398,6 +435,27 @@
     else group.classList.add("hidden");
   }
 
+  // التحكم في ظهور حقول تواريخ الديمو بناءً على نوع المهمة
+  function checkTaskType() {
+    var taskVal = document.getElementById("taskSelect").value;
+    var demoGroup = document.getElementById("demoDatesGroup");
+    var otherGroup = document.getElementById("otherTaskGroup");
+
+    // التحقق من المهمة البديلة (أخرى)
+    if (taskVal === "أخرى") {
+      otherGroup.classList.remove("hidden");
+    } else {
+      otherGroup.classList.add("hidden");
+    }
+
+    // التحقق من تركيب جهاز ديمو
+    if (taskVal === "تركيب جهاز ديمو") {
+      demoGroup.classList.remove("hidden");
+    } else {
+      demoGroup.classList.add("hidden");
+    }
+  }
+
   function loadCases() {
     var oldScript = document.getElementById("jsonpScript");
     if (oldScript) oldScript.remove();
@@ -427,7 +485,6 @@
     }
   };
 
-  // 📊 دالة تحليل البيانات وعرضها عند الضغط على زر التحليلات
   function loadAnalyticsData() {
     var analyticsBody = document.getElementById("analyticsBody");
     analyticsBody.classList.remove("hidden");
@@ -470,7 +527,6 @@
       html += `<span class="badge-status status-delayed">مؤجلة: ${statusCounts["مؤجلة"]}</span>`;
       html += `</div>`;
 
-      // تفصيل مقسم حسب الحالة
       Object.keys(statusLists).forEach(function(st) {
         html += `<div style="margin-top:8px; border-top:1px dashed #cbd5e1; padding-top:6px;">`;
         html += `<strong>المهام (${st}) [${statusLists[st].length}]:</strong>`;
@@ -499,6 +555,11 @@
 
     document.getElementById("location").value = (item.location && item.location !== "غير مسجلة") ? item.location : "";
     document.getElementById("taskStatus").value = item.status || "تم الانتهاء بنجاح";
+    
+    var taskSelect = document.getElementById("taskSelect");
+    taskSelect.value = item.task && taskSelect.querySelector("option[value='" + item.task + "']") ? item.task : "أخرى";
+    checkTaskType();
+
     document.getElementById("serialNumber").value = item.serial === "غير مسجل" ? "" : (item.serial || "");
     document.getElementById("reportDate").value = item.reportDate || today;
     document.getElementById("reportTime").value = item.reportTime || timeStr;
@@ -541,7 +602,17 @@
     var payload = { actionType: actionType, taskId: taskId, taskStatus: taskStatusVal };
 
     if (actionType !== "DELETE") {
-      payload.task = document.getElementById("taskSelect").value;
+      var taskVal = document.getElementById("taskSelect").value;
+      if (taskVal === "أخرى") {
+        var od = document.getElementById("otherTaskDetails").value.trim();
+        taskVal = od ? "أخرى (" + od + ")" : "أخرى";
+      }
+
+      // إذا كانت المهمة ديمو، نقوم بدمج فترتها في تفاصيل التنفيذ أو البيانات المرسلة بوضوح
+      var demoStart = document.getElementById("demoStartDate").value;
+      var demoEnd = document.getElementById("demoEndDate").value;
+      
+      payload.task = taskVal;
       payload.location = locationVal;
       payload.taskStatus = taskStatusVal;
       payload.device = document.getElementById("deviceSelect").value;
@@ -552,7 +623,13 @@
       payload.reportDate = document.getElementById("reportDate").value;
       payload.reportTime = document.getElementById("reportTime").value;
       payload.endDate = document.getElementById("endDate").value;
-      payload.executionNotes = document.getElementById("executionNotes").value.trim();
+      
+      var execNotes = document.getElementById("executionNotes").value.trim();
+      if (taskVal.includes("تركيب جهاز ديمو")) {
+        execNotes = "[فترة الديمو من " + demoStart + " إلى " + demoEnd + "] - " + execNotes;
+      }
+      payload.executionNotes = execNotes;
+      
       payload.results = document.getElementById("results").value.trim();
       payload.errors = document.getElementById("errors").value.trim();
     }
@@ -575,9 +652,10 @@
         statusMsg.innerText = "❌ " + (res.message || "فشلت العملية");
       } else {
         statusMsg.className = "status-msg status-success";
-        statusMsg.innerText = actionType === "DELETE" ? "🗑️ تم الحذف بنجاح!" : "✅ تم حفظ التقرير وتوثيق الحالة بنجاح!";
+        statusMsg.innerText = actionType === "DELETE" ? "🗑️ تم الحذف بنجاح!" : "✅ تم حفظ وتوثيق بيانات الديمو بالمستند بنجاح!";
         document.getElementById("medicalForm").reset();
         document.getElementById("actionType").value = actionType;
+        checkTaskType();
         if (actionType === "DELETE" || actionType === "UPDATE") loadCases();
       }
       submitBtn.disabled = false;
