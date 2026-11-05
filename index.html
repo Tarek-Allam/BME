@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>نظام توثيق مهام الأجهزة الطبية | Eng. Tarek Allam</title>
+  <title>نظام توثيق الأجهزة الطبية | Eng. Tarek Allam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -29,13 +29,9 @@
     .container { max-width: 680px; margin: 0 auto; }
 
     .login-wrapper {
-      background: var(--card-bg);
-      padding: 32px 28px;
-      border-radius: var(--radius);
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-      border: 1px solid var(--border-color);
-      max-width: 420px;
-      margin: 60px auto;
+      background: var(--card-bg); padding: 32px 28px; border-radius: var(--radius);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08); border: 1px solid var(--border-color);
+      max-width: 420px; margin: 60px auto;
     }
     .login-header { text-align: center; margin-bottom: 24px; }
     .login-header h2 { margin: 0; color: #0a2540; font-size: 22px; font-weight: 800; }
@@ -44,8 +40,7 @@
     .profile-card {
       background: linear-gradient(135deg, #0a2540 0%, #0052cc 100%);
       color: white; padding: 20px 24px; border-radius: var(--radius);
-      margin-bottom: 24px; display: flex; align-items: center;
-      justify-content: space-between;
+      margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between;
       box-shadow: 0 8px 24px rgba(10, 37, 64, 0.15);
     }
     .profile-info h3 { margin: 0 0 2px 0; font-size: 20px; font-weight: 800; display: flex; align-items: center; gap: 8px; }
@@ -54,33 +49,33 @@
 
     .action-btns { display: flex; gap: 8px; align-items: center; }
     .header-btn {
-      background-color: #ffffff; color: #0052cc;
-      padding: 8px 14px; border-radius: 8px; text-decoration: none;
-      font-weight: 700; font-size: 13px;
-      display: inline-flex; align-items: center; gap: 6px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      transition: all 0.2s ease;
+      background-color: #ffffff; color: #0052cc; padding: 8px 14px; border-radius: 8px; text-decoration: none;
+      font-weight: 700; font-size: 13px; display: inline-flex; align-items: center; gap: 6px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1); transition: all 0.2s ease;
     }
     .header-btn:hover { background-color: var(--accent-blue); transform: translateY(-1px); }
 
     .form-wrapper {
       background: var(--card-bg); padding: 28px; border-radius: var(--radius);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-      border: 1px solid rgba(0,0,0,0.03);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); border: 1px solid rgba(0,0,0,0.03);
     }
     .form-header { margin-bottom: 24px; border-bottom: 2px solid var(--bg-color); padding-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
     .form-header h2 { margin: 0; font-size: 20px; color: #0a2540; font-weight: 800; }
 
-    .btn-logout {
-      background-color: #ffe8e8; color: #da1e28; border: none; padding: 6px 12px;
-      border-radius: 6px; font-size: 12px; font-weight: 700; cursor: pointer;
-    }
+    .btn-logout { background-color: #ffe8e8; color: #da1e28; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 700; cursor: pointer; }
     .btn-logout:hover { background-color: #f8b4b4; }
 
-    .form-section {
-      background: #fafbfc; border: 1px solid var(--border-color);
-      padding: 16px; border-radius: 10px; margin-bottom: 20px;
+    .analytics-panel {
+      background: #f0f4f8; border: 1px solid #cbd5e1; border-radius: 10px; padding: 16px; margin-bottom: 20px;
     }
+    .analytics-title { font-size: 15px; font-weight: 800; color: #0a2540; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; }
+    .analytics-content { font-size: 13px; color: #334155; }
+    .badge-status { display: inline-block; padding: 3px 8px; border-radius: 6px; font-size: 11px; font-weight: 700; margin-left: 6px; }
+    .status-done { background-color: #def8ee; color: #0e6027; }
+    .status-progress { background-color: #fff1c5; color: #8a6100; }
+    .status-delayed { background-color: #ffe8e8; color: #9e1a1a; }
+
+    .form-section { background: #fafbfc; border: 1px solid var(--border-color); padding: 16px; border-radius: 10px; margin-bottom: 20px; }
     .section-title { font-size: 14px; color: var(--primary-color); margin-top: 0; margin-bottom: 14px; font-weight: 700; display: flex; align-items: center; gap: 6px; }
 
     .form-group { margin-bottom: 16px; }
@@ -89,45 +84,23 @@
 
     select, input, textarea {
       width: 100%; padding: 10px 12px; font-size: 14px;
-      border: 1.5px solid var(--border-color); border-radius: 8px;
-      background-color: #fff; color: var(--text-main);
+      border: 1.5px solid var(--border-color); border-radius: 8px; background-color: #fff; color: var(--text-main);
       transition: all 0.2s ease-in-out;
     }
-    select:focus, input:focus, textarea:focus {
-      outline: none; border-color: var(--primary-color);
-      box-shadow: 0 0 0 3px rgba(15, 98, 254, 0.15);
-    }
+    select:focus, input:focus, textarea:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(15, 98, 254, 0.15); }
     textarea { resize: vertical; min-height: 80px; }
     .hidden { display: none !important; }
     .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
-    @media (max-width: 500px) {
-      .grid-2 { grid-template-columns: 1fr; }
-      .profile-card { flex-direction: column; align-items: flex-start; gap: 12px; }
-      .action-btns { flex-direction: column; width: 100%; }
-      .header-btn { width: 100%; justify-content: center; }
-    }
-
     .btn-submit {
-      width: 100%; padding: 14px; background-color: var(--primary-color);
-      color: white; border: none; border-radius: 8px;
-      font-size: 16px; font-weight: 700; cursor: pointer; margin-top: 10px;
-      box-shadow: 0 4px 12px rgba(15, 98, 254, 0.25);
-      transition: all 0.2s ease;
+      width: 100%; padding: 14px; background-color: var(--primary-color); color: white; border: none; border-radius: 8px;
+      font-size: 16px; font-weight: 700; cursor: pointer; margin-top: 10px; box-shadow: 0 4px 12px rgba(15, 98, 254, 0.25);
     }
-    .btn-submit:hover { background-color: var(--primary-hover); transform: translateY(-1px); }
-    .btn-submit:disabled { background-color: #a8a8a8; cursor: not-allowed; }
+    .btn-submit:hover { background-color: var(--primary-hover); }
+    .btn-analytics { background-color: #10b981; color: white; border: none; padding: 8px 12px; border-radius: 6px; font-weight: 700; cursor: pointer; font-size: 12px; }
+    .btn-analytics:hover { background-color: #059669; }
 
-    .btn-reset {
-      width: 100%; background-color: transparent; color: #da1e28;
-      border: 1px dashed #da1e28; margin-top: 12px; font-size: 13px;
-      padding: 10px; border-radius: 8px; font-weight: 700; cursor: pointer;
-    }
-
-    .status-msg {
-      margin-top: 16px; padding: 12px 16px; border-radius: 8px;
-      text-align: center; font-size: 14px; font-weight: 700; display: none;
-    }
+    .status-msg { margin-top: 16px; padding: 12px 16px; border-radius: 8px; text-align: center; font-size: 14px; font-weight: 700; display: none; }
     .status-success { background-color: var(--success-bg); color: var(--success-text); border: 1px solid #a7e1c4; }
     .status-error { background-color: var(--error-bg); color: var(--error-text); border: 1px solid #f8b4b4; }
   </style>
@@ -158,7 +131,7 @@
   <div class="profile-card">
     <div class="profile-info">
       <h3>Eng. Tarek Allam <span class="badge-verified">مُوثّق</span></h3>
-      <p>Biomedical Service Lead (BME)</p>
+      <p>Biomedical Equipment Engineer (BME)</p>
     </div>
     <div class="action-btns">
       <a href="https://docs.google.com/document/d/1lRtJn33qK8Ozlv0C7zCtmJpBU-N4VXqvyYnQEnj-aGk/edit?tab=t.0" target="_blank" rel="noopener noreferrer" class="header-btn">📄 فتح المستند</a>
@@ -168,8 +141,19 @@
 
   <div class="form-wrapper">
     <div class="form-header">
-      <h2>نظام توثيق ومتابعه المهام الهندسية </h2>
+      <h2>نظام توثيق وتفتيش المهام الهندسية الطبية</h2>
       <button type="button" class="btn-logout" onclick="logout()">🚪 تسجيل الخروج</button>
+    </div>
+
+    <!-- لوحة تحليلات البيانات وسرد المهام حسب الحالة -->
+    <div class="analytics-panel">
+      <div class="analytics-title">
+        <span>📈 تحليل بيانات المهام والحالات</span>
+        <button type="button" class="btn-analytics" onclick="loadAnalyticsData()">📊 عرض التحليلات</button>
+      </div>
+      <div id="analyticsBody" class="analytics-content hidden">
+        <p>جاري تحليل البيانات...</p>
+      </div>
     </div>
 
     <form id="medicalForm">
@@ -191,19 +175,29 @@
 
       <div id="formDetailsBody">
         <div class="form-section">
-          <div class="section-title">🛠️ تفاصيل الجهاز والمهمة</div>
+          <div class="section-title">🛠️ تفاصيل الجهاز والمهمة وحالتها</div>
 
-          <div class="form-group">
-            <label>نوع المهمة:</label>
-            <select id="taskSelect" onchange="toggleInput('taskSelect', 'otherTaskGroup', 'أخرى')">
-              <option value="تجهيز جهاز طبي">تجهيز جهاز طبي</option>
-              <option value="تركيب جهاز طبي">تركيب جهاز طبي</option>
-              <option value="تركيب جهاز ديمو">تركيب جهاز ديمو</option>
-              <option value="تفكيك جهاز طبي">تفكيك جهاز طبي</option>
-              <option value="طلب صيانة">طلب صيانة</option>
-              <option value="صيانة طوارئ">صيانة طوارئ</option>
-              <option value="أخرى">أخرى...</option>
-            </select>
+          <div class="grid-2">
+            <div class="form-group">
+              <label>نوع المهمة:</label>
+              <select id="taskSelect" onchange="toggleInput('taskSelect', 'otherTaskGroup', 'أخرى')">
+                <option value="تجهيز جهاز طبي">تجهيز جهاز طبي</option>
+                <option value="تركيب جهاز طبي">تركيب جهاز طبي</option>
+                <option value="تركيب جهاز ديمو">تركيب جهاز ديمو</option>
+                <option value="تفكيك جهاز طبي">تفكيك جهاز طبي</option>
+                <option value="طلب صيانة">طلب صيانة</option>
+                <option value="صيانة طوارئ">صيانة طوارئ</option>
+                <option value="أخرى">أخرى...</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>حالة المهمة:</label>
+              <select id="taskStatus">
+                <option value="تم الانتهاء بنجاح">🟢 تم الانتهاء بنجاح</option>
+                <option value="قيد التنفيذ">🟡 قيد التنفيذ</option>
+                <option value="مؤجلة">🔴 مؤجلة</option>
+              </select>
+            </div>
           </div>
 
           <div class="form-group hidden" id="otherTaskGroup">
@@ -220,30 +214,8 @@
             <label>نوع الجهاز:</label>
             <select id="deviceSelect" onchange="toggleInput('deviceSelect', 'newDeviceGroup', 'NEW_DEVICE')">
               <option value="INTALIGHT DREAM OCTA VG100D">INTALIGHT DREAM OCTA VG100D</option>
-              <option value="INTALIGHT DREAM OCTA VG200D">INTALIGHT DREAM OCTA VG200D</option>
-              <option value="INTALIGHT DREAM OCTA VG200C">INTALIGHT DREAM OCTA VG200C</option>
               <option value="OPTOVUE SOLIX OCTA">OPTOVUE SOLIX OCTA</option>
-              <option value="OPTOVUE XRAVANTI OCTA">OPTOVUE XRAVANTI OCTA</option>
-              <option value="OPTOVUE IVUE80 OCT">OPTOVUE IVUE80 OCT</option>
-              <option value="OPTOVUE ISCAN OCT">OPTOVUE ISCAN OCT</option>
               <option value="OPTOVUE RTVUE100 OCT">OPTOVUE RTVUE100 OCT</option>
-              <option value="MOVU Argos AS OCT">MOVU Argos AS OCT</option>
-              <option value="DGH Ocular UtraSound A/B Scan">DGH Ocular UtraSound A/B Scan</option>
-              <option value="DGH Ocular UtraSound A/B Scan and UBM">DGH Ocular UtraSound A/B Scan and UBM</option>
-              <option value="MicroClear Apollo Laser Retinal Fundus Camera RB">MicroClear Apollo Laser Retinal Fundus Camera RB</option>
-              <option value="MicroClear Apollo Laser Retinal Fundus Camera RGB v1.0">MicroClear Apollo Laser Retinal Fundus Camera RGB v1.0</option>
-              <option value="MicroClear ApolloLaser Retinal Fundus Camera RGB v2.0">MicroClear ApolloLaser Retinal Fundus Camera RGB v2.0</option>
-              <option value="RODENSTOCK Perimat Visual Field">RODENSTOCK Perimat Visual Field</option>
-              <option value="RODENSTOCK Perimat2 Visual Field">RODENSTOCK Perimat2 Visual Field</option>
-              <option value="RODENSTOCK Refraction Unit 500">RODENSTOCK Refraction Unit 500</option>
-              <option value="RODENSTOCK Refraction Unit 1000">RODENSTOCK Refraction Unit 1000</option>
-              <option value="RODENSTOCK Tonometer Topascope">RODENSTOCK Tonometer Topascope</option>
-              <option value="Visionix Tulip Screen Portable Autorefractor autokeratometer">Visionix Tulip Screen Portable Autorefractor autokeratometer</option>
-              <option value="Visionix Tulip sidetube Portable Autorefractor autokeratometer">Visionix Tulip sidetube Portable Autorefractor autokeratometer</option>
-              <option value="REXONE EYE Resono Dry Eye Treatment">REXONE EYE Resono Dry Eye Treatment</option>
-              <option value="SBM Dry Eye Diagnostics OS-1000">SBM Dry Eye Diagnostics OS-1000</option>
-              <option value="Peschke PXL Corneal Cross linking SAPPHIRE 318">Peschke PXL Corneal Cross linking SAPPHIRE 318</option>
-              <option value="Sterlink Plasmapp FPS-15s-Plus Low temp Plasma sterilizer">Sterlink Plasmapp FPS-15s-Plus Low temp Plasma sterilizer</option>
               <option value="ENBIO Autoclave">ENBIO Autoclave</option>
               <option value="W&H Autoclave">W&H Autoclave</option>
               <option value="NEW_DEVICE">إضافة جهاز جديد...</option>
@@ -281,22 +253,16 @@
               <label>المهندس المسؤول:</label>
               <select id="responsibleManager">
                 <option value="طارق علام (مدير الصيانة)">طارق علام (مدير الصيانة)</option>
-                <option value="مدير الصيانة">مدير الصيانة</option>
               </select>
             </div>
             <div class="form-group">
               <label>المهندس المكلف بالتنفيذ:</label>
-              <select id="engineerSelect" onchange="toggleInput('engineerSelect', 'newEngineerGroup', 'NEW')">
+              <select id="engineerSelect">
                 <option value="طارق علام">طارق علام</option>
                 <option value="عمرو عباس">عمرو عباس</option>
                 <option value="محمد ابراهيم">محمد ابراهيم</option>
-                <option value="NEW">إضافة مهندس جديد...</option>
               </select>
             </div>
-          </div>
-          <div class="form-group hidden" id="newEngineerGroup">
-            <label>اسم المهندس المكلف الجديد:</label>
-            <input type="text" id="newEngineerName" placeholder="أدخل اسم المهندس الجديد">
           </div>
         </div>
 
@@ -313,24 +279,24 @@
             </div>
           </div>
           <div class="form-group">
-            <label>تاريخ الانتهاء المتوقع/الفعلي:</label>
+            <label>تاريخ الانتهاء:</label>
             <input type="date" id="endDate">
           </div>
         </div>
 
         <div class="form-section">
-          <div class="section-title">📝 التقرير الفني والنتائج</div>
+          <div class="section-title">📝 التقارير الفنية</div>
           <div class="form-group">
             <label>تفاصيل ما تم تنفيذه:</label>
-            <textarea id="executionNotes" placeholder="اكتب بالتفصيل خطوات العمل والإجراءات التي تمت..."></textarea>
+            <textarea id="executionNotes" placeholder="خطوات العمل..."></textarea>
           </div>
           <div class="form-group">
-            <label>النتائج والتقييم النهائي:</label>
-            <textarea id="results" placeholder="حالة الجهاز وكفاءة العمل بعد التنفيذ..."></textarea>
+            <label>النتائج والتقييم:</label>
+            <textarea id="results" placeholder="حالة الجهاز..."></textarea>
           </div>
           <div class="form-group">
-            <label>الأخطاء والملاحظات (إن وجدت):</label>
-            <textarea id="errors" placeholder="أي عقبات أو قطع غيار مطلوبة مستقبلاً..."></textarea>
+            <label>الأخطاء والملاحظات:</label>
+            <textarea id="errors" placeholder="أي عقبات..."></textarea>
           </div>
         </div>
       </div>
@@ -344,7 +310,7 @@
 </div>
 
 <script>
-  const API_ENDPOINT = "https://script.google.com/macros/s/AKfycbzbh3z0u0viE1a6OfuVxFtFzh2YeavLDBo_8maY7JIyKDPpVFwa2GKrIiOenmsU2IdcPw/exec";
+  const API_ENDPOINT = "https://script.google.com/macros/s/AKfycbzyEr57CX8qJBztz1dwVN-D1uxJwb6GhKeIKx0PXef_e37xQhZTugVGNqeK8rRl3YhkBw/exec";
 
   window.addEventListener("DOMContentLoaded", function() {
     if (sessionStorage.getItem("isLoggedIn") === "true") {
@@ -352,7 +318,6 @@
     }
   });
 
-  // 🔒 معالجة تسجيل الدخول الآمن بنظام JSONP المتوافق تماماً مع Google Apps Script
   document.getElementById("loginForm").addEventListener("submit", function(e) {
     e.preventDefault();
     var u = document.getElementById("usernameInput").value.trim();
@@ -374,50 +339,31 @@
     window.handleLoginResponse = function(res) {
       btn.disabled = false;
       btn.innerText = "دخول للنظام 🚀";
-      
       if (res && res.status === "success") {
         sessionStorage.setItem("isLoggedIn", "true");
         showMainApp();
       } else {
         msg.className = "status-msg status-error";
-        msg.innerText = "❌ " + (res.message || "اسم المستخدم أو كلمة السر غير صحيحة!");
+        msg.innerText = "❌ اسم المستخدم أو كلمة السر غير صحيحة!";
         msg.style.display = "block";
       }
     };
-
-    script.onerror = function() {
-      btn.disabled = false;
-      btn.innerText = "دخول للنظام 🚀";
-      msg.className = "status-msg status-error";
-      msg.innerText = "❌ تعذر الاتصال بالخادم.";
-      msg.style.display = "block";
-    };
-
     document.body.appendChild(script);
   });
 
   function showMainApp() {
     document.getElementById("loginSection").classList.add("hidden");
     document.getElementById("mainAppSection").classList.remove("hidden");
-    
     var today = new Date().toISOString().split("T")[0];
     document.getElementById("reportDate").value = today;
     document.getElementById("endDate").value = today;
-
     var now = new Date();
-    var timeStr = (now.getHours() < 10 ? "0" : "") + now.getHours() + ":" + (now.getMinutes() < 10 ? "0" : "") + now.getMinutes();
-    document.getElementById("reportTime").value = timeStr;
+    document.getElementById("reportTime").value = (now.getHours() < 10 ? "0" : "") + now.getHours() + ":" + (now.getMinutes() < 10 ? "0" : "") + now.getMinutes();
   }
 
-  function logout() {
-    sessionStorage.removeItem("isLoggedIn");
-    location.reload();
-  }
+  function logout() { sessionStorage.removeItem("isLoggedIn"); location.reload(); }
 
   var loadedCasesData = {};
-  var today = new Date().toISOString().split("T")[0];
-  var now = new Date();
-  var timeStr = (now.getHours() < 10 ? "0" : "") + now.getHours() + ":" + (now.getMinutes() < 10 ? "0" : "") + now.getMinutes();
 
   function toggleActionType() {
     var action = document.getElementById("actionType").value;
@@ -448,28 +394,16 @@
   function toggleInput(selectId, targetGroupId, triggerValue) {
     var select = document.getElementById(selectId);
     var group = document.getElementById(targetGroupId);
-    if (select.value === triggerValue) {
-      group.classList.remove("hidden");
-    } else {
-      group.classList.add("hidden");
-    }
+    if (select.value === triggerValue) group.classList.remove("hidden");
+    else group.classList.add("hidden");
   }
 
   function loadCases() {
-    var dropdown = document.getElementById("caseDropdownSelect");
-    dropdown.innerHTML = "<option value=''>جاري تحميل البلاغات...</option>";
-
     var oldScript = document.getElementById("jsonpScript");
     if (oldScript) oldScript.remove();
-
     var script = document.createElement("script");
     script.id = "jsonpScript";
     script.src = API_ENDPOINT + "?callback=handleJSONPResponse&t=" + new Date().getTime();
-    
-    script.onerror = function() {
-      dropdown.innerHTML = "<option value=''>تعذر الاتصال بالخادم.</option>";
-    };
-
     document.body.appendChild(script);
   }
 
@@ -478,59 +412,93 @@
     if (data && data.status === "success" && data.casesMap) {
       loadedCasesData = data.casesMap;
       var keys = Object.keys(loadedCasesData);
-
       if (keys.length > 0) {
-        dropdown.innerHTML = "<option value=''>-- اختر كود المهمة المطلوب التعامل معها --</option>";
+        dropdown.innerHTML = "<option value=''>-- اختر كود المهمة --</option>";
         keys.forEach(function(caseId) {
           var option = document.createElement("option");
           option.value = caseId;
-          option.text = caseId;
+          option.text = caseId + " (" + (loadedCasesData[caseId].location || "غير مسجلة") + ")";
           dropdown.appendChild(option);
         });
         dropdown.onchange = populateFormFields;
       } else {
-        dropdown.innerHTML = "<option value=''>لا توجد بلاغات مسجلة بالمستند</option>";
+        dropdown.innerHTML = "<option value=''>لا توجد بلاغات مسجلة</option>";
       }
+    }
+  };
+
+  // 📊 دالة تحليل البيانات وعرضها عند الضغط على زر التحليلات
+  function loadAnalyticsData() {
+    var analyticsBody = document.getElementById("analyticsBody");
+    analyticsBody.classList.remove("hidden");
+    analyticsBody.innerHTML = "<p>جاري سحب وتحليل البلاغات من المستند...</p>";
+
+    var oldScript = document.getElementById("analyticsScript");
+    if (oldScript) oldScript.remove();
+
+    var script = document.createElement("script");
+    script.id = "analyticsScript";
+    script.src = API_ENDPOINT + "?callback=handleAnalyticsResponse&t=" + new Date().getTime();
+    document.body.appendChild(script);
+  }
+
+  window.handleAnalyticsResponse = function(data) {
+    var analyticsBody = document.getElementById("analyticsBody");
+    if (data && data.status === "success" && data.casesMap) {
+      var cases = data.casesMap;
+      var total = Object.keys(cases).length;
+
+      var statusCounts = { "تم الانتهاء بنجاح": 0, "قيد التنفيذ": 0, "مؤجلة": 0 };
+      var statusLists = { "تم الانتهاء بنجاح": [], "قيد التنفيذ": [], "مؤجلة": [] };
+
+      Object.keys(cases).forEach(function(id) {
+        var item = cases[id];
+        var st = item.status || "تم الانتهاء بنجاح";
+        if (statusCounts[st] !== undefined) {
+          statusCounts[st]++;
+          statusLists[st].push({ id: id, location: item.location, device: item.device });
+        } else {
+          statusCounts["تم الانتهاء بنجاح"]++;
+          statusLists["تم الانتهاء بنجاح"].push({ id: id, location: item.location, device: item.device });
+        }
+      });
+
+      var html = `<p><b>إجمالي البلاغات بالمستند:</b> ${total} بلاغ</p>`;
+      html += `<div style="display:flex; gap:10px; margin-bottom:12px; flex-wrap:wrap;">`;
+      html += `<span class="badge-status status-done">تم الانتهاء: ${statusCounts["تم الانتهاء بنجاح"]}</span>`;
+      html += `<span class="badge-status status-progress">قيد التنفيذ: ${statusCounts["قيد التنفيذ"]}</span>`;
+      html += `<span class="badge-status status-delayed">مؤجلة: ${statusCounts["مؤجلة"]}</span>`;
+      html += `</div>`;
+
+      // تفصيل مقسم حسب الحالة
+      Object.keys(statusLists).forEach(function(st) {
+        html += `<div style="margin-top:8px; border-top:1px dashed #cbd5e1; padding-top:6px;">`;
+        html += `<strong>المهام (${st}) [${statusLists[st].length}]:</strong>`;
+        if (statusLists[st].length > 0) {
+          html += `<ul style="margin:4px 0; padding-right:20px; font-size:12px;">`;
+          statusLists[st].forEach(function(task) {
+            html += `<li><b>${task.id}</b> - الجهة: ${task.location || 'غير مسجلة'} (${task.device || 'جهاز'})</li>`;
+          });
+          html += `</ul>`;
+        } else {
+          html += `<p style="margin:2px 0; font-size:12px; color:#666;">لا توجد مهام بهذه الحالة.</p>`;
+        }
+        html += `</div>`;
+      });
+
+      analyticsBody.innerHTML = html;
     } else {
-      dropdown.innerHTML = "<option value=''>تعذر جلب البلاغات</option>";
+      analyticsBody.innerHTML = "<p style='color:red;'>تعذر جلب تحليلات البيانات.</p>";
     }
   };
 
   function populateFormFields() {
     var selectedId = document.getElementById("caseDropdownSelect").value;
     if (!selectedId || !loadedCasesData[selectedId]) return;
-
     var item = loadedCasesData[selectedId];
 
     document.getElementById("location").value = (item.location && item.location !== "غير مسجلة") ? item.location : "";
-
-    var taskSelect = document.getElementById("taskSelect");
-    if (setSelectValueIfExists(taskSelect, item.task)) {
-      document.getElementById("otherTaskGroup").classList.add("hidden");
-    } else if (item.task) {
-      taskSelect.value = "أخرى";
-      document.getElementById("otherTaskGroup").classList.remove("hidden");
-      document.getElementById("otherTaskDetails").value = item.task.replace("أخرى (", "").replace(")", "");
-    }
-
-    var deviceSelect = document.getElementById("deviceSelect");
-    if (setSelectValueIfExists(deviceSelect, item.device)) {
-      document.getElementById("newDeviceGroup").classList.add("hidden");
-    } else if (item.device) {
-      deviceSelect.value = "NEW_DEVICE";
-      document.getElementById("newDeviceGroup").classList.remove("hidden");
-      document.getElementById("newDeviceName").value = item.device;
-    }
-
-    var engineerSelect = document.getElementById("engineerSelect");
-    if (setSelectValueIfExists(engineerSelect, item.engineer)) {
-      document.getElementById("newEngineerGroup").classList.add("hidden");
-    } else if (item.engineer) {
-      engineerSelect.value = "NEW";
-      document.getElementById("newEngineerGroup").classList.remove("hidden");
-      document.getElementById("newEngineerName").value = item.engineer;
-    }
-
+    document.getElementById("taskStatus").value = item.status || "تم الانتهاء بنجاح";
     document.getElementById("serialNumber").value = item.serial === "غير مسجل" ? "" : (item.serial || "");
     document.getElementById("reportDate").value = item.reportDate || today;
     document.getElementById("reportTime").value = item.reportTime || timeStr;
@@ -540,89 +508,47 @@
     document.getElementById("errors").value = item.errors === "لا توجد أخطاء" ? "" : (item.errors || "");
   }
 
-  function setSelectValueIfExists(selectElement, val) {
-    if (!val) return false;
-    for (var i = 0; i < selectElement.options.length; i++) {
-      if (selectElement.options[i].value === val) {
-        selectElement.selectedIndex = i;
-        return true;
-      }
-    }
-    return false;
-  }
-
   function resetCounter() {
-    if (confirm("هل أنت تأكد من تصفير عداد الترقيم تلقائياً؟")) {
+    if (confirm("هل أنت تأكد من تصفير عداد الترقيم؟")) {
       var script = document.createElement("script");
-      var payload = encodeURIComponent(JSON.stringify({ actionType: "RESET_COUNTER" }));
-      script.src = API_ENDPOINT + "?callback=handleResetResponse&actionType=RESET_COUNTER&payload=" + payload;
+      script.src = API_ENDPOINT + "?callback=handleResetResponse&actionType=RESET_COUNTER";
       document.body.appendChild(script);
     }
   }
-
-  window.handleResetResponse = function() {
-    alert("تم تصفير العداد بنجاح.");
-  };
+  window.handleResetResponse = function() { alert("تم تصفير العداد بنجاح."); };
 
   document.getElementById("medicalForm").addEventListener("submit", function(e) {
     e.preventDefault();
-    
     var submitBtn = document.getElementById("submitBtn");
     var statusMsg = document.getElementById("statusMsg");
     var actionType = document.getElementById("actionType").value;
     var taskId = document.getElementById("caseDropdownSelect").value;
 
     if ((actionType === "UPDATE" || actionType === "DELETE") && !taskId) {
-      alert("الرجاء اختيار كود المهمة المراد التعامل معها!");
+      alert("الرجاء اختيار كود المهمة!");
       return;
     }
 
-    if (actionType === "DELETE") {
-      if (!confirm("هل أنت تأكد من رغبتك في حذف البلاغ (" + taskId + ") نهائياً من المستند؟")) {
-        return;
-      }
-    }
-    
+    if (actionType === "DELETE" && !confirm("هل أنت متأكد من حذف البلاغ (" + taskId + ")؟")) return;
+
     submitBtn.disabled = true;
-    submitBtn.innerText = "جاري الإرسال وتحديث المستند...";
+    submitBtn.innerText = "جاري الحفظ بالمستند...";
     statusMsg.style.display = "none";
 
-    var payload = {
-      actionType: actionType,
-      taskId: taskId
-    };
-
     var locationVal = document.getElementById("location").value.trim();
+    var taskStatusVal = document.getElementById("taskStatus").value;
+
+    var payload = { actionType: actionType, taskId: taskId, taskStatus: taskStatusVal };
 
     if (actionType !== "DELETE") {
-      var task = document.getElementById("taskSelect").value;
-      if (task === "أخرى") {
-        var od = document.getElementById("otherTaskDetails").value.trim();
-        task = od ? "أخرى (" + od + ")" : "أخرى";
-      }
-
-      var device = document.getElementById("deviceSelect").value;
-      if (device === "NEW_DEVICE") {
-        var nd = document.getElementById("newDeviceName").value.trim();
-        device = nd ? nd : "جهاز جديد غير معرف";
-      }
-
-      var engineer = document.getElementById("engineerSelect").value;
-      if (engineer === "NEW") {
-        engineer = document.getElementById("newEngineerName").value.trim();
-      }
-
-      var rt = document.getElementById("reporterSelect").value;
-      var rn = document.getElementById("reporterName").value.trim();
-      var reporterFull = rn ? rt + " (" + rn + ")" : rt;
-
-      payload.task = task;
+      payload.task = document.getElementById("taskSelect").value;
       payload.location = locationVal;
-      payload.device = device;
+      payload.taskStatus = taskStatusVal;
+      payload.device = document.getElementById("deviceSelect").value;
       payload.serial = document.getElementById("serialNumber").value.trim();
-      payload.reporter = reporterFull;
+      payload.reporter = document.getElementById("reporterSelect").value;
       payload.manager = document.getElementById("responsibleManager").value;
-      payload.engineer = engineer;
+      payload.engineer = document.getElementById("engineerSelect").value;
       payload.reportDate = document.getElementById("reportDate").value;
       payload.reportTime = document.getElementById("reportTime").value;
       payload.endDate = document.getElementById("endDate").value;
@@ -636,54 +562,33 @@
 
     var script = document.createElement("script");
     script.id = "submitScript";
-    var encodedPayload = encodeURIComponent(JSON.stringify(payload));
-    
-    script.src = API_ENDPOINT + "?callback=handleSubmitSuccess" +
-      "&actionType=" + encodeURIComponent(actionType) + 
+    script.src = API_ENDPOINT + "?callback=handleSubmitSuccess&actionType=" + encodeURIComponent(actionType) + 
       "&taskId=" + encodeURIComponent(taskId) + 
       "&location=" + encodeURIComponent(locationVal) + 
-      "&payload=" + encodedPayload + 
+      "&payload=" + encodeURIComponent(JSON.stringify(payload)) + 
       "&t=" + new Date().getTime();
 
     window.handleSubmitSuccess = function(res) {
       statusMsg.style.display = "block";
-
       if (res && res.status === "error") {
         statusMsg.className = "status-msg status-error";
         statusMsg.innerText = "❌ " + (res.message || "فشلت العملية");
       } else {
         statusMsg.className = "status-msg status-success";
-        
-        if (actionType === "NEW") {
-          statusMsg.innerText = "✅ تم إضافة البلاغ بنجاح وتوثيقه بداخل المستند!";
-        } else if (actionType === "UPDATE") {
-          statusMsg.innerText = "✅ تم تحديث البيانات للبلاغ بنجاح بداخل المستند!";
-        } else if (actionType === "DELETE") {
-          statusMsg.innerText = "🗑️ تم حذف البلاغ بنجاح من المستند!";
-        }
-
-        var currentAction = document.getElementById("actionType").value;
+        statusMsg.innerText = actionType === "DELETE" ? "🗑️ تم الحذف بنجاح!" : "✅ تم حفظ التقرير وتوثيق الحالة بنجاح!";
         document.getElementById("medicalForm").reset();
-        document.getElementById("actionType").value = currentAction;
-
-        document.getElementById("reportDate").value = today;
-        document.getElementById("endDate").value = today;
-        document.getElementById("reportTime").value = timeStr;
-        
-        if (actionType === "DELETE" || actionType === "UPDATE") {
-          loadCases();
-        }
+        document.getElementById("actionType").value = actionType;
+        if (actionType === "DELETE" || actionType === "UPDATE") loadCases();
       }
-
       submitBtn.disabled = false;
-      submitBtn.innerText = actionType === "DELETE" ? "🗑️ تأكيد حذف البلاغ المحدد" : "حفظ التقرير وتوثيقه بالمستند";
+      submitBtn.innerText = "حفظ التقرير وتوثيقه بالمستند";
     };
 
     script.onerror = function() {
       statusMsg.className = "status-msg status-error";
       statusMsg.innerText = "❌ حدث خطأ أثناء الاتصال بالخادم.";
       submitBtn.disabled = false;
-      submitBtn.innerText = actionType === "DELETE" ? "🗑️ تأكيد حذف البلاغ المحدد" : "حفظ التقرير وتوثيقه بالمستند";
+      submitBtn.innerText = "حفظ التقرير وتوثيقه بالمستند";
       statusMsg.style.display = "block";
     };
 
